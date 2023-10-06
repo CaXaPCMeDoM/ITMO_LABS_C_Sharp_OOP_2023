@@ -7,6 +7,7 @@
 
 
     <ItemGroup>
+      <Folder Include="Deflectors\DeflectorImprovements\" />
       <Folder Include="Engines\Models\" />
       <Folder Include="SurroundingWorld\Models\" />
       <Folder Include="SurroundingWorld\Services\" />

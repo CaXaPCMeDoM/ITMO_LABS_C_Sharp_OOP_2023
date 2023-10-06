@@ -1,6 +1,5 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Fuel.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 
@@ -8,7 +7,7 @@ public abstract class JumpEngine : Engine
 {
     public override double StartEngine(Engine engine)
     {
-        return TotalFuel.TotalFuelConsumptionGravitationalMatter;
+        return TotalFuelConsumptionGravitationalMatter;
     }
 
     public bool TravelDistance(IEnvironment? environment)

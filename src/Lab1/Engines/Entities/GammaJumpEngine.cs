@@ -10,7 +10,7 @@ public class GammaJumpEngine : JumpEngine
     {
         FuelConsumption = 1; // quadratic consumption
         MaxTravelDistance = maxTravelDistance;
-        Speed = 300;
+        Speed = 200;
     }
 
     public override double CalculationFuelConsumption()
@@ -21,9 +21,10 @@ public class GammaJumpEngine : JumpEngine
         {
             i++;
             maxTravelDistance -= Speed;
+            TotalFuelConsumptionActivePlasma += Math.Pow(i, 2) * FuelConsumption;
             TotalFuel.TotalFuelConsumptionActivePlasma += Math.Pow(i, 2) * FuelConsumption;
         }
 
-        return TotalFuel.TotalFuelConsumptionGravitationalMatter;
+        return TotalFuelConsumptionGravitationalMatter;
     }
 }

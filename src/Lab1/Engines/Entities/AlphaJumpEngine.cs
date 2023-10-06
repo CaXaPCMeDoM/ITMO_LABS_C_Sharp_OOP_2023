@@ -20,9 +20,10 @@ public class AlphaJumpEngine : JumpEngine
         {
             i++;
             maxTravelDistance -= Speed;
+            TotalFuelConsumptionActivePlasma += FuelConsumption * i;
             TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * i;
         }
 
-        return TotalFuel.TotalFuelConsumptionGravitationalMatter;
+        return TotalFuelConsumptionGravitationalMatter;
     }
 }

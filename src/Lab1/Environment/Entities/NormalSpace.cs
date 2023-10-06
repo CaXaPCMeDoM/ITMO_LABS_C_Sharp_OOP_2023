@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
@@ -7,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class NormalSpace : IEnvironment
 {
-    protected NormalSpace(int distance) => Distance = distance;
+    public NormalSpace(int distance) => Distance = distance;
     public double Distance { get; set; }
     Queue<IObstacles> IEnvironment.ObstaclesQueue { get; } = new Queue<IObstacles>();
 
@@ -27,9 +26,11 @@ public class NormalSpace : IEnvironment
     {
         if (obstacles is not Meteorites && obstacles is not SmallAsteroids)
         {
-            throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
+            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
         }
-
-        ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
+        else
+        {
+            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
+        }
     }
 }

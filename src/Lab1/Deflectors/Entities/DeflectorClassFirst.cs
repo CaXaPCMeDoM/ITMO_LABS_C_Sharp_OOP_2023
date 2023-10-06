@@ -1,8 +1,8 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
-public class ClassFirst : Deflectors
+public class DeflectorClassFirst : Deflectors
 {
-    public ClassFirst()
+    public DeflectorClassFirst()
         : base(5, 10, 11, true)
     {
     }

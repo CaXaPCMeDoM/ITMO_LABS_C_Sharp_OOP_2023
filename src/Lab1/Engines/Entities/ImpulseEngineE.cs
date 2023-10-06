@@ -19,12 +19,14 @@ public class ImpulseEngineE : ImpulseEngine
         int i = 0;
         while (maxTravelDistance > 0)
         {
+            TotalFuelConsumptionActivePlasma += FuelConsumption * Math.Exp(i);
+            TotalFuelConsumptionActivePlasma %= double.MaxValue;
             TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * Math.Exp(i);
             TotalFuel.TotalFuelConsumptionActivePlasma %= double.MaxValue;
             maxTravelDistance -= Speed;
             Speed += Speed * Math.Exp(i++);
         }
 
-        return TotalFuel.TotalFuelConsumptionActivePlasma;
+        return TotalFuelConsumptionActivePlasma;
     }
 }

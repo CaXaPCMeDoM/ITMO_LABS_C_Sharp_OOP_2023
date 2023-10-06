@@ -9,14 +9,15 @@ public class ImpulseEngineC : ImpulseEngine
     {
         MaxTravelDistance = maxTravelDistance;
         FuelConsumption = 100;
-        Speed = 100;
+        Speed = 200;
     }
 
     public double ConstantSpeed { get; set; } = 10000;
 
     public override double CalculationFuelConsumption()
     {
+        TotalFuelConsumptionActivePlasma += FuelConsumption * MaxTravelDistance;
         TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * MaxTravelDistance;
-        return TotalFuel.TotalFuelConsumptionActivePlasma;
+        return TotalFuelConsumptionActivePlasma;
     }
 }

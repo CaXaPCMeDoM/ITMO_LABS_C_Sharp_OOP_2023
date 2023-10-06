@@ -10,6 +10,7 @@ public class OmegaJumpEngine : JumpEngine
     {
         FuelConsumption = 5; // quadratic consumption
         MaxTravelDistance = maxTravelDistance;
+        Speed = 200;
     }
 
     public override double CalculationFuelConsumption()
@@ -18,9 +19,10 @@ public class OmegaJumpEngine : JumpEngine
         while (maxTravelDistance > 0)
         {
             maxTravelDistance -= Speed;
+            TotalFuelConsumptionGravitationalMatter += Math.Log(FuelConsumption);
             TotalFuel.TotalFuelConsumptionGravitationalMatter += Math.Log(FuelConsumption);
         }
 
-        return TotalFuel.TotalFuelConsumptionGravitationalMatter;
+        return TotalFuelConsumptionGravitationalMatter;
     }
 }

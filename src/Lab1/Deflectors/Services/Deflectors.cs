@@ -10,24 +10,22 @@ public abstract class Deflectors
         MeteoritesDamage = meteoritesDamage;
         HeatPoints = heatPoints;
         DeflectorIsActive = deflectorIsActive;
-        Photon = new Photon();
     }
 
     public bool CrewIsAlive { get; set; } = true;
-    public Photon Photon { get; set; }
     public bool DeflectorIsActive { get; set; }
     protected abstract int CosmoWhalesDamage { get; }
     protected abstract int AntimatterFlaresDamage { get; }
-    private int SmallAsteroidsDamage { get; }
-    private int MeteoritesDamage { get; }
-    private int HeatPoints { get; set; }
+    protected int SmallAsteroidsDamage { get; }
+    protected int MeteoritesDamage { get; }
+    protected int HeatPoints { get; set; }
 
     /*private AntimatterFlares AntimatterFlares1 { get; set; } = new AntimatterFlares
     {
         Damage = 50,
     };*/
 
-    public virtual bool DeflectorDamage(IObstacles obstacles)
+    public bool DeflectorDamage(IObstacles obstacles)
     {
         switch (obstacles)
         {
@@ -41,24 +39,7 @@ public abstract class Deflectors
                 HeatPoints -= CosmoWhalesDamage;
                 break;
             case AntimatterFlares:
-                if (Photon.IsActive)
-                {
-                    if (Photon.CounterAntimatter > 0)
-                    {
-                        Photon.CounterAntimatter--;
-                    }
-                    else
-                    {
-                        HeatPoints = 0;
-                        CrewIsAlive = false;
-                        Photon.IsActive = false;
-                    }
-                }
-                else
-                {
-                    HeatPoints -= AntimatterFlaresDamage;
-                }
-
+                HeatPoints -= AntimatterFlaresDamage;
                 break;
         }
 

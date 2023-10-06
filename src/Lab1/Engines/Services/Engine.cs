@@ -6,6 +6,8 @@ public abstract class Engine
     {
     }
 
+    public double TotalFuelConsumptionGravitationalMatter { get; set; }
+    public double TotalFuelConsumptionActivePlasma { get; protected set; }
     public double FuelConsumption { get; protected set; }
 
     // public double JumpDistance { get; protected set; }

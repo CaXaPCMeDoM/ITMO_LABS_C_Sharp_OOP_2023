@@ -1,12 +1,13 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
-public class AntineutrineEmitter : Deflectors
+public class Photon : Deflectors
 {
-    public AntineutrineEmitter()
+    public Photon()
         : base(0, 0, 100, true)
     {
+        CosmoWhalesDamage = 0;
     }
 
     protected override int CosmoWhalesDamage { get; }
-    protected override int AntimatterFlaresDamage { get; } = 100;
+    protected override int AntimatterFlaresDamage { get; } = 33;
 }

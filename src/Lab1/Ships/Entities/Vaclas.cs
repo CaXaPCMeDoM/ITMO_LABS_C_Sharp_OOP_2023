@@ -1,33 +1,66 @@
-using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
-using Itmo.ObjectOrientedProgramming.Lab1.Fuel.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Ships;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public class Vaclas : ISpaceShip, ICheckFuel
+public class Vaclas : ISpaceShip
 {
-    public Vaclas(double maxTravelDistance)
-    {
-        ImpulseEngineE = new ImpulseEngineE(maxTravelDistance);
-        JumpEngineGamma = new GammaJumpEngine(maxTravelDistance);
-        DeflectorsClass1 = new ClassFirst();
-        HullClass2 = new HullClass2();
+    private readonly Deflectors.Entities.Deflectors _deflectorsClassFirst;
+    private readonly ShipHulls _hullClassSecond;
+    private readonly Deflectors.Entities.Deflectors? _photon;
+    private readonly Deflectors.Entities.Deflectors? _antiNeutrinoEmitter;
 
-        // DeflectorsClass2.DeflectorDamage(new Meteorites());
-        ImpulseEngineE.StartEngine(ImpulseEngineE);
+    private bool _deflectorIsActive = true;
+    private bool _crewIsAlive = true;
+    private bool _shipIsActive = true;
+
+    public Vaclas(double maxTravelDistance, bool photonIsActive)
+    {
+        MaxTravelDistance = maxTravelDistance;
+        ((ISegments)this).EnginesCollection.Add(new Engines.Entities.ImpulseEngineE(maxTravelDistance));
+        ((ISegments)this).EnginesCollection.Add(new Engines.Entities.GammaJumpEngine(maxTravelDistance));
+        _deflectorsClassFirst = new DeflectorClassFirst();
+        _hullClassSecond = new HullClassSecond();
+        _antiNeutrinoEmitter = null;
+
+        ((ISegments)this).EnginesCollection[0].StartEngine(((ISegments)this).EnginesCollection[0]);
+        if (photonIsActive)
+        {
+            _photon = new Photon();
+            _photon.DeflectorIsActive = true;
+        }
+        else
+        {
+            _photon = null;
+        }
     }
 
-    protected readonly Engine ImpulseEngineE;
-    protected readonly Engine JumpEngineGamma;
-    protected readonly Deflectors.Entities.Deflectors DeflectorsClass1;
-    protected readonly ShipHulls HullClass2;
-    public void CheckFuel()
+    public double MaxTravelDistance { get; }
+    Collection<Engine> ISegments.EnginesCollection { get; } = new Collection<Engine>();
+
+    // protected readonly Engine ImpulseEngineE;
+    // protected readonly Engine AlphaJumpEngine;
+    public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
+
+    public int Move(Queue<IEnvironment> pathShip)
     {
-        double fuelReserve = ImpulseEngineE.TotalFuelConsumption;
-        Console.WriteLine($"Топливный резерв: {fuelReserve}");
+        return ShipMove.Move(_deflectorsClassFirst, _hullClassSecond, pathShip, ((ISegments)this).EnginesCollection, ref _deflectorIsActive, ref _shipIsActive, ref _crewIsAlive, _photon, _antiNeutrinoEmitter);
+    }
+
+    public double CheckFuel()
+    {
+        double fuelReserve = 0;
+        foreach (Engine engine in ((ISegments)this).EnginesCollection)
+        {
+            fuelReserve += engine.TotalFuelConsumptionActivePlasma + engine.TotalFuelConsumptionGravitationalMatter;
+        }
+
+        return fuelReserve;
     }
 }
