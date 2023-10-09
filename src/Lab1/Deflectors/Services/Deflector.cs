@@ -2,29 +2,20 @@ using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
-public abstract class Deflectors
+public abstract class Deflector
 {
-    protected Deflectors(int smallAsteroidsDamage, int meteoritesDamage, int heatPoints, bool deflectorIsActive)
+    protected Deflector(int smallAsteroidsDamage, int meteoritesDamage, int heatPoints)
     {
         SmallAsteroidsDamage = smallAsteroidsDamage;
         MeteoritesDamage = meteoritesDamage;
         HeatPoints = heatPoints;
-        DeflectorIsActive = deflectorIsActive;
     }
 
-    public bool CrewIsAlive { get; set; } = true;
-    public bool DeflectorIsActive { get; set; }
     protected abstract int CosmoWhalesDamage { get; }
     protected abstract int AntimatterFlaresDamage { get; }
-    protected int SmallAsteroidsDamage { get; }
-    protected int MeteoritesDamage { get; }
-    protected int HeatPoints { get; set; }
-
-    /*private AntimatterFlares AntimatterFlares1 { get; set; } = new AntimatterFlares
-    {
-        Damage = 50,
-    };*/
-
+    private int SmallAsteroidsDamage { get; }
+    private int MeteoritesDamage { get; }
+    private int HeatPoints { get; set; }
     public bool DeflectorDamage(IObstacles obstacles)
     {
         switch (obstacles)
@@ -45,7 +36,6 @@ public abstract class Deflectors
 
         if (HeatPoints <= 0)
         {
-            DeflectorIsActive = false;
             return false;
         }
         else

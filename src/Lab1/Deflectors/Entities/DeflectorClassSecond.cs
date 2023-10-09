@@ -1,9 +1,9 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
-public class DeflectorClassSecond : Deflectors
+public class DeflectorClassSecond : Deflector
 {
     public DeflectorClassSecond()
-        : base(3, 10, 31, true)
+        : base(3, 10, 31)
     {
     }
 

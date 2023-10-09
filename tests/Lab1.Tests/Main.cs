@@ -20,7 +20,8 @@ public static class Main
         ISpaceShip? shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
         ISpaceShip? shipAugur = new Augur(shipRange, hasJumpEngines);
         var pathShip = new PathShip();
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 1000, "HighDensityNebulae");
+        IEnvironment environment = new HighDensityNebulae(1000);
+        pathShip.AddPathShip(environment);
 
         // Act
         int shuttleCompletedRoute = shipWalkingShuttle.Move(pathShip.PathShipQueue);
@@ -44,7 +45,9 @@ public static class Main
         obstaclesAntimatterFlares = new AntimatterFlares();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 1000, nameof(HighDensityNebulae));
+        IEnvironment environment = new HighDensityNebulae(1000);
+        pathShip.AddPathShip(environment);
+
         pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
         int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
         int vaclasWithPhotonCompletedRoute = shipVaclasWithPhoton.Move(pathShip.PathShipQueue);
@@ -55,8 +58,8 @@ public static class Main
     }
 
     [Theory]
-    [InlineData(1000, "NitronParticleNebulae")]
-    public static void TestThird(int shipRange, string nameEnvironmet)
+    [InlineData(1000)]
+    public static void TestThird(int shipRange)
     {
         // Arrange
         ISpaceShip? shipVaclas = new Vaclas(shipRange, false);
@@ -68,7 +71,9 @@ public static class Main
         obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 1000, nameEnvironmet);
+        IEnvironment environment = new NitronParticleNebulae(1000);
+        pathShip.AddPathShip(environment);
+
         pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
         int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
         int augurCompletedRoute = shipAugur.Move(pathShip.PathShipQueue);
@@ -81,8 +86,8 @@ public static class Main
     }
 
     [Theory]
-    [InlineData(1000, "NormalSpace")]
-    public static void TestFourth(int shipRange, string nameEnvironmet)
+    [InlineData(1000)]
+    public static void TestFourth(int shipRange)
     {
         // Arrange
         var ships = new Collection<ISpaceShip?>();
@@ -96,7 +101,8 @@ public static class Main
         obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 200, nameEnvironmet);
+        IEnvironment environment = new NormalSpace(1000);
+        pathShip.AddPathShip(environment);
         pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
 
@@ -105,8 +111,8 @@ public static class Main
     }
 
     [Theory]
-    [InlineData(1000, 2000, "NormalSpace")]
-    public static void TestFifth(int shipRangeAugur, int shipRangeStella, string nameEnvironmet)
+    [InlineData(1000, 2000)]
+    public static void TestFifth(int shipRangeAugur, int shipRangeStella)
     {
         // Arrange
         var ships = new Collection<ISpaceShip?>();
@@ -120,7 +126,9 @@ public static class Main
         obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 1000, nameEnvironmet);
+        IEnvironment environment = new NormalSpace(1000);
+        pathShip.AddPathShip(environment);
+
         pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
 
@@ -129,8 +137,8 @@ public static class Main
     }
 
     [Theory]
-    [InlineData(1000, "NitronParticleNebulae")]
-    public static void TestSixth(int shipRange, string nameEnvironmet)
+    [InlineData(1000)]
+    public static void TestSixth(int shipRange)
     {
         // Arrange
         var ships = new Collection<ISpaceShip?>();
@@ -141,7 +149,9 @@ public static class Main
         var pathShip = new PathShip();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, 1000, nameEnvironmet);
+        IEnvironment environment = new NitronParticleNebulae(1000);
+        pathShip.AddPathShip(environment);
+
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
 
         // Assert
@@ -165,9 +175,12 @@ public static class Main
         var pathShip = new PathShip();
 
         // Act
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, distanceEnviromentsFirst, nameof(HighDensityNebulae));
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, distanceEnviromentsSecond, nameof(NitronParticleNebulae));
-        Factory.Entities.EnvironmentFactory.CreateEnvironment(ref pathShip, distanceEnviromentsThirt, nameof(NormalSpace));
+        IEnvironment environmentFirst = new HighDensityNebulae(distanceEnviromentsFirst);
+        pathShip.AddPathShip(environmentFirst);
+        IEnvironment environment = new NitronParticleNebulae(distanceEnviromentsSecond);
+        pathShip.AddPathShip(environment);
+        IEnvironment environmentThird = new NormalSpace(distanceEnviromentsThirt);
+        pathShip.AddPathShip(environmentThird);
 
         Factory.Entities.ObstaclesFactory.GenerateObstacles(pathShip.PathShipQueue.ElementAt(0), 40, nameof(SmallAsteroids)); // The meteorite will not be added to this Environment, since it cannot exist here
 

@@ -1,24 +1,23 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 public static class ShipMove
 {
-    public static int Move(Deflectors.Entities.Deflectors? deflectorsClass, ShipHulls hulls, Queue<IEnvironment> path, Collection<Engine> engineCollection, ref bool deflectorIsActive, ref bool shipIsActive, ref bool crewIsAlive, Deflectors.Entities.Deflectors? photon, Deflectors.Entities.Deflectors? antiNeutrinoEmitter)
+    public static int Move(ISpaceShip ship, Queue<IEnvironment> path)
     {
-        Debug.Assert(path != null, nameof(path) + " != null");
+        bool crewIsAlive = true;
+        bool deflectorIsActive = true;
         foreach (IEnvironment environmentForEach in path)
         {
             bool flagSuitableEnginesAreAvailable = false;
-            if (engineCollection != null)
+            if (ship.EnginesCollection != null)
             {
-                foreach (Engine engine in engineCollection)
+                foreach (Engine engine in ship.EnginesCollection)
                 {
                     if (environmentForEach.EngineCompatibilityChecker(engine))
                     {
@@ -45,9 +44,9 @@ public static class ShipMove
             {
                 if (obstaclesForEach is AntimatterFlares)
                 {
-                    if (photon is not null)
+                    if (ship.Photon is not null)
                     {
-                        if (!photon.DeflectorDamage(obstaclesForEach))
+                        if (!ship.Photon.DeflectorDamage(obstaclesForEach))
                         {
                             return (int)RouteResults.CrewIsDead;
                         }
@@ -63,9 +62,9 @@ public static class ShipMove
 
                 if (obstaclesForEach is CosmoWhales)
                 {
-                    if (antiNeutrinoEmitter != null)
+                    if (ship.AntiNeutrinoEmitter != null)
                     {
-                        if (!antiNeutrinoEmitter.DeflectorDamage(obstaclesForEach))
+                        if (!ship.AntiNeutrinoEmitter.DeflectorDamage(obstaclesForEach))
                         {
                         }
                         else
@@ -75,10 +74,10 @@ public static class ShipMove
                     }
                 }
 
-                if (deflectorsClass is not null)
+                if (ship.DeflectorsClass is not null)
                 {
-                    if (deflectorsClass is { DeflectorIsActive: true } && crewIsAlive &&
-                        !deflectorsClass.DeflectorDamage(obstaclesForEach))
+                    if (deflectorIsActive == true && crewIsAlive &&
+                        !ship.DeflectorsClass.DeflectorDamage(obstaclesForEach))
                     {
                         deflectorIsActive = false;
                     }
@@ -90,10 +89,9 @@ public static class ShipMove
 
                 if (crewIsAlive && deflectorIsActive == false)
                 {
-                    if (hulls != null && !hulls.ShipDamage(obstaclesForEach))
+                    if (ship.HullClass != null && !ship.HullClass.ShipDamage(obstaclesForEach))
                     {
-                        shipIsActive = false;
-                        hulls.ShipIsActive = false;
+                        ship.HullClass.ShipIsActive = false;
                         return (int)RouteResults.ShipDestruction;
                     }
                 }
@@ -102,7 +100,7 @@ public static class ShipMove
                     continue;
                 }
             }
-            }
+        }
 
         return (int)RouteResults.Success;
     }

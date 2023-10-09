@@ -6,8 +6,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class NormalSpace : IEnvironment
 {
-    public NormalSpace(int distance) => Distance = distance;
-    public double Distance { get; set; }
+    public NormalSpace(int distance)
+    {
+        Distance = distance;
+    }
+
+    public double Distance { get; }
     Queue<IObstacles> IEnvironment.ObstaclesQueue { get; } = new Queue<IObstacles>();
 
     public bool EngineCompatibilityChecker(Engine engine)

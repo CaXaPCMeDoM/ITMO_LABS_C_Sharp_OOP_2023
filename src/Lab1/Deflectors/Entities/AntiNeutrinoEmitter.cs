@@ -1,9 +1,9 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
-public class AntiNeutrinoEmitter : Deflectors
+public class AntiNeutrinoEmitter : Deflector
 {
     public AntiNeutrinoEmitter()
-        : base(0, 0, 100, true)
+        : base(0, 0, 100)
     {
         AntimatterFlaresDamage = 0;
     }

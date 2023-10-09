@@ -9,51 +9,46 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public class Stella : ISpaceShip
+public sealed class Stella : ISpaceShip
 {
-    private readonly Deflectors.Entities.Deflectors _deflectorsClassFirst;
-    private readonly ShipHulls _hullClassFirst;
-    private readonly Deflectors.Entities.Deflectors? _photon;
-    private readonly Deflectors.Entities.Deflectors? _antiNeutrinoEmitter;
-
-    private bool _deflectorIsActive = true;
-    private bool _crewIsAlive = true;
-    private bool _shipIsActive = true;
-
     public Stella(double maxTravelDistance, bool photonIsActive)
     {
         MaxTravelDistance = maxTravelDistance;
-        ((ISegments)this).EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
-        ((ISegments)this).EnginesCollection.Add(new Engines.Entities.OmegaJumpEngine(maxTravelDistance));
-        _deflectorsClassFirst = new DeflectorClassFirst();
-        _hullClassFirst = new HullClassFirst();
-        _antiNeutrinoEmitter = null;
+        EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
+        EnginesCollection.Add(new Engines.Entities.OmegaJumpEngine(maxTravelDistance));
+        DeflectorsClass = new DeflectorClassFirst();
+        HullClass = new HullClassFirst();
+        AntiNeutrinoEmitter = null;
 
-        ((ISegments)this).EnginesCollection[0].StartEngine(((ISegments)this).EnginesCollection[0]);
+        EnginesCollection[0].StartEngine(EnginesCollection[0]);
         if (photonIsActive)
         {
-            _photon = new Photon();
-            _photon.DeflectorIsActive = true;
+            Photon = new Photon();
         }
         else
         {
-            _photon = null;
+            Photon = null;
         }
     }
 
-    public double MaxTravelDistance { get; }
-    Collection<Engine> ISegments.EnginesCollection { get; } = new Collection<Engine>();
+    public override double MaxTravelDistance { get; }
+    public sealed override Collection<Engine> EnginesCollection { get; } = new Collection<Engine>();
+
+    public override Deflector? DeflectorsClass { get; protected set; }
+    public override ShipHulls? HullClass { get; protected set; }
+    public override Deflector? Photon { get; protected set; }
+    public override Deflector? AntiNeutrinoEmitter { get; protected set; }
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Little;
 
-    public int Move(Queue<IEnvironment> pathShip)
+    public override int Move(Queue<IEnvironment> pathShip)
     {
-        return ShipMove.Move(_deflectorsClassFirst, _hullClassFirst, pathShip, ((ISegments)this).EnginesCollection, ref _deflectorIsActive, ref _shipIsActive, ref _crewIsAlive, _photon, _antiNeutrinoEmitter);
+        return ShipMove.Move(this, pathShip);
     }
 
-    public double CheckFuel()
+    public override double CheckFuel()
     {
         double fuelReserve = 0;
-        foreach (Engine engine in ((ISegments)this).EnginesCollection)
+        foreach (Engine engine in EnginesCollection)
         {
             fuelReserve += engine.TotalFuelConsumptionActivePlasma + engine.TotalFuelConsumptionGravitationalMatter;
         }

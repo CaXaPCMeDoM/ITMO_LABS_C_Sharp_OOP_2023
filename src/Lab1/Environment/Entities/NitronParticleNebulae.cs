@@ -8,7 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 public class NitronParticleNebulae : IEnvironment
 {
     public NitronParticleNebulae(int distance) => Distance = distance;
-    public double Distance { get; set; }
+    public double Distance { get; }
     Queue<IObstacles> IEnvironment.ObstaclesQueue { get; } = new Queue<IObstacles>();
 
     public bool EngineCompatibilityChecker(Engine engine)
