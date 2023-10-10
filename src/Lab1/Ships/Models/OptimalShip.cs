@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
@@ -11,7 +10,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 public static class OptimalShip
 {
     // private static double shipDistance = 0;
-    public static ISpaceShip? OptimalShipCalculation(Collection<ISpaceShip?>? ships, Queue<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
+    public static ISpaceShip? OptimalShipCalculation(Collection<ISpaceShip?>? ships, Collection<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
     {
         ISpaceShip? optimalShip = null;
         double highestScore = 0;
@@ -32,7 +31,7 @@ public static class OptimalShip
         return optimalShip;
     }
 
-    private static double CalculateScore(ISpaceShip? spaceShip, Queue<IEnvironment> pathShip)
+    private static double CalculateScore(ISpaceShip? spaceShip, Collection<IEnvironment> pathShip)
     {
         int resultInstenceMove = -1;
         if (spaceShip != null)

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
@@ -40,7 +39,7 @@ public sealed class Meredian : ISpaceShip
 
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
 
-    public override int Move(Queue<IEnvironment> pathShip)
+    public override int Move(Collection<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }

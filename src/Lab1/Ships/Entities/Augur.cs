@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
@@ -35,7 +34,7 @@ public sealed class Augur : ISpaceShip
     public override Deflector? Photon { get; protected set; }
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
 
-    public override int Move(Queue<IEnvironment> pathShip)
+    public override int Move(Collection<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }

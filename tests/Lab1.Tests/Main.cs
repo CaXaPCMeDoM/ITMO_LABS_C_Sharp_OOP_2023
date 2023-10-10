@@ -48,7 +48,7 @@ public static class Main
         IEnvironment environment = new HighDensityNebulae(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
+        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
         int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
         int vaclasWithPhotonCompletedRoute = shipVaclasWithPhoton.Move(pathShip.PathShipQueue);
 
@@ -74,7 +74,7 @@ public static class Main
         IEnvironment environment = new NitronParticleNebulae(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
+        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
         int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
         int augurCompletedRoute = shipAugur.Move(pathShip.PathShipQueue);
         int meredianCompletedRoute = shipMeredian.Move(pathShip.PathShipQueue);
@@ -103,7 +103,7 @@ public static class Main
         // Act
         IEnvironment environment = new NormalSpace(1000);
         pathShip.AddPathShip(environment);
-        pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
+        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
 
         // Assert
@@ -129,7 +129,7 @@ public static class Main
         IEnvironment environment = new NormalSpace(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue.Peek().AddObstacles(obstaclesAntimatterFlares);
+        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
 
         // Assert

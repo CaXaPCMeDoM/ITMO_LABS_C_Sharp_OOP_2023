@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
@@ -24,6 +23,6 @@ public abstract class ISpaceShip : ICheckFuel
     public abstract ShipHulls? HullClass { get; protected set; }
     public abstract Deflector? Photon { get; protected set; }
     public abstract Deflector? AntiNeutrinoEmitter { get; protected set; }
-    public abstract int Move(Queue<IEnvironment> pathShip);
+    public abstract int Move(Collection<IEnvironment> pathShip);
     public abstract double CheckFuel();
 }
