@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Path.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
@@ -181,11 +180,20 @@ public static class Main
         pathShip.AddPathShip(environment);
         IEnvironment environmentThird = new NormalSpace(distanceEnviromentsThirt);
         pathShip.AddPathShip(environmentThird);
+        for (int i = 0; i < 40; i++)
+        {
+            pathShip.PathShipQueue[0].AddObstacles(new SmallAsteroids()); // will not be added. The meteorite will not be added to this Environment, since it cannot exist here
+        }
 
-        Factory.Entities.ObstaclesFactory.GenerateObstacles(pathShip.PathShipQueue.ElementAt(0), 40, nameof(SmallAsteroids)); // The meteorite will not be added to this Environment, since it cannot exist here
+        for (int i = 0; i < 3; i++)
+        {
+            pathShip.PathShipQueue[0].AddObstacles(new AntimatterFlares());
+        }
 
-        Factory.Entities.ObstaclesFactory.GenerateObstacles(pathShip.PathShipQueue.ElementAt(0), 3, nameof(AntimatterFlares));
-        Factory.Entities.ObstaclesFactory.GenerateObstacles(pathShip.PathShipQueue.ElementAt(2), 40, nameof(SmallAsteroids));
+        for (int i = 0; i < 40; i++)
+        {
+            pathShip.PathShipQueue[2].AddObstacles(new SmallAsteroids());
+        }
 
         int completeAugur = shipAugur.Move(pathShip.PathShipQueue);
         int completeStella = shipStella.Move(pathShip.PathShipQueue);
