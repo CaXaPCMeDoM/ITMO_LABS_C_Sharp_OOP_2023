@@ -5,11 +5,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class AlphaJumpEngine : JumpEngine
 {
+    protected const double SpeedConst = 200;
     public AlphaJumpEngine(double maxTravelDistance)
     {
-        FuelConsumption = 10; // quadratic consumption
         MaxTravelDistance = maxTravelDistance;
-        Speed = 200;
     }
 
     public override double CalculationFuelConsumption()
@@ -19,7 +18,7 @@ public class AlphaJumpEngine : JumpEngine
         while (maxTravelDistance > 0)
         {
             i++;
-            maxTravelDistance -= Speed;
+            maxTravelDistance -= SpeedConst;
             TotalFuelConsumptionActivePlasma += FuelConsumption * i;
             TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * i;
         }

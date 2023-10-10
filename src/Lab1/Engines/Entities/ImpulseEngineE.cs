@@ -6,16 +6,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class ImpulseEngineE : ImpulseEngine
 {
+    protected const double SpeedConst = 200;
     public ImpulseEngineE(double maxTravelDistance)
     {
         MaxTravelDistance = maxTravelDistance;
-        FuelConsumption = 200;
-        Speed = 200;
     }
 
     public override double CalculationFuelConsumption()
     {
         double maxTravelDistance = MaxTravelDistance;
+        double growingSpeed = SpeedConst;
         int i = 0;
         while (maxTravelDistance > 0)
         {
@@ -23,8 +23,8 @@ public class ImpulseEngineE : ImpulseEngine
             TotalFuelConsumptionActivePlasma %= double.MaxValue;
             TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * Math.Exp(i);
             TotalFuel.TotalFuelConsumptionActivePlasma %= double.MaxValue;
-            maxTravelDistance -= Speed;
-            Speed += Speed * Math.Exp(i++);
+            maxTravelDistance -= growingSpeed;
+            growingSpeed += SpeedConst * Math.Exp(i++);
         }
 
         return TotalFuelConsumptionActivePlasma;

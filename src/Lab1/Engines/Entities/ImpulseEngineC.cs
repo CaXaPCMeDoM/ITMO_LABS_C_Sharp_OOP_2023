@@ -5,14 +5,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class ImpulseEngineC : ImpulseEngine
 {
+    protected const double SpeedConst = 200;
     public ImpulseEngineC(double maxTravelDistance)
     {
         MaxTravelDistance = maxTravelDistance;
-        FuelConsumption = 100;
-        Speed = 200;
     }
-
-    public double ConstantSpeed { get; set; } = 10000;
 
     public override double CalculationFuelConsumption()
     {
