@@ -1,6 +1,8 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
-public class SmallAsteroids : IObstacles
+public class SmallAsteroids : ISmallAsteroids, ICanAddInNormalSpace
 {
     public SmallAsteroids()
     {

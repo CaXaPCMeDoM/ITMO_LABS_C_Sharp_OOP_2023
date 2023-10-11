@@ -28,13 +28,13 @@ public class NormalSpace : IEnvironment
 
     public void AddObstacles(IObstacles obstacles)
     {
-        if (obstacles is not Meteorites && obstacles is not SmallAsteroids)
+        if (obstacles is ICanAddInNormalSpace)
         {
-            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
+            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
         }
         else
         {
-            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
+            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
         }
     }
 }

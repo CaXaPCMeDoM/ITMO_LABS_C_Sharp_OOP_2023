@@ -6,7 +6,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class HighDensityNebulae : IEnvironment
 {
-    protected internal HighDensityNebulae(int distance) => Distance = distance;
+    protected internal HighDensityNebulae(int distance)
+    {
+        Distance = distance;
+    }
+
     public double Distance { get; }
     Queue<IObstacles> IEnvironment.ObstaclesQueue { get; } = new Queue<IObstacles>();
 
@@ -24,13 +28,13 @@ public class HighDensityNebulae : IEnvironment
 
     public void AddObstacles(IObstacles obstacles)
     {
-        if (obstacles is not AntimatterFlares)
+        if (obstacles is ICanAddInHighDensityNebulae)
         {
-            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
+            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
         }
         else
         {
-            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
+            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
         }
     }
 }

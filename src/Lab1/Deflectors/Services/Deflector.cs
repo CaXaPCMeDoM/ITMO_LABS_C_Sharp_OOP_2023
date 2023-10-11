@@ -20,13 +20,13 @@ public abstract class Deflector
     {
         switch (obstacles)
         {
-            case SmallAsteroids:
+            case ISmallAsteroids:
                 HeatPoints -= SmallAsteroidsDamage;
                 break;
-            case Meteorites:
+            case IMeteorites:
                 HeatPoints -= MeteoritesDamage;
                 break;
-            case CosmoWhales:
+            case ICosmoWhales:
                 HeatPoints -= CosmoWhalesDamage;
                 break;
             case AntimatterFlares:

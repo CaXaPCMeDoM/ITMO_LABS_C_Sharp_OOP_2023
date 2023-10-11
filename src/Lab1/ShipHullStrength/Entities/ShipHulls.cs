@@ -25,16 +25,16 @@ public abstract class ShipHulls
     {
         switch (obstacles)
         {
-            case SmallAsteroids:
+            case ISmallAsteroids:
                 HeatPoints -= SmallAsteroidsDamage;
                 break;
-            case Meteorites:
+            case IMeteorites:
                 HeatPoints -= MeteoritesDamage;
                 break;
-            case AntimatterFlares:
+            case IAntimatterFlares:
                 HeatPoints -= AntimatterFlaresDamage;
                 break;
-            case CosmoWhales:
+            case ICosmoWhales:
                 HeatPoints -= CosmoWhalesDamage;
                 break;
         }

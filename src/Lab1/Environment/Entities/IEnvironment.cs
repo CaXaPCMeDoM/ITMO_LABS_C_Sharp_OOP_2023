@@ -8,6 +8,7 @@ public interface IEnvironment
 {
     double Distance { get; }
     public Queue<IObstacles> ObstaclesQueue { get; }
+
     void AddObstacles(IObstacles obstacles);
     public bool EngineCompatibilityChecker(Engine engine);
 }
