@@ -9,7 +9,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 public static class OptimalShip
 {
-    // private static double shipDistance = 0;
     public static ISpaceShip? OptimalShipCalculation(Collection<ISpaceShip?>? ships, Collection<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
     {
         ISpaceShip? optimalShip = null;
@@ -44,9 +43,7 @@ public static class OptimalShip
                 Debug.Assert(spaceShip != null, nameof(spaceShip) + " != null");
                 return BlackMarket.FuelCost(spaceShip.CheckFuel());
         }
-        else
-        {
-            return -1;
-        }
+
+        return -1;
     }
 }

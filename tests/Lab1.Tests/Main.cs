@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Path.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;

@@ -6,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class ImpulseEngineE : ImpulseEngine
 {
-    protected const double SpeedConst = 200;
+    private const double SpeedConst = 200;
     public ImpulseEngineE(double maxTravelDistance)
     {
         MaxTravelDistance = maxTravelDistance;

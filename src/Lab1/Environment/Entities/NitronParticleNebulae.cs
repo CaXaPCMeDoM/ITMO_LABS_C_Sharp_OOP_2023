@@ -33,9 +33,5 @@ public class NitronParticleNebulae : IEnvironment
         {
             ((IEnvironment)this).ObstaclesCollection.Add(obstacles);
         }
-        else
-        {
-            // throw new ArgumentException("There can't be such objects of the 'obstacles' type in this 'environment'");
-        }
     }
 }

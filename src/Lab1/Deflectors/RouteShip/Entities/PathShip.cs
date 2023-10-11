@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Path.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 
 public class PathShip
 {

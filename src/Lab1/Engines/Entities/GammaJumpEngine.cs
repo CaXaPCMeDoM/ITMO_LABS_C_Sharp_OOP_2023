@@ -6,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class GammaJumpEngine : JumpEngine
 {
-    protected const double SpeedConst = 200;
+    private const double SpeedConst = 200;
     public GammaJumpEngine(double maxTravelDistance)
     {
         MaxTravelDistance = maxTravelDistance;
