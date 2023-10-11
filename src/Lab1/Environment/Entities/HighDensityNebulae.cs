@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
@@ -12,7 +12,7 @@ public class HighDensityNebulae : IEnvironment
     }
 
     public double Distance { get; }
-    Queue<IObstacles> IEnvironment.ObstaclesQueue { get; } = new Queue<IObstacles>();
+    Collection<IObstacles> IEnvironment.ObstaclesCollection { get; } = new Collection<IObstacles>();
 
     public bool EngineCompatibilityChecker(Engine engine)
     {
@@ -30,7 +30,7 @@ public class HighDensityNebulae : IEnvironment
     {
         if (obstacles is ICanAddInHighDensityNebulae)
         {
-            ((IEnvironment)this).ObstaclesQueue.Enqueue(obstacles);
+            ((IEnvironment)this).ObstaclesCollection.Add(obstacles);
         }
         else
         {

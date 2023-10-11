@@ -40,7 +40,7 @@ public static class ShipMove
                 return (int)RouteResults.EnginesNotSuitable;
             }
 
-            foreach (IObstacles obstaclesForEach in environmentForEach.ObstaclesQueue)
+            foreach (IObstacles obstaclesForEach in environmentForEach.ObstaclesCollection)
             {
                 if (obstaclesForEach is AntimatterFlares)
                 {
