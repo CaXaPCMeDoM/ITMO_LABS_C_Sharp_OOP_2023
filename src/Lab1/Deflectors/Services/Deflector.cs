@@ -4,37 +4,37 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public abstract class Deflector
 {
+    private readonly int _smallAsteroidsDamage;
+    private readonly int _meteoritesDamage;
+    private int _heatPoints;
     protected Deflector(int smallAsteroidsDamage, int meteoritesDamage, int heatPoints)
     {
-        SmallAsteroidsDamage = smallAsteroidsDamage;
-        MeteoritesDamage = meteoritesDamage;
-        HeatPoints = heatPoints;
+        _smallAsteroidsDamage = smallAsteroidsDamage;
+        _meteoritesDamage = meteoritesDamage;
+        _heatPoints = heatPoints;
     }
 
     protected abstract int CosmoWhalesDamage { get; }
     protected abstract int AntimatterFlaresDamage { get; }
-    private int SmallAsteroidsDamage { get; }
-    private int MeteoritesDamage { get; }
-    private int HeatPoints { get; set; }
     public bool DeflectorDamage(IObstacles obstacles)
     {
         switch (obstacles)
         {
             case ISmallAsteroids:
-                HeatPoints -= SmallAsteroidsDamage;
+                _heatPoints -= _smallAsteroidsDamage;
                 break;
             case IMeteorites:
-                HeatPoints -= MeteoritesDamage;
+                _heatPoints -= _meteoritesDamage;
                 break;
             case ICosmoWhales:
-                HeatPoints -= CosmoWhalesDamage;
+                _heatPoints -= CosmoWhalesDamage;
                 break;
             case AntimatterFlares:
-                HeatPoints -= AntimatterFlaresDamage;
+                _heatPoints -= AntimatterFlaresDamage;
                 break;
         }
 
-        if (HeatPoints <= 0)
+        if (_heatPoints <= 0)
         {
             return false;
         }
