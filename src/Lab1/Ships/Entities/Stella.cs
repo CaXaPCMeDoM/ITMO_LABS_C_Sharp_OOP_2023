@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
@@ -13,8 +15,10 @@ public sealed class Stella : ISpaceShip
     public Stella(double maxTravelDistance, bool photonIsActive)
     {
         MaxTravelDistance = maxTravelDistance;
-        EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
-        EnginesCollection.Add(new Engines.Entities.OmegaJumpEngine(maxTravelDistance));
+        EnginesCollection = new ReadOnlyCollection<Engine>(new List<Engine> { new Engines.Entities.ImpulseEngineC(maxTravelDistance), new OmegaJumpEngine(maxTravelDistance) });
+
+        // EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
+        // EnginesCollection.Add(new Engines.Entities.OmegaJumpEngine(maxTravelDistance));
         DeflectorsClass = new DeflectorClassFirst();
         HullClass = new HullClassFirst();
         AntiNeutrinoEmitter = null;
@@ -31,7 +35,7 @@ public sealed class Stella : ISpaceShip
     }
 
     public override double MaxTravelDistance { get; }
-    public sealed override Collection<Engine> EnginesCollection { get; } = new Collection<Engine>();
+    public sealed override ReadOnlyCollection<Engine> EnginesCollection { get; }
 
     public override Deflector? DeflectorsClass { get; protected set; }
     public override ShipHulls? HullClass { get; protected set; }
@@ -39,7 +43,7 @@ public sealed class Stella : ISpaceShip
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Little;
 
-    public override int Move(Collection<IEnvironment> pathShip)
+    public override int Move(IEnumerable<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }

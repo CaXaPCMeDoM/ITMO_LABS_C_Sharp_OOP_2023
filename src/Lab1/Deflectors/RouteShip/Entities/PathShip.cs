@@ -1,13 +1,15 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 
 public class PathShip
 {
-    public Collection<IEnvironment> PathShipQueue { get; } = new Collection<IEnvironment>();
+    public IEnumerable<IEnvironment> PathShipEnumerable { get; private set; } = Enumerable.Empty<IEnvironment>();
+
     public void AddPathShip(IEnvironment environment)
     {
-        PathShipQueue.Add(environment);
+        PathShipEnumerable = PathShipEnumerable.Concat(new[] { environment });
     }
 }

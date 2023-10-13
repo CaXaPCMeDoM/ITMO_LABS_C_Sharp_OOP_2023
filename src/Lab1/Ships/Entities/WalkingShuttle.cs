@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
@@ -14,7 +15,7 @@ public sealed class WalkingShuttle : ISpaceShip, ICheckFuel
     public WalkingShuttle(double maxTravelDistance, bool photonIsActive)
     {
         MaxTravelDistance = maxTravelDistance;
-        EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
+        EnginesCollection = new ReadOnlyCollection<Engine>(new List<Engine> { new Engines.Entities.ImpulseEngineC(maxTravelDistance) });
         DeflectorsClass = null;
         HullClass = new HullClassSecond();
         AntiNeutrinoEmitter = null;
@@ -24,7 +25,7 @@ public sealed class WalkingShuttle : ISpaceShip, ICheckFuel
     }
 
     public override double MaxTravelDistance { get; }
-    public sealed override Collection<Engine> EnginesCollection { get; } = new Collection<Engine>();
+    public sealed override ReadOnlyCollection<Engine> EnginesCollection { get; }
 
     public override Deflector? DeflectorsClass { get; protected set; }
     public override ShipHulls? HullClass { get; protected set; }
@@ -33,7 +34,7 @@ public sealed class WalkingShuttle : ISpaceShip, ICheckFuel
 
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
 
-    public override int Move(Collection<IEnvironment> pathShip)
+    public override int Move(IEnumerable<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }

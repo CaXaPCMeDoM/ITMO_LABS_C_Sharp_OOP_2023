@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
@@ -8,7 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 public static class ShipMove
 {
-    public static int Move(ISpaceShip ship, Collection<IEnvironment> path)
+    public static int Move(ISpaceShip ship, IEnumerable<IEnvironment> path)
     {
         bool crewIsAlive = true;
         bool deflectorIsActive = true;

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
@@ -23,8 +24,8 @@ public static class Main
         pathShip.AddPathShip(environment);
 
         // Act
-        int shuttleCompletedRoute = shipWalkingShuttle.Move(pathShip.PathShipQueue);
-        int avgureCompletedRoute = shipAugur.Move(pathShip.PathShipQueue);
+        int shuttleCompletedRoute = shipWalkingShuttle.Move(pathShip.PathShipEnumerable);
+        int avgureCompletedRoute = shipAugur.Move(pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal((int)RouteResults.EnginesNotSuitable, shuttleCompletedRoute);
@@ -47,9 +48,9 @@ public static class Main
         IEnvironment environment = new HighDensityNebulae(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
-        int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
-        int vaclasWithPhotonCompletedRoute = shipVaclasWithPhoton.Move(pathShip.PathShipQueue);
+        pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
+        int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipEnumerable);
+        int vaclasWithPhotonCompletedRoute = shipVaclasWithPhoton.Move(pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal((int)RouteResults.CrewIsDead, vaclasCompletedRoute);
@@ -73,10 +74,10 @@ public static class Main
         IEnvironment environment = new NitronParticleNebulae(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
-        int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipQueue);
-        int augurCompletedRoute = shipAugur.Move(pathShip.PathShipQueue);
-        int meredianCompletedRoute = shipMeredian.Move(pathShip.PathShipQueue);
+        pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
+        int vaclasCompletedRoute = shipVaclas.Move(pathShip.PathShipEnumerable);
+        int augurCompletedRoute = shipAugur.Move(pathShip.PathShipEnumerable);
+        int meredianCompletedRoute = shipMeredian.Move(pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal((int)RouteResults.ShipDestruction, vaclasCompletedRoute);
@@ -102,8 +103,8 @@ public static class Main
         // Act
         IEnvironment environment = new NormalSpace(1000);
         pathShip.AddPathShip(environment);
-        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
+        pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
+        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipWalkingShuttle);
@@ -128,8 +129,8 @@ public static class Main
         IEnvironment environment = new NormalSpace(1000);
         pathShip.AddPathShip(environment);
 
-        pathShip.PathShipQueue[0].AddObstacles(obstaclesAntimatterFlares);
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
+        pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
+        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipStella);
@@ -151,7 +152,7 @@ public static class Main
         IEnvironment environment = new NitronParticleNebulae(1000);
         pathShip.AddPathShip(environment);
 
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipQueue);
+        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipVaclas);
@@ -182,23 +183,23 @@ public static class Main
         pathShip.AddPathShip(environmentThird);
         for (int i = 0; i < 40; i++)
         {
-            pathShip.PathShipQueue[0].AddObstacles(new SmallAsteroids()); // will not be added. The meteorite will not be added to this Environment, since it cannot exist here
+            pathShip.PathShipEnumerable.First().AddObstacles(new SmallAsteroids()); // will not be added. The meteorite will not be added to this Environment, since it cannot exist here
         }
 
         for (int i = 0; i < 3; i++)
         {
-            pathShip.PathShipQueue[0].AddObstacles(new AntimatterFlares());
+            pathShip.PathShipEnumerable.First().AddObstacles(new AntimatterFlares());
         }
 
         for (int i = 0; i < 40; i++)
         {
-            pathShip.PathShipQueue[2].AddObstacles(new SmallAsteroids());
+            pathShip.PathShipEnumerable.Skip(2).First().AddObstacles(new SmallAsteroids());
         }
 
-        int completeAugur = shipAugur.Move(pathShip.PathShipQueue);
-        int completeStella = shipStella.Move(pathShip.PathShipQueue);
-        int completeWalkingShuttle = shipWalkingShuttle.Move(pathShip.PathShipQueue);
-        int completeVaclas = shipVaclas.Move(pathShip.PathShipQueue);
+        int completeAugur = shipAugur.Move(pathShip.PathShipEnumerable);
+        int completeStella = shipStella.Move(pathShip.PathShipEnumerable);
+        int completeWalkingShuttle = shipWalkingShuttle.Move(pathShip.PathShipEnumerable);
+        int completeVaclas = shipVaclas.Move(pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal((int)RouteResults.EnginesNotSuitable, completeStella);

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
@@ -13,8 +15,7 @@ public sealed class Augur : ISpaceShip
     public Augur(double maxTravelDistance, bool photonIsActive)
     {
         MaxTravelDistance = maxTravelDistance;
-        EnginesCollection.Add(new Engines.Entities.ImpulseEngineE(maxTravelDistance));
-        EnginesCollection.Add(new Engines.Entities.AlphaJumpEngine(maxTravelDistance));
+        EnginesCollection = new ReadOnlyCollection<Engine>(new List<Engine> { new Engines.Entities.ImpulseEngineE(maxTravelDistance), new AlphaJumpEngine(maxTravelDistance) });
         DeflectorsClass = new DeflectorClassThird();
         HullClass = new HullClassThird();
         AntiNeutrinoEmitter = null;
@@ -25,7 +26,7 @@ public sealed class Augur : ISpaceShip
     }
 
     public override double MaxTravelDistance { get; }
-    public sealed override Collection<Engine> EnginesCollection { get; } = new Collection<Engine>();
+    public sealed override ReadOnlyCollection<Engine> EnginesCollection { get; }
 
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Big;
 
@@ -34,7 +35,7 @@ public sealed class Augur : ISpaceShip
     public override Deflector? Photon { get; protected set; }
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
 
-    public override int Move(Collection<IEnvironment> pathShip)
+    public override int Move(IEnumerable<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
@@ -13,7 +14,7 @@ public sealed class Meredian : ISpaceShip
     public Meredian(double maxTravelDistance, bool photonIsActive)
     {
         MaxTravelDistance = maxTravelDistance;
-        EnginesCollection.Add(new Engines.Entities.ImpulseEngineE(maxTravelDistance));
+        EnginesCollection = new ReadOnlyCollection<Engine>(new List<Engine> { new Engines.Entities.ImpulseEngineE(maxTravelDistance) });
         DeflectorsClass = new DeflectorClassSecond();
         HullClass = new HullClassSecond();
         AntiNeutrinoEmitter = new AntiNeutrinoEmitter();
@@ -30,8 +31,7 @@ public sealed class Meredian : ISpaceShip
     }
 
     public override double MaxTravelDistance { get; }
-    public sealed override Collection<Engine> EnginesCollection { get; } = new Collection<Engine>();
-
+    public override ReadOnlyCollection<Engine> EnginesCollection { get; }
     public override Deflector? DeflectorsClass { get; protected set; }
     public override ShipHulls? HullClass { get; protected set; }
     public override Deflector? Photon { get; protected set; }
@@ -39,7 +39,7 @@ public sealed class Meredian : ISpaceShip
 
     public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
 
-    public override int Move(Collection<IEnvironment> pathShip)
+    public override int Move(IEnumerable<IEnvironment> pathShip)
     {
         return ShipMove.Move(this, pathShip);
     }
