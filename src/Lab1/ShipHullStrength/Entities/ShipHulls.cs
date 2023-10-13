@@ -16,10 +16,10 @@ public abstract class ShipHulls
 
     public bool ShipIsActive { get; protected internal set; }
     private double HeatPoints { get; set; }
-    private double AntimatterFlaresDamage { get; set; }
-    private double CosmoWhalesDamage { get; set; }
-    private double MeteoritesDamage { get; set; }
-    private double SmallAsteroidsDamage { get; set; }
+    private double AntimatterFlaresDamage { get; }
+    private double CosmoWhalesDamage { get; }
+    private double MeteoritesDamage { get; }
+    private double SmallAsteroidsDamage { get; }
 
     public bool ShipDamage(IObstacles obstacles)
     {

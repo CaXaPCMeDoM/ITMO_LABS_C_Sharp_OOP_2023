@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
@@ -15,13 +16,13 @@ public static class Main
 {
     [Theory]
     [MemberData(nameof(TestFirstData))]
-    public static void TestFirst(int shipRange, bool hasJumpEngines, int expectedShuttleResult, int expectedAugurResult)
+    public static void TestFirst(double shipRange, bool hasJumpEngines, int expectedShuttleResult, int expectedAugurResult)
     {
         // Arrange
-        ISpaceShip? shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
-        ISpaceShip? shipAugur = new Augur(shipRange, hasJumpEngines);
+        ISpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
+        ISpaceShip shipAugur = new Augur(shipRange, hasJumpEngines);
         var pathShip = new PathShip();
-        IEnvironment environment = new HighDensityNebulae(1000);
+        IEnvironment environment = new HighDensityNebulae((double)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
         // Act
@@ -35,7 +36,7 @@ public static class Main
 
     public static IEnumerable<object[]> TestFirstData()
     {
-        yield return new object[] { 999, false, (int)RouteResults.EnginesNotSuitable, (int)RouteResults.ShipIsLost };
+        yield return new object[] { RouteLength.ShortLength, false, (int)RouteResults.EnginesNotSuitable, (int)RouteResults.ShipIsLost };
     }
 
     [Theory]
@@ -43,14 +44,14 @@ public static class Main
     public static void TestSecond(int shipRange, int expectedVaclasResult, int expectedVaclasWithPhotonResult)
     {
         // Arrange
-        ISpaceShip? shipVaclas = new Vaclas(shipRange, false);
-        ISpaceShip? shipVaclasWithPhoton = new Vaclas(shipRange, true);
+        ISpaceShip shipVaclas = new Vaclas(shipRange, false);
+        ISpaceShip shipVaclasWithPhoton = new Vaclas(shipRange, true);
         var pathShip = new PathShip();
         IObstacles obstaclesAntimatterFlares;
         obstaclesAntimatterFlares = new AntimatterFlares();
 
         // Act
-        IEnvironment environment = new HighDensityNebulae(1000);
+        IEnvironment environment = new HighDensityNebulae((double)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
@@ -64,7 +65,7 @@ public static class Main
 
     public static IEnumerable<object[]> TestSecondData()
     {
-        yield return new object[] { 1000, (int)RouteResults.CrewIsDead, (int)RouteResults.Success };
+        yield return new object[] { (double)RouteLength.AverageLength, (int)RouteResults.CrewIsDead, (int)RouteResults.Success };
     }
 
     [Theory]
@@ -72,16 +73,16 @@ public static class Main
     public static void TestThird(int shipRange)
     {
         // Arrange
-        ISpaceShip? shipVaclas = new Vaclas(shipRange, false);
-        ISpaceShip? shipAugur = new Augur(shipRange, false);
-        ISpaceShip? shipMeredian = new Meredian(shipRange, false);
+        ISpaceShip shipVaclas = new Vaclas(shipRange, false);
+        ISpaceShip shipAugur = new Augur(shipRange, false);
+        ISpaceShip shipMeredian = new Meredian(shipRange, false);
         var pathShip = new PathShip();
 
         IObstacles obstaclesAntimatterFlares;
         obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        IEnvironment environment = new NitronParticleNebulae(1000);
+        IEnvironment environment = new NitronParticleNebulae((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
@@ -97,7 +98,7 @@ public static class Main
 
     public static IEnumerable<object[]> TestThirdData()
     {
-        yield return new object[] { 1000 };
+        yield return new object[] { (int)RouteLength.AverageLength };
     }
 
     [Theory]
@@ -116,7 +117,7 @@ public static class Main
         obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        IEnvironment environment = new NormalSpace(1000);
+        IEnvironment environment = new NormalSpace((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
@@ -127,7 +128,7 @@ public static class Main
 
     public static IEnumerable<object[]> TestFourthData()
     {
-        yield return new object[] { 1000 };
+        yield return new object[] { (int)RouteLength.AverageLength };
     }
 
     [Theory]
@@ -142,11 +143,10 @@ public static class Main
         ships.Add(shipStella);
         var pathShip = new PathShip();
 
-        IObstacles obstaclesAntimatterFlares;
-        obstaclesAntimatterFlares = new CosmoWhales();
+        IObstacles obstaclesAntimatterFlares = new CosmoWhales();
 
         // Act
-        IEnvironment environment = new NormalSpace(1000);
+        IEnvironment environment = new NormalSpace((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
@@ -158,7 +158,7 @@ public static class Main
 
     public static IEnumerable<object[]> TestFifthData()
     {
-        yield return new object[] { 1000, 2000 };
+        yield return new object[] { (int)RouteLength.AverageLength, (int)RouteLength.LongsLength };
     }
 
     [Theory]
@@ -174,7 +174,7 @@ public static class Main
         var pathShip = new PathShip();
 
         // Act
-        IEnvironment environment = new NitronParticleNebulae(1000);
+        IEnvironment environment = new NitronParticleNebulae((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
         ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
@@ -185,19 +185,22 @@ public static class Main
 
     public static IEnumerable<object[]> TestSixthData()
     {
-        yield return new object[] { 1000 };
+        yield return new object[] { (int)RouteLength.AverageLength };
     }
 
     [Theory]
     [MemberData(nameof(TestSeventhData))]
     public static void TestSeventh(int distanceEnviromentsFirst, int distanceEnviromentsSecond, int distanceEnviromentsThirt)
     {
+        const int numberOfSmallAsteroids = 40;
+        const int numberOfAntimatterFlares = 3;
+
         // Arrange
         var ships = new Collection<ISpaceShip?>();
-        ISpaceShip shipAugur = new Augur(2000, true);
-        ISpaceShip shipStella = new Stella(2000, true);
-        ISpaceShip shipWalkingShuttle = new WalkingShuttle(4400, true);
-        ISpaceShip shipVaclas = new Vaclas(1000, true);
+        ISpaceShip shipAugur = new Augur((int)RouteLength.LongsLength, true);
+        ISpaceShip shipStella = new Stella((int)RouteLength.LongsLength, true);
+        ISpaceShip shipWalkingShuttle = new WalkingShuttle((int)RouteLength.LongsLength, true);
+        ISpaceShip shipVaclas = new Vaclas((int)RouteLength.AverageLength, true);
         ships.Add(shipAugur);
         ships.Add(shipStella);
         ships.Add(shipWalkingShuttle);
@@ -211,17 +214,17 @@ public static class Main
         pathShip.AddPathShip(environment);
         IEnvironment environmentThird = new NormalSpace(distanceEnviromentsThirt);
         pathShip.AddPathShip(environmentThird);
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < numberOfSmallAsteroids; i++)
         {
             pathShip.PathShipEnumerable.First().AddObstacles(new SmallAsteroids()); // will not be added. The meteorite will not be added to this Environment, since it cannot exist here
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < numberOfAntimatterFlares; i++)
         {
             pathShip.PathShipEnumerable.First().AddObstacles(new AntimatterFlares());
         }
 
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < numberOfSmallAsteroids; i++)
         {
             pathShip.PathShipEnumerable.Skip(2).First().AddObstacles(new SmallAsteroids());
         }
@@ -240,6 +243,6 @@ public static class Main
 
     public static IEnumerable<object[]> TestSeventhData()
     {
-        yield return new object[] { 1000, 2000, 500 };
+        yield return new object[] { (int)RouteLength.AverageLength, (int)RouteLength.LongsLength, (int)RouteLength.ShortLength };
     }
 }

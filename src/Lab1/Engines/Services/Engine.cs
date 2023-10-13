@@ -8,7 +8,7 @@ public abstract class Engine
     {
     }
 
-    public double TotalFuelConsumptionGravitationalMatter { get; set; }
+    public double TotalFuelConsumptionGravitationalMatter { get; protected set; }
     public double TotalFuelConsumptionActivePlasma { get; protected set; }
     public double MaxTravelDistance { get; protected set; }
     public abstract double StartEngine(Engine engine);

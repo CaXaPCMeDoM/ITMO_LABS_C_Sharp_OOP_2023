@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
@@ -20,14 +21,7 @@ public sealed class Meredian : ISpaceShip
         AntiNeutrinoEmitter = new AntiNeutrinoEmitter();
 
         EnginesCollection[0].StartEngine(EnginesCollection[0]);
-        if (photonIsActive)
-        {
-            Photon = new Photon();
-        }
-        else
-        {
-            Photon = null;
-        }
+        Photon = photonIsActive ? new Photon() : null;
     }
 
     public override double MaxTravelDistance { get; }
@@ -37,7 +31,7 @@ public sealed class Meredian : ISpaceShip
     public override Deflector? Photon { get; protected set; }
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
 
-    public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
+    public int WeightShip { get; } = (int)WeightOverallCharacteristics.Average;
 
     public override int Move(IEnumerable<IEnvironment> pathShip)
     {

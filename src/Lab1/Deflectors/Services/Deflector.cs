@@ -1,6 +1,7 @@
+using Itmo.ObjectOrientedProgramming.Lab1.MyException;
 using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Services;
 
 public abstract class Deflector
 {
@@ -32,6 +33,8 @@ public abstract class Deflector
             case AntimatterFlares:
                 _heatPoints -= AntimatterFlaresDamage;
                 break;
+            default:
+                throw new ObstaclesNotFoundException();
         }
 
         if (_heatPoints <= 0)

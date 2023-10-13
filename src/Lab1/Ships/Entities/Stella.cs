@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
@@ -16,9 +17,6 @@ public sealed class Stella : ISpaceShip
     {
         MaxTravelDistance = maxTravelDistance;
         EnginesCollection = new ReadOnlyCollection<Engine>(new List<Engine> { new Engines.Entities.ImpulseEngineC(maxTravelDistance), new OmegaJumpEngine(maxTravelDistance) });
-
-        // EnginesCollection.Add(new Engines.Entities.ImpulseEngineC(maxTravelDistance));
-        // EnginesCollection.Add(new Engines.Entities.OmegaJumpEngine(maxTravelDistance));
         DeflectorsClass = new DeflectorClassFirst();
         HullClass = new HullClassFirst();
         AntiNeutrinoEmitter = null;
@@ -41,7 +39,7 @@ public sealed class Stella : ISpaceShip
     public override ShipHulls? HullClass { get; protected set; }
     public override Deflector? Photon { get; protected set; }
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
-    public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Little;
+    public int WeightShip { get; } = (int)WeightOverallCharacteristics.Little;
 
     public override int Move(IEnumerable<IEnvironment> pathShip)
     {

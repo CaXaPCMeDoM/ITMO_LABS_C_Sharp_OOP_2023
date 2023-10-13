@@ -7,7 +7,6 @@ public static class BlackMarket
     public static double FuelCost(double fuel)
     {
         double totalFuel = fuel;
-        _currentPrice = 3570;
         return totalFuel * _currentPrice;
     }
 }

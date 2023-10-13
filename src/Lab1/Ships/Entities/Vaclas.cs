@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
@@ -35,7 +36,7 @@ public sealed class Vaclas : ISpaceShip
     public override ShipHulls? HullClass { get; protected set; }
     public override Deflector? Photon { get; protected set; }
     public override Deflector? AntiNeutrinoEmitter { get; protected set; }
-    public int WeightShip { get; set; } = (int)WeightOverallCharacteristics.Average;
+    public int WeightShip { get; } = (int)WeightOverallCharacteristics.Average;
 
     public override int Move(IEnumerable<IEnvironment> pathShip)
     {

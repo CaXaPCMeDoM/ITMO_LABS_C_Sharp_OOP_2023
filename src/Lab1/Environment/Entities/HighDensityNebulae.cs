@@ -7,7 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class HighDensityNebulae : IEnvironment
 {
-    protected internal HighDensityNebulae(int distance)
+    protected internal HighDensityNebulae(double distance)
     {
         Distance = distance;
     }

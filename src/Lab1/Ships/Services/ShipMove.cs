@@ -15,7 +15,7 @@ public static class ShipMove
         foreach (IEnvironment environmentForEach in path)
         {
             bool flagSuitableEnginesAreAvailable = false;
-            if (ship.EnginesCollection != null)
+            if (ship.EnginesCollection is not null)
             {
                 foreach (Engine engine in ship.EnginesCollection)
                 {
@@ -62,7 +62,7 @@ public static class ShipMove
 
                 if (obstaclesForEach is CosmoWhales)
                 {
-                    if (ship.AntiNeutrinoEmitter != null)
+                    if (ship.AntiNeutrinoEmitter is not null)
                     {
                         if (!ship.AntiNeutrinoEmitter.DeflectorDamage(obstaclesForEach))
                         {
@@ -89,7 +89,7 @@ public static class ShipMove
 
                 if (crewIsAlive && deflectorIsActive == false)
                 {
-                    if (ship.HullClass != null && !ship.HullClass.ShipDamage(obstaclesForEach))
+                    if (ship.HullClass is not null && !ship.HullClass.ShipDamage(obstaclesForEach))
                     {
                         ship.HullClass.ShipIsActive = false;
                         return (int)RouteResults.ShipDestruction;

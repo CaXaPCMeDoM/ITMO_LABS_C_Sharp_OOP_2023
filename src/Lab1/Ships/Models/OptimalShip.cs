@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Fuel.Entities;
@@ -11,12 +10,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 public static class OptimalShip
 {
+    private const int ResultNotFound = -1;
     public static ISpaceShip? OptimalShipCalculation(Collection<ISpaceShip?>? ships, IEnumerable<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
     {
         ISpaceShip? optimalShip = null;
         double highestScore = 0;
 
-        if (ships != null)
+        if (ships is not null)
         {
             foreach (ISpaceShip? spaceShip in ships)
             {
@@ -35,18 +35,17 @@ public static class OptimalShip
 
     private static double CalculateScore(ISpaceShip? spaceShip, IEnumerable<IEnvironment> pathShip)
     {
-        int resultInstenceMove = -1;
-        if (spaceShip != null)
+        int resultInstenceMove;
+        if (spaceShip is not null)
         {
             resultInstenceMove = spaceShip.Move(pathShip);
-        }
 
-        if (resultInstenceMove == (int)RouteResults.Success)
-        {
-                Debug.Assert(spaceShip != null, nameof(spaceShip) + " != null");
+            if (resultInstenceMove == (int)RouteResults.Success)
+            {
                 return BlackMarket.FuelCost(spaceShip.CheckFuel());
+            }
         }
 
-        return -1;
+        return ResultNotFound;
     }
 }
