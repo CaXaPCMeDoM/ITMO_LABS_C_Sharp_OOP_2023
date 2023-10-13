@@ -1,5 +1,4 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
-using Itmo.ObjectOrientedProgramming.Lab1.Fuel.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
@@ -20,7 +19,6 @@ public class AlphaJumpEngine : JumpEngine
             i++;
             maxTravelDistance -= SpeedConst;
             TotalFuelConsumptionActivePlasma += FuelConsumption * i;
-            TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * i;
         }
 
         return TotalFuelConsumptionGravitationalMatter;

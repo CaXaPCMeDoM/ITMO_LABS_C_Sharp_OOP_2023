@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
@@ -13,8 +14,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Tests;
 public static class Main
 {
     [Theory]
-    [InlineData(999, false)]
-    public static void TestFirst(int shipRange, bool hasJumpEngines)
+    [MemberData(nameof(TestFirstData))]
+    public static void TestFirst(int shipRange, bool hasJumpEngines, int expectedShuttleResult, int expectedAugurResult)
     {
         // Arrange
         ISpaceShip? shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
@@ -25,22 +26,26 @@ public static class Main
 
         // Act
         int shuttleCompletedRoute = shipWalkingShuttle.Move(pathShip.PathShipEnumerable);
-        int avgureCompletedRoute = shipAugur.Move(pathShip.PathShipEnumerable);
+        int augurCompletedRoute = shipAugur.Move(pathShip.PathShipEnumerable);
 
         // Assert
-        Assert.Equal((int)RouteResults.EnginesNotSuitable, shuttleCompletedRoute);
-        Assert.Equal((int)RouteResults.ShipIsLost, avgureCompletedRoute);
+        Assert.Equal(expectedShuttleResult, shuttleCompletedRoute);
+        Assert.Equal(expectedAugurResult, augurCompletedRoute);
+    }
+
+    public static IEnumerable<object[]> TestFirstData()
+    {
+        yield return new object[] { 999, false, (int)RouteResults.EnginesNotSuitable, (int)RouteResults.ShipIsLost };
     }
 
     [Theory]
-    [InlineData(1000)]
-    public static void TestSecond(int shipRange)
+    [MemberData(nameof(TestSecondData))]
+    public static void TestSecond(int shipRange, int expectedVaclasResult, int expectedVaclasWithPhotonResult)
     {
         // Arrange
         ISpaceShip? shipVaclas = new Vaclas(shipRange, false);
         ISpaceShip? shipVaclasWithPhoton = new Vaclas(shipRange, true);
         var pathShip = new PathShip();
-
         IObstacles obstaclesAntimatterFlares;
         obstaclesAntimatterFlares = new AntimatterFlares();
 
@@ -53,12 +58,17 @@ public static class Main
         int vaclasWithPhotonCompletedRoute = shipVaclasWithPhoton.Move(pathShip.PathShipEnumerable);
 
         // Assert
-        Assert.Equal((int)RouteResults.CrewIsDead, vaclasCompletedRoute);
-        Assert.Equal((int)RouteResults.Success, vaclasWithPhotonCompletedRoute);
+        Assert.Equal(expectedVaclasResult, vaclasCompletedRoute);
+        Assert.Equal(expectedVaclasWithPhotonResult, vaclasWithPhotonCompletedRoute);
+    }
+
+    public static IEnumerable<object[]> TestSecondData()
+    {
+        yield return new object[] { 1000, (int)RouteResults.CrewIsDead, (int)RouteResults.Success };
     }
 
     [Theory]
-    [InlineData(1000)]
+    [MemberData(nameof(TestThirdData))]
     public static void TestThird(int shipRange)
     {
         // Arrange
@@ -85,8 +95,13 @@ public static class Main
         Assert.Equal((int)RouteResults.Success, meredianCompletedRoute);
     }
 
+    public static IEnumerable<object[]> TestThirdData()
+    {
+        yield return new object[] { 1000 };
+    }
+
     [Theory]
-    [InlineData(1000)]
+    [MemberData(nameof(TestFourthData))]
     public static void TestFourth(int shipRange)
     {
         // Arrange
@@ -110,8 +125,13 @@ public static class Main
         Assert.Equal(optimalShip, shipWalkingShuttle);
     }
 
+    public static IEnumerable<object[]> TestFourthData()
+    {
+        yield return new object[] { 1000 };
+    }
+
     [Theory]
-    [InlineData(1000, 2000)]
+    [MemberData(nameof(TestFifthData))]
     public static void TestFifth(int shipRangeAugur, int shipRangeStella)
     {
         // Arrange
@@ -136,8 +156,13 @@ public static class Main
         Assert.Equal(optimalShip, shipStella);
     }
 
+    public static IEnumerable<object[]> TestFifthData()
+    {
+        yield return new object[] { 1000, 2000 };
+    }
+
     [Theory]
-    [InlineData(1000)]
+    [MemberData(nameof(TestSixthData))]
     public static void TestSixth(int shipRange)
     {
         // Arrange
@@ -158,8 +183,13 @@ public static class Main
         Assert.Equal(optimalShip, shipVaclas);
     }
 
+    public static IEnumerable<object[]> TestSixthData()
+    {
+        yield return new object[] { 1000 };
+    }
+
     [Theory]
-    [InlineData(1000, 2000, 500)]
+    [MemberData(nameof(TestSeventhData))]
     public static void TestSeventh(int distanceEnviromentsFirst, int distanceEnviromentsSecond, int distanceEnviromentsThirt)
     {
         // Arrange
@@ -206,5 +236,10 @@ public static class Main
         Assert.Equal((int)RouteResults.ShipIsLost, completeVaclas);
         Assert.Equal((int)RouteResults.Success, completeAugur);
         Assert.Equal((int)RouteResults.EnginesNotSuitable, completeWalkingShuttle);
+    }
+
+    public static IEnumerable<object[]> TestSeventhData()
+    {
+        yield return new object[] { 1000, 2000, 500 };
     }
 }

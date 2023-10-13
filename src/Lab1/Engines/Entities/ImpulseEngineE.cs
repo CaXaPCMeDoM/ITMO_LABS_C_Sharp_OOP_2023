@@ -1,6 +1,5 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
-using Itmo.ObjectOrientedProgramming.Lab1.Fuel.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
@@ -21,8 +20,6 @@ public class ImpulseEngineE : ImpulseEngine
         {
             TotalFuelConsumptionActivePlasma += FuelConsumption * Math.Exp(i);
             TotalFuelConsumptionActivePlasma %= double.MaxValue;
-            TotalFuel.TotalFuelConsumptionActivePlasma += FuelConsumption * Math.Exp(i);
-            TotalFuel.TotalFuelConsumptionActivePlasma %= double.MaxValue;
             maxTravelDistance -= growingSpeed;
             growingSpeed += SpeedConst * Math.Exp(i++);
         }

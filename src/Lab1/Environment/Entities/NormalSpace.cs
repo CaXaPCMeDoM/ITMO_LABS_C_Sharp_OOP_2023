@@ -1,4 +1,5 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.SurroundingWorld.Entities;
 
@@ -12,7 +13,7 @@ public class NormalSpace : IEnvironment
     }
 
     public double Distance { get; }
-    Collection<IObstacles> IEnvironment.ObstaclesCollection { get; } = new Collection<IObstacles>();
+    public IEnumerable<IObstacles> ObstaclesEnumerable { get; private set; } = Enumerable.Empty<IObstacles>();
 
     public bool EngineCompatibilityChecker(Engine engine)
     {
@@ -28,9 +29,9 @@ public class NormalSpace : IEnvironment
 
     public void AddObstacles(IObstacles obstacles)
     {
-        if (obstacles is ICanAddInNormalSpace)
+        if (obstacles is IAcceptableObstaclesForNormalSpace)
         {
-            ((IEnvironment)this).ObstaclesCollection.Add(obstacles);
+            ObstaclesEnumerable = ObstaclesEnumerable.Concat(new[] { obstacles });
         }
     }
 }
