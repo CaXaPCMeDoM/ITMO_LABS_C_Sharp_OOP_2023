@@ -7,13 +7,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class HighDensityNebulae : IEnvironment
 {
+    private IEnumerable<IObstacles> _obstaclesEnumerable;
     protected internal HighDensityNebulae(double distance)
     {
+        _obstaclesEnumerable = new List<IObstacles>();
         Distance = distance;
     }
 
+    public IEnumerable<IObstacles> ObstaclesEnumerable => _obstaclesEnumerable;
+
     public double Distance { get; }
-    public IEnumerable<IObstacles> ObstaclesEnumerable { get; private set; } = Enumerable.Empty<IObstacles>();
 
     public bool EngineCompatibilityChecker(Engine engine)
     {
@@ -31,7 +34,7 @@ public class HighDensityNebulae : IEnvironment
     {
         if (obstacles is IAcceptableObstaclesForHighDensityNebulae)
         {
-            ObstaclesEnumerable = ObstaclesEnumerable.Concat(new[] { obstacles });
+            _obstaclesEnumerable = _obstaclesEnumerable.Concat(new[] { obstacles });
         }
     }
 }

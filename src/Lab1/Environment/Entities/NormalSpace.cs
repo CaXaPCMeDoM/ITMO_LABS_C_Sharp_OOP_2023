@@ -7,14 +7,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
 
 public class NormalSpace : IEnvironment
 {
-    public NormalSpace(int distance)
+    private IEnumerable<IObstacles> _obstaclesEnumerable;
+    protected internal NormalSpace(double distance)
     {
+        _obstaclesEnumerable = new List<IObstacles>();
         Distance = distance;
     }
 
-    public double Distance { get; }
-    public IEnumerable<IObstacles> ObstaclesEnumerable { get; private set; } = Enumerable.Empty<IObstacles>();
+    public IEnumerable<IObstacles> ObstaclesEnumerable => _obstaclesEnumerable;
 
+    public double Distance { get; }
     public bool EngineCompatibilityChecker(Engine engine)
     {
         if (engine is ImpulseEngine)
@@ -31,7 +33,7 @@ public class NormalSpace : IEnvironment
     {
         if (obstacles is IAcceptableObstaclesForNormalSpace)
         {
-            ObstaclesEnumerable = ObstaclesEnumerable.Concat(new[] { obstacles });
+            _obstaclesEnumerable = _obstaclesEnumerable.Concat(new[] { obstacles });
         }
     }
 }
