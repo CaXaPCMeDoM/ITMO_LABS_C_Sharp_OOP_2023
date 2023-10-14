@@ -6,10 +6,17 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.RouteShip.Entities;
 
 public class PathShip
 {
-    public IEnumerable<IEnvironment> PathShipEnumerable { get; private set; } = Enumerable.Empty<IEnvironment>();
+    private IEnumerable<IEnvironment> _pathShipEnumerable;
+
+    public PathShip()
+    {
+        _pathShipEnumerable = new List<IEnvironment>();
+    }
+
+    public IEnumerable<IEnvironment> PathShipEnumerable => _pathShipEnumerable;
 
     public void AddPathShip(IEnvironment environment)
     {
-        PathShipEnumerable = PathShipEnumerable.Concat(new[] { environment });
+        _pathShipEnumerable = _pathShipEnumerable.Concat(new[] { environment });
     }
 }
