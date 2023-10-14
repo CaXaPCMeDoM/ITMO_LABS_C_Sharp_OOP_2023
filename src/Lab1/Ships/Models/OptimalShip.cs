@@ -11,14 +11,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 public static class OptimalShip
 {
     private const int ResultNotFound = -1;
-    public static ISpaceShip? OptimalShipCalculation(Collection<ISpaceShip?>? ships, IEnumerable<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
+    public static SpaceShip? OptimalShipCalculation(Collection<SpaceShip?>? ships, IEnumerable<IEnvironment> pathShip) // Attention! Obviously, after calling this method, 'Obstacles' will be removed.
     {
-        ISpaceShip? optimalShip = null;
+        SpaceShip? optimalShip = null;
         double highestScore = 0;
 
         if (ships is not null)
         {
-            foreach (ISpaceShip? spaceShip in ships)
+            foreach (SpaceShip? spaceShip in ships)
             {
                 IEnumerable<IEnvironment> environments = pathShip.ToList();
                 double score = CalculateScore(spaceShip, environments);
@@ -33,7 +33,7 @@ public static class OptimalShip
         return optimalShip;
     }
 
-    private static double CalculateScore(ISpaceShip? spaceShip, IEnumerable<IEnvironment> pathShip)
+    private static double CalculateScore(SpaceShip? spaceShip, IEnumerable<IEnvironment> pathShip)
     {
         int resultInstenceMove;
         if (spaceShip is not null)

@@ -11,7 +11,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public sealed class Augur : ISpaceShip
+public sealed class Augur : SpaceShip
 {
     public Augur(double maxTravelDistance, bool photonIsActive)
     {

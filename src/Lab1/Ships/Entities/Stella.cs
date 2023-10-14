@@ -11,7 +11,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public sealed class Stella : ISpaceShip
+public sealed class Stella : SpaceShip
 {
     public Stella(double maxTravelDistance, bool photonIsActive)
     {

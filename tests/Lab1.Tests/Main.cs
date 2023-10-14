@@ -19,8 +19,8 @@ public static class Main
     public static void TestFirst(double shipRange, bool hasJumpEngines, int expectedShuttleResult, int expectedAugurResult)
     {
         // Arrange
-        ISpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
-        ISpaceShip shipAugur = new Augur(shipRange, hasJumpEngines);
+        SpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, hasJumpEngines);
+        SpaceShip shipAugur = new Augur(shipRange, hasJumpEngines);
         var pathShip = new PathShip();
         IEnvironment environment = new HighDensityNebulae((double)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
@@ -44,8 +44,8 @@ public static class Main
     public static void TestSecond(int shipRange, int expectedVaclasResult, int expectedVaclasWithPhotonResult)
     {
         // Arrange
-        ISpaceShip shipVaclas = new Vaclas(shipRange, false);
-        ISpaceShip shipVaclasWithPhoton = new Vaclas(shipRange, true);
+        SpaceShip shipVaclas = new Vaclas(shipRange, false);
+        SpaceShip shipVaclasWithPhoton = new Vaclas(shipRange, true);
         var pathShip = new PathShip();
         IObstacles obstaclesAntimatterFlares;
         obstaclesAntimatterFlares = new AntimatterFlares();
@@ -73,9 +73,9 @@ public static class Main
     public static void TestThird(int shipRange)
     {
         // Arrange
-        ISpaceShip shipVaclas = new Vaclas(shipRange, false);
-        ISpaceShip shipAugur = new Augur(shipRange, false);
-        ISpaceShip shipMeredian = new Meredian(shipRange, false);
+        SpaceShip shipVaclas = new Vaclas(shipRange, false);
+        SpaceShip shipAugur = new Augur(shipRange, false);
+        SpaceShip shipMeredian = new Meredian(shipRange, false);
         var pathShip = new PathShip();
 
         IObstacles obstaclesAntimatterFlares;
@@ -106,9 +106,9 @@ public static class Main
     public static void TestFourth(int shipRange)
     {
         // Arrange
-        var ships = new Collection<ISpaceShip?>();
-        ISpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, false);
-        ISpaceShip shipVaclas = new Vaclas(shipRange, true);
+        var ships = new Collection<SpaceShip?>();
+        SpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, false);
+        SpaceShip shipVaclas = new Vaclas(shipRange, true);
         ships.Add(shipWalkingShuttle);
         ships.Add(shipVaclas);
         var pathShip = new PathShip();
@@ -120,7 +120,7 @@ public static class Main
         IEnvironment environment = new NormalSpace((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
+        SpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipWalkingShuttle);
@@ -136,9 +136,9 @@ public static class Main
     public static void TestFifth(int shipRangeAugur, int shipRangeStella)
     {
         // Arrange
-        var ships = new Collection<ISpaceShip?>();
-        ISpaceShip shipAugur = new Augur(shipRangeAugur, false);
-        ISpaceShip shipStella = new Stella(shipRangeStella, true);
+        var ships = new Collection<SpaceShip?>();
+        SpaceShip shipAugur = new Augur(shipRangeAugur, false);
+        SpaceShip shipStella = new Stella(shipRangeStella, true);
         ships.Add(shipAugur);
         ships.Add(shipStella);
         var pathShip = new PathShip();
@@ -150,7 +150,7 @@ public static class Main
         pathShip.AddPathShip(environment);
 
         pathShip.PathShipEnumerable.First().AddObstacles(obstaclesAntimatterFlares);
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
+        SpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipStella);
@@ -166,9 +166,9 @@ public static class Main
     public static void TestSixth(int shipRange)
     {
         // Arrange
-        var ships = new Collection<ISpaceShip?>();
-        ISpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, false);
-        ISpaceShip shipVaclas = new Vaclas(shipRange, true);
+        var ships = new Collection<SpaceShip?>();
+        SpaceShip shipWalkingShuttle = new WalkingShuttle(shipRange, false);
+        SpaceShip shipVaclas = new Vaclas(shipRange, true);
         ships.Add(shipWalkingShuttle);
         ships.Add(shipVaclas);
         var pathShip = new PathShip();
@@ -177,7 +177,7 @@ public static class Main
         IEnvironment environment = new NitronParticleNebulae((int)RouteLength.AverageLength);
         pathShip.AddPathShip(environment);
 
-        ISpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
+        SpaceShip? optimalShip = OptimalShip.OptimalShipCalculation(ships, pathShip.PathShipEnumerable);
 
         // Assert
         Assert.Equal(optimalShip, shipVaclas);
@@ -196,11 +196,11 @@ public static class Main
         const int numberOfAntimatterFlares = 3;
 
         // Arrange
-        var ships = new Collection<ISpaceShip?>();
-        ISpaceShip shipAugur = new Augur((int)RouteLength.LongsLength, true);
-        ISpaceShip shipStella = new Stella((int)RouteLength.LongsLength, true);
-        ISpaceShip shipWalkingShuttle = new WalkingShuttle((int)RouteLength.LongsLength, true);
-        ISpaceShip shipVaclas = new Vaclas((int)RouteLength.AverageLength, true);
+        var ships = new Collection<SpaceShip?>();
+        SpaceShip shipAugur = new Augur((int)RouteLength.LongsLength, true);
+        SpaceShip shipStella = new Stella((int)RouteLength.LongsLength, true);
+        SpaceShip shipWalkingShuttle = new WalkingShuttle((int)RouteLength.LongsLength, true);
+        SpaceShip shipVaclas = new Vaclas((int)RouteLength.AverageLength, true);
         ships.Add(shipAugur);
         ships.Add(shipStella);
         ships.Add(shipWalkingShuttle);

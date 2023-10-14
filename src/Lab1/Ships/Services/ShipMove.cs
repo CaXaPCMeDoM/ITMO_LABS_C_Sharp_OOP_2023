@@ -8,7 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 public static class ShipMove
 {
-    public static int Move(ISpaceShip ship, IEnumerable<IEnvironment> path)
+    public static int Move(SpaceShip ship, IEnumerable<IEnvironment> path)
     {
         bool crewIsAlive = true;
         bool deflectorIsActive = true;

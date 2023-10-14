@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Environment.Entities;
@@ -8,9 +7,9 @@ using Itmo.ObjectOrientedProgramming.Lab1.ShipHullStrength.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public abstract class ISpaceShip : ICheckFuel
+public abstract class SpaceShip : ICheckFuel
 {
-    protected ISpaceShip()
+    protected SpaceShip()
     {
         DeflectorsClass = null;
         HullClass = null;
@@ -19,7 +18,7 @@ public abstract class ISpaceShip : ICheckFuel
     }
 
     public abstract double MaxTravelDistance { get; }
-    public abstract ReadOnlyCollection<Engine> EnginesCollection { get; }
+    public abstract IReadOnlyCollection<Engine> EnginesCollection { get; }
     public abstract Deflector? DeflectorsClass { get; protected set; }
     public abstract ShipHulls? HullClass { get; protected set; }
     public abstract Deflector? Photon { get; protected set; }

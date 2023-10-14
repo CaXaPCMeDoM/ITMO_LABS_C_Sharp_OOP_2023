@@ -11,7 +11,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public sealed class Vaclas : ISpaceShip
+public sealed class Vaclas : SpaceShip
 {
     public Vaclas(double maxTravelDistance, bool photonIsActive)
     {

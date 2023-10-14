@@ -11,7 +11,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public sealed class WalkingShuttle : ISpaceShip, ICheckFuel
+public sealed class WalkingShuttle : SpaceShip, ICheckFuel
 {
     public WalkingShuttle(double maxTravelDistance, bool photonIsActive)
     {

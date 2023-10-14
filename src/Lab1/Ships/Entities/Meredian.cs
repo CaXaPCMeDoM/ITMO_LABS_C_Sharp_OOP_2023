@@ -10,7 +10,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Services;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public sealed class Meredian : ISpaceShip
+public sealed class Meredian : SpaceShip
 {
     public Meredian(double maxTravelDistance, bool photonIsActive)
     {
