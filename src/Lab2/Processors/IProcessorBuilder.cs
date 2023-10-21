@@ -4,20 +4,20 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Processors;
 
 public interface IProcessorBuilder
 {
-    ProcessorBuilder Name(string name);
-    ProcessorBuilder CoreFrequency(int frequency);
+    public ProcessorBuilder Name(string name);
+    public ProcessorBuilder CoreFrequency(int frequency);
 
-    ProcessorBuilder Cores(int cores);
+    public ProcessorBuilder Cores(int cores);
 
-    ProcessorBuilder Socket(string socket);
+    public ProcessorBuilder Socket(string socket);
 
-    ProcessorBuilder IntegratedGraphics(bool integratedGraphics);
+    public ProcessorBuilder IntegratedGraphics(bool integratedGraphics);
 
-    ProcessorBuilder SupportedMemoryFrequencies(Collection<int> supportedFrequencies);
+    public ProcessorBuilder SupportedMemoryFrequencies(Collection<int> supportedFrequencies);
 
-    ProcessorBuilder WithTdp(int tdp);
+    public ProcessorBuilder WithTdp(int tdp);
 
-    ProcessorBuilder PowerConsumption(int powerConsumption);
+    public ProcessorBuilder PowerConsumption(int powerConsumption);
 
-    Processor Build();
+    public Processor Build();
 }

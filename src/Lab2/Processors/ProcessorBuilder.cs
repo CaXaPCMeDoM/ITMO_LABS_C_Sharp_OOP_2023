@@ -4,73 +4,63 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Processors;
 
 public class ProcessorBuilder : IProcessorBuilder
 {
-    private string _name = string.Empty;
-    private int _coreFrequency;
-    private int _cores;
-    private Collection<int> _supportedMemoryFrequencies = new Collection<int>();
-    private string _socket = string.Empty;
-    private bool _integratedGraphics;
-    private int _tdp;
-    private int _powerConsumption;
+    internal ProcessorBuilder()
+    {
+        Processor = new Processor();
+    }
+
+    private Processor Processor { get; set; }
 
     public ProcessorBuilder Name(string name)
     {
-        _name = name;
+        Processor.Name = name;
         return this;
     }
 
     public ProcessorBuilder CoreFrequency(int frequency)
     {
-        _coreFrequency = frequency;
+        Processor.CoreFrequency = frequency;
         return this;
     }
 
     public ProcessorBuilder Cores(int cores)
     {
-        _cores = cores;
+        Processor.Cores = cores;
         return this;
     }
 
     public ProcessorBuilder Socket(string socket)
     {
-        _socket = socket;
+        Processor.Socket = socket;
         return this;
     }
 
     public ProcessorBuilder IntegratedGraphics(bool integratedGraphics)
     {
-        _integratedGraphics = integratedGraphics;
+        Processor.IntegratedGraphics = integratedGraphics;
         return this;
     }
 
     public ProcessorBuilder SupportedMemoryFrequencies(Collection<int> supportedFrequencies)
     {
-        _supportedMemoryFrequencies = supportedFrequencies;
+        Processor.AddSupportedMemoryFrequencies(supportedFrequencies);
         return this;
     }
 
     public ProcessorBuilder WithTdp(int tdp)
     {
-        _tdp = tdp;
+        Processor.Tdp = tdp;
         return this;
     }
 
     public ProcessorBuilder PowerConsumption(int powerConsumption)
     {
-        _powerConsumption = powerConsumption;
+        Processor.PowerConsumption = powerConsumption;
         return this;
     }
 
     public Processor Build()
     {
-        return new Processor(
-            _name,
-            _coreFrequency,
-            _cores,
-            _socket,
-            _integratedGraphics,
-            _supportedMemoryFrequencies,
-            _tdp,
-            _powerConsumption);
+        return Processor;
     }
 }

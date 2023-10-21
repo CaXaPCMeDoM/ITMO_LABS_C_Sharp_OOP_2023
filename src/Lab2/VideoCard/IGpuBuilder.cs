@@ -2,18 +2,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.VideoCard;
 
 public interface IGpuBuilder
 {
-    GpuBuilder Name(string name);
-    GpuBuilder Height(int height);
+    public GpuBuilder Name(string name);
+    public GpuBuilder Height(int height);
 
-    GpuBuilder Width(int width);
+    public GpuBuilder Width(int width);
 
-    GpuBuilder Memory(int memory);
+    public GpuBuilder Memory(int memory);
 
-    GpuBuilder PciVersion(string pciVersion);
+    public GpuBuilder PciVersion(string pciVersion);
 
-    GpuBuilder ChipFrequency(int chipFrequency);
+    public GpuBuilder ChipFrequency(int chipFrequency);
 
-    GpuBuilder PowerConsumption(int powerConsumption);
+    public GpuBuilder PowerConsumption(int powerConsumption);
 
-    Gpu Build();
+    public Gpu Build();
 }

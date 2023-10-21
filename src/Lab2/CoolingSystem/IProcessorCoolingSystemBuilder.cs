@@ -4,12 +4,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.CoolingSystem;
 
 public interface IProcessorCoolingSystemBuilder
 {
-    ProcessorCoolingSystemBuilder Name(string name);
+    public ProcessorCoolingSystemBuilder Name(string name);
 
-    ProcessorCoolingSystemBuilder Dimensions(int width, int height, int length);
+    public ProcessorCoolingSystemBuilder Dimensions(int width, int height, int length);
 
-    ProcessorCoolingSystemBuilder Tdp(int tdp);
-    ProcessorCoolingSystemBuilder SupportedSockets(Collection<string> supportedSockets);
+    public ProcessorCoolingSystemBuilder Tdp(int tdp);
+    public ProcessorCoolingSystemBuilder SupportedSockets(Collection<string> supportedSockets);
 
-    ProcessorCoolingSystem Build();
+    public ProcessorCoolingSystem Build();
 }

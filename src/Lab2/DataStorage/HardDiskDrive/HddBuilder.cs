@@ -2,33 +2,33 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.DataStorage.HardDiskDrive;
 
 public class HddBuilder : IHddBuilder
 {
-    private int _capacity;
-    private int _spindleRotationSpeed;
-    private int _powerConsumption;
+    internal HddBuilder()
+    {
+        Hdd = new Hdd();
+    }
+
+    private Hdd Hdd { get; }
 
     public HddBuilder Capacity(int capacity)
     {
-        _capacity = capacity;
+        Hdd.SetCapacity(capacity);
         return this;
     }
 
     public HddBuilder SpindleRotationSpeed(int spindleRotationSpeed)
     {
-        _spindleRotationSpeed = spindleRotationSpeed;
+        Hdd.SetSpindleRotationSpeed(spindleRotationSpeed);
         return this;
     }
 
     public HddBuilder PowerConsumption(int powerConsumption)
     {
-        _powerConsumption = powerConsumption;
+        Hdd.SetPowerConsumption(powerConsumption);
         return this;
     }
 
     public Hdd Builder()
     {
-        return new Hdd(
-            _capacity,
-            _spindleRotationSpeed,
-            _powerConsumption);
+        return Hdd;
     }
 }

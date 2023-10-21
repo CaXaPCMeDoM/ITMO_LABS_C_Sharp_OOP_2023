@@ -13,10 +13,9 @@ public class Bios
         _supportedProcessors = new List<string>();
     }
 
-    public string? BiosType { get; set; } = string.Empty;
-    public string? BiosVersion { get; set; } = string.Empty;
+    public string? BiosType { get; set; }
+    public string? BiosVersion { get; set; }
     public IEnumerable<string> SupportedProcessors => _supportedProcessors;
-
     public void AddSupportedProcessors(Collection<string> supportedFrequencies)
     {
         foreach (Collection<string> collection in new[] { supportedFrequencies }) _supportedProcessors = _supportedProcessors.Concat<string>(collection);

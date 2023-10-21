@@ -2,11 +2,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.DataStorage.HardDiskDrive;
 
 public interface IHddBuilder
 {
-    HddBuilder Capacity(int capacity);
+    public HddBuilder Capacity(int capacity);
 
-    HddBuilder SpindleRotationSpeed(int spindleRotationSpeed);
+    public HddBuilder SpindleRotationSpeed(int spindleRotationSpeed);
 
-    HddBuilder PowerConsumption(int powerConsumption);
+    public HddBuilder PowerConsumption(int powerConsumption);
 
-    Hdd Builder();
+    public Hdd Builder();
 }

@@ -1,110 +1,95 @@
 using System.Collections.ObjectModel;
-using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Mother;
 public class MotherboardBuilder : IMotherboardBuilder
 {
-    private bool _haveWiFiModule;
-    private string _name = string.Empty;
-    private string _processorSocket = string.Empty;
-    private int _numberOfPciExpressLanes;
-    private int _numberOfSataPorts;
-    private Chipset _chipset = new Chipset();
-    private string _supportedRamStandard = string.Empty;
-    private int _numberOfRamSlots;
-    private string _formFactor = string.Empty;
-    private Bios _bios = new Bios();
+    internal MotherboardBuilder()
+    {
+        Motherboard = new Motherboard();
+    }
+
+    private Motherboard Motherboard { get; set; }
 
     public MotherboardBuilder HaveWiFiModule(bool haveWiFiModule)
     {
-        _haveWiFiModule = haveWiFiModule;
+        Motherboard.HaveWiFiModule = haveWiFiModule;
         return this;
     }
 
     public MotherboardBuilder Name(string name)
     {
-        _name = name;
+        Motherboard.Name = name;
         return this;
     }
 
     public MotherboardBuilder ProcessorSocket(string socket)
     {
-        _processorSocket = socket;
+        Motherboard.ProcessorSocket = socket;
         return this;
     }
 
     public MotherboardBuilder NumberOfPciExpressLanes(int lanes)
     {
-        _numberOfPciExpressLanes = lanes;
+        Motherboard.NumberOfPciExpressLanes = lanes;
         return this;
     }
 
     public MotherboardBuilder NumberOfSataPorts(int ports)
     {
-        _numberOfSataPorts = ports;
+        Motherboard.NumberOfSataPorts = ports;
         return this;
     }
 
     public MotherboardBuilder ChipsetSupportXmp(bool supportChipset)
     {
-        _chipset.StateСhangeSupportXmp(supportChipset);
+        Motherboard.Chipset.StateСhangeSupportXmp(supportChipset);
         return this;
     }
 
     public MotherboardBuilder ChipsetSupportedRamFrequency(Collection<string> frequency)
     {
-        _chipset.AddSupportedRamFrequencies(frequency);
+        Motherboard.Chipset.AddSupportedRamFrequencies(frequency);
         return this;
     }
 
     public MotherboardBuilder SupportedRamStandard(string standard)
     {
-        _supportedRamStandard = standard;
+        Motherboard.SupportedRamStandard = standard;
         return this;
     }
 
     public MotherboardBuilder NumberOfRamSlots(int slots)
     {
-        _numberOfRamSlots = slots;
+        Motherboard.NumberOfRamSlots = slots;
         return this;
     }
 
     public MotherboardBuilder FormFactor(string formFactor)
     {
-        _formFactor = formFactor;
+        Motherboard.FormFactor = formFactor;
         return this;
     }
 
     public MotherboardBuilder Bios(string biosType)
     {
-        _bios.BiosType = biosType;
+        Motherboard.Bios.BiosType = biosType;
         return this;
     }
 
     public MotherboardBuilder BiosVersion(string biosVersion)
     {
-        _bios.BiosVersion = biosVersion;
+        Motherboard.Bios.BiosVersion = biosVersion;
         return this;
     }
 
     public MotherboardBuilder BiosSupportedProcessors(Collection<string> processor)
     {
-        _bios.AddSupportedProcessors(processor);
+        Motherboard.Bios.AddSupportedProcessors(processor);
         return this;
     }
 
     public Mother.Motherboard Build()
     {
-        return new Motherboard(
-            _haveWiFiModule,
-            _name,
-            _processorSocket,
-            _numberOfPciExpressLanes,
-            _numberOfSataPorts,
-            _chipset,
-            _supportedRamStandard,
-            _numberOfRamSlots,
-            _formFactor,
-            _bios);
+        return Motherboard;
     }
 }

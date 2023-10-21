@@ -1,40 +1,39 @@
 using System;
-using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 public class RamBuilder : IRamBuilder
 {
-    private double _ramSize;
-    private Collection<Tuple<int, double>> _supportedFrequenciesAndVoltages = new();
-    private Collection<string> _availableProfiles = new();
-    private string _formFactor = string.Empty;
-    private string _ddrVersion = string.Empty;
-    private double _powerConsumption;
-    private double _timings;
-    private double _voltage;
-    private int _frequency;
+    internal RamBuilder()
+    {
+        Xmp = new Xmp();
+        Ram = new Ram();
+    }
+
+    private Xmp Xmp { get; set; }
+    private Ram Ram { get; set; }
 
     public RamBuilder RamSize(double ramSize)
     {
-        _ramSize = ramSize;
+        Ram.RamSize = ramSize;
         return this;
     }
 
     public RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage)
     {
-        _supportedFrequenciesAndVoltages.Add(Tuple.Create(frequency, voltage));
+        Ram.SupportedFrequenciesAndVoltages.Add(Tuple.Create(frequency, voltage));
         return this;
     }
 
     public RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency)
     {
-        _availableProfiles.Add(profile);
+        Ram.AvailableProfiles.Add(profile);
         if (profile is not "")
         {
-            _timings = timings;
-            _voltage = voltage;
-            _frequency = frequency;
+            Xmp.Timings = timings;
+            Xmp.Voltage = voltage;
+            Xmp.Frequency = frequency;
         }
 
         return this;
@@ -42,30 +41,24 @@ public class RamBuilder : IRamBuilder
 
     public RamBuilder FormFactor(string formFactor)
     {
-        _formFactor = formFactor;
+        Ram.FormFactor = formFactor;
         return this;
     }
 
     public RamBuilder DdrVersion(string ddrVersion)
     {
-        _ddrVersion = ddrVersion;
+        Ram.DdrVersion = ddrVersion;
         return this;
     }
 
     public RamBuilder PowerConsumption(double powerConsumption)
     {
-        _powerConsumption = powerConsumption;
+        Ram.PowerConsumption = powerConsumption;
         return this;
     }
 
     public Ram Build()
     {
-        return new Ram(
-            _ramSize,
-            _supportedFrequenciesAndVoltages,
-            _availableProfiles,
-            _formFactor,
-            _ddrVersion,
-            _powerConsumption);
+        return Ram;
     }
 }

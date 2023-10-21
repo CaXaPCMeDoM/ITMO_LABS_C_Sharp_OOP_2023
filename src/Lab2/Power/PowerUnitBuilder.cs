@@ -2,16 +2,21 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Power;
 
 public class PowerUnitBuilder : IPowerUnitBuilder
 {
-    private int _peakLoad;
+    internal PowerUnitBuilder()
+    {
+        PowerUnit = new Power.PowerUnit();
+    }
+
+    private Power.PowerUnit PowerUnit { get; set; }
 
     public PowerUnitBuilder PeakLoad(int peakLoad)
     {
-        _peakLoad = peakLoad;
+        PowerUnit.PeakLoad = peakLoad;
         return this;
     }
 
     public Power.PowerUnit Builder()
     {
-        return new PowerUnit(_peakLoad);
+        return PowerUnit;
     }
 }

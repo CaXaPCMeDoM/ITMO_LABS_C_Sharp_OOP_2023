@@ -2,16 +2,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 public interface IRamBuilder
 {
-    RamBuilder RamSize(double ramSize);
+    public RamBuilder RamSize(double ramSize);
 
-    RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage);
+    public RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage);
 
-    RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency);
+    public RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency);
 
-    RamBuilder FormFactor(string formFactor);
+    public RamBuilder FormFactor(string formFactor);
 
-    RamBuilder DdrVersion(string ddrVersion);
+    public RamBuilder DdrVersion(string ddrVersion);
 
-    RamBuilder PowerConsumption(double powerConsumption);
-    Ram Build();
+    public RamBuilder PowerConsumption(double powerConsumption);
+    public Ram Build();
 }

@@ -2,22 +2,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.DataStorage.SolidStateDisk;
 
 public class Ssd
 {
-    public Ssd(string connectionType, int capacity, int maxSpeed, int powerConsumption)
-    {
-        ConnectionType = connectionType;
-        Capacity = capacity;
-        MaxSpeed = maxSpeed;
-        PowerConsumption = powerConsumption;
-    }
-
-    public string ConnectionType { get; protected set; } = string.Empty;
-    public int Capacity { get; protected set; }
-    public int MaxSpeed { get; protected set; }
-    public int PowerConsumption { get; protected set; }
+    public string ConnectionType { get; set; } = string.Empty;
+    public int Capacity { get; set; }
+    public int MaxSpeed { get; set; }
+    public int PowerConsumption { get; set; }
 
     public Ssd Clone()
     {
-        return new Ssd(ConnectionType, Capacity, MaxSpeed, PowerConsumption)
+        return new Ssd()
         {
             ConnectionType = ConnectionType,
             PowerConsumption = PowerConsumption,
