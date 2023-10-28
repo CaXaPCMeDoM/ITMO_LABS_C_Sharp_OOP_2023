@@ -15,8 +15,8 @@ public class Chipset
         _supportXmp = false;
     }
 
-    public string? BiosType { get; set; }
-    public string? BiosVersion { get; set; }
+    public string? BiosType { get; protected set; }
+    public string? BiosVersion { get; protected set; }
     public IEnumerable<string> SupportRamFrequencies => _supportRamFrequencies;
     public bool SupportXmp => _supportXmp;
     public void AddSupportedRamFrequencies(Collection<string> supportedFrequencies)

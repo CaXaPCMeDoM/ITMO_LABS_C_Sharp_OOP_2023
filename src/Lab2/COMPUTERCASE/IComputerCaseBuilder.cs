@@ -4,11 +4,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.COMPUTERCASE;
 
 public interface IComputerCaseBuilder
 {
-    public ComputerCaseBuilder MaximumDimensionsGpu(int length, int weight);
+    ComputerCaseBuilder MaximumDimensionsGpu(int length, int weight);
+    ComputerCaseBuilder SupportedFormFactors(Collection<string>? supportedFormFactors);
 
-    public ComputerCaseBuilder SupportedFormFactors(Collection<string>? supportedFormFactors);
+    ComputerCaseBuilder Dimensions(int width, int height, int length);
 
-    public ComputerCaseBuilder Dimensions(int width, int height, int length);
-
-    public ComputerCase Build();
+    ComputerCase Build();
 }

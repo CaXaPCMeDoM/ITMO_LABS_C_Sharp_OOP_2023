@@ -2,39 +2,41 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.DataStorage.SolidStateDisk;
 
 public class SsdBuilder : ISsdBuilder
 {
-    internal SsdBuilder()
-    {
-        Ssd = new Ssd();
-    }
-
-    private Ssd Ssd { get; set; }
+    private string _connectionType = string.Empty;
+    private int _powerConsumption;
+    private int _capacity;
+    private int _maxSpeed;
 
     public SsdBuilder ConnectionType(string connectionType)
     {
-        Ssd.ConnectionType = connectionType;
+        _connectionType = connectionType;
         return this;
     }
 
     public SsdBuilder Capacity(int capacity)
     {
-        Ssd.Capacity = capacity;
+        _capacity = capacity;
         return this;
     }
 
     public SsdBuilder MaxSpeed(int maxSpeed)
     {
-        Ssd.MaxSpeed = maxSpeed;
+        _maxSpeed = maxSpeed;
         return this;
     }
 
     public SsdBuilder PowerConsumption(int powerConsumption)
     {
-        Ssd.PowerConsumption = powerConsumption;
+        _powerConsumption = powerConsumption;
         return this;
     }
 
     public Ssd Builder()
     {
-        return Ssd;
+        return new Ssd(
+            _connectionType,
+            _capacity,
+            _maxSpeed,
+            _powerConsumption);
     }
 }

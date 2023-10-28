@@ -4,12 +4,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.COMPUTERCASE;
 
 public class ComputerCase
 {
-    public MaximumDimensionsGPU MaximumDimensionsGpu { get; init; } = new MaximumDimensionsGPU();
-    public ICollection<string>? SupportedFormFactors { get; init; } = new List<string>();
-    public Dimensions Dimensions { get; init; } = new Dimensions();
+    public ComputerCase(int maxLengthGpu, int maxWidthGpu, ICollection<string>? supportedFormFactor, Dimensions dimensions)
+    {
+        MaximumDimensionsGpu = new MaximumDimensionsGPU(maxLengthGpu, maxWidthGpu);
+        SupportedFormFactors = supportedFormFactor;
+        Dimensions = dimensions;
+    }
+
+    public MaximumDimensionsGPU MaximumDimensionsGpu { get; protected init; }
+    public ICollection<string>? SupportedFormFactors { get; protected init; }
+    public Dimensions Dimensions { get; protected init; }
     public ComputerCase Clone()
     {
-        return new ComputerCase()
+        return new ComputerCase(MaximumDimensionsGpu.MaxLengthGPU, MaximumDimensionsGpu.MaxWidthGPU, SupportedFormFactors, Dimensions)
         {
             MaximumDimensionsGpu = MaximumDimensionsGpu,
             SupportedFormFactors = SupportedFormFactors,

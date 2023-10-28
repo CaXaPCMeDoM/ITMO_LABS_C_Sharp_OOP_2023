@@ -16,44 +16,52 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PC.BuildPc;
 
 public class PcBuild
 {
-    public PcBuild()
-    {
-        Pc = new Pc();
-    }
+    private ResultsProcessingOfPcComponents _result;
+    private Mother.Motherboard? _motherboard;
+    private Processor? _processor;
 
-    public int ResultBuild { get; private set; } = (int)ResultsProcessingOfPcComponents.Successful;
-    private Pc Pc { get; set; }
+    private ProcessorCoolingSystem? _processorCoolingSystem;
+
+    private ICollection<Ram>? _ram = new List<Ram>();
+    private ICollection<Gpu>? _gpu = new List<Gpu>();
+    private ICollection<Ssd>? _ssd = new List<Ssd>();
+    private ICollection<Hdd>? _hdd = new List<Hdd>();
+    private ComputerCase? _computerCase;
+    private Power.PowerUnit? _powerUnit;
+    private WiFiAdapter? _wiFiAdapter;
+
+    public int ResultBuild { get; protected set; }
 
     public PcBuild MotherboardBuilder(Mother.Motherboard? motherboard)
     {
-        if (Pc.Processor is not null)
+        if (_processor is not null)
         {
-            if (Validation.SocketOfTheProcessorAndTheMotherboardAreTheSame(
+            if (ValidationSocketProcessorAndMotherboard.SocketOfTheProcessorAndTheMotherboardAreTheSame(
                     motherboard,
-                    Pc.Processor))
+                    _processor))
             {
             }
             else
             {
-                Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+                _result = ResultsProcessingOfPcComponents.SupportSocketError;
                 return this;
             }
 
             return this;
         }
 
-        if (Pc.Motherboard?.NumberOfPciExpressLanes <= Pc.Gpu?.Count)
+        if (_motherboard?.NumberOfPciExpressLanes <= _gpu?.Count)
         {
-            Pc.Result = ResultsProcessingOfPcComponents.PcieCountError;
+            _result = ResultsProcessingOfPcComponents.PcieCountError;
             return this;
         }
 
-        if (Pc.ComputerCase != null)
+        if (_computerCase != null)
         {
-            if (Pc.ComputerCase.SupportedFormFactors?.Any() == true)
+            if (_computerCase.SupportedFormFactors?.Any() == true)
             {
                 bool flagCheckFormFactor = false;
-                foreach (string supportedFormFactor in Pc.ComputerCase.SupportedFormFactors)
+                foreach (string supportedFormFactor in _computerCase.SupportedFormFactors)
                 {
                     if (supportedFormFactor == motherboard?.FormFactor)
                     {
@@ -63,17 +71,17 @@ public class PcBuild
 
                 if (!flagCheckFormFactor)
                 {
-                    Pc.Result = ResultsProcessingOfPcComponents.FormFactorError;
+                    _result = ResultsProcessingOfPcComponents.FormFactorError;
                     return this;
                 }
             }
         }
 
         bool flagSupportSocket = true;
-        if (Pc.ProcessorCoolingSystem != null)
+        if (_processorCoolingSystem != null)
         {
             flagSupportSocket = false;
-            foreach (string collingSupportSocket in Pc.ProcessorCoolingSystem.SupportedSockets)
+            foreach (string collingSupportSocket in _processorCoolingSystem.SupportedSockets)
             {
                 if (collingSupportSocket == motherboard?.ProcessorSocket)
                 {
@@ -82,43 +90,41 @@ public class PcBuild
             }
         }
 
-        int totalSataPorts = Pc.Motherboard?.NumberOfSataPorts ?? 0;
-        int? requiredSataPorts = Pc.Ssd?.Count + Pc.Hdd?.Count;
+        int totalSataPorts = _motherboard?.NumberOfSataPorts ?? 0;
+        int? requiredSataPorts = _ssd?.Count + _hdd?.Count;
         if (totalSataPorts < requiredSataPorts)
         {
-            Pc.Result = ResultsProcessingOfPcComponents.SataCountError;
+            _result = ResultsProcessingOfPcComponents.SataCountError;
             return this;
         }
 
         if (!flagSupportSocket)
         {
-            Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+            _result = ResultsProcessingOfPcComponents.SupportSocketError;
             return this;
         }
 
-        Pc.Motherboard = motherboard;
+        _motherboard = motherboard;
         return this;
     }
 
     public PcBuild ProcessorBuilder(Processor? processor)
     {
-        if (Pc.Motherboard != null && processor != null)
+        if (_motherboard != null && processor != null)
         {
-            // Проверка совместимости сокетов
-            if (!Validation.SocketOfTheProcessorAndTheMotherboardAreTheSame(
-                    Pc.Motherboard,
+            if (!ValidationSocketProcessorAndMotherboard.SocketOfTheProcessorAndTheMotherboardAreTheSame(
+                    _motherboard,
                     processor))
             {
-                Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+                _result = ResultsProcessingOfPcComponents.SupportSocketError;
                 return this;
             }
 
-            // Проверка совместимости системы охлаждения
             bool flagSupportSocket = true;
-            if (Pc.ProcessorCoolingSystem != null)
+            if (_processorCoolingSystem != null)
             {
                 flagSupportSocket = false;
-                foreach (string collingSupportSocket in Pc.ProcessorCoolingSystem.SupportedSockets)
+                foreach (string collingSupportSocket in _processorCoolingSystem.SupportedSockets)
                 {
                     if (collingSupportSocket == processor.Socket)
                     {
@@ -127,38 +133,37 @@ public class PcBuild
                 }
             }
 
-            // Проверка Bios fuckThisShit
             bool processorSupported = true;
-            foreach (string supportedProcessor in Pc.Motherboard.Bios.SupportedProcessors)
+            foreach (string supportedProcessor in _motherboard.Bios.SupportedProcessors)
             {
                 processorSupported = false;
                 if (supportedProcessor == processor.Name)
                 {
                     processorSupported = true;
-                    Pc.Processor = processor;
+                    _processor = processor;
                     return this;
                 }
             }
 
             if (!processorSupported)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.BiosSupportError;
+                _result = ResultsProcessingOfPcComponents.BiosSupportError;
                 return this;
             }
 
             if (!flagSupportSocket)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+                _result = ResultsProcessingOfPcComponents.SupportSocketError;
                 return this;
             }
 
-            Pc.Processor = processor;
+            _processor = processor;
 
             return this;
         }
         else if (processor is not null)
         {
-            Pc.Processor = processor;
+            _processor = processor;
         }
 
         return this;
@@ -172,45 +177,45 @@ public class PcBuild
             bool flagMotherboardSupportSocket = false;
             foreach (string collingSupportSocket in processorCoolingSystem.SupportedSockets)
             {
-                if (collingSupportSocket == Pc.Processor?.Socket)
+                if (collingSupportSocket == _processor?.Socket)
                 {
                     flagProcessorSupportSocket = true;
                 }
 
-                if (collingSupportSocket == Pc.Motherboard?.ProcessorSocket)
+                if (collingSupportSocket == _motherboard?.ProcessorSocket)
                 {
                     flagMotherboardSupportSocket = true;
                 }
             }
 
-            if (Pc.Processor != null && Pc.Processor.Tdp > processorCoolingSystem.Tdp)
+            if (_processor != null && _processor.Tdp > processorCoolingSystem.Tdp)
             {
-                Pc.ProcessorCoolingSystem = processorCoolingSystem;
-                Pc.Result = ResultsProcessingOfPcComponents.Warning;
+                _processorCoolingSystem = processorCoolingSystem;
+                _result = ResultsProcessingOfPcComponents.Warning;
                 return this;
             }
 
-            if (Pc.ComputerCase?.Dimensions.Height < processorCoolingSystem.Dimensions.Height ||
-                Pc.ComputerCase?.Dimensions.Width < processorCoolingSystem.Dimensions.Width
-                || Pc.ComputerCase?.Dimensions.Length < processorCoolingSystem.Dimensions.Length)
+            if (_computerCase?.Dimensions.Height < processorCoolingSystem.Dimensions.Height ||
+                _computerCase?.Dimensions.Width < processorCoolingSystem.Dimensions.Width
+                || _computerCase?.Dimensions.Length < processorCoolingSystem.Dimensions.Length)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.DimensionsError;
+                _result = ResultsProcessingOfPcComponents.DimensionsError;
                 return this;
             }
 
             if (!flagMotherboardSupportSocket)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+                _result = ResultsProcessingOfPcComponents.SupportSocketError;
                 return this;
             }
             else if (!flagProcessorSupportSocket)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.SupportSocketError;
+                _result = ResultsProcessingOfPcComponents.SupportSocketError;
                 return this;
             }
         }
 
-        Pc.ProcessorCoolingSystem = processorCoolingSystem;
+        _processorCoolingSystem = processorCoolingSystem;
 
         return this;
     }
@@ -219,16 +224,16 @@ public class PcBuild
     {
         if (ram != null)
         {
-            if (Pc.Motherboard is not null)
+            if (_motherboard is not null)
             {
-                if (Pc.Motherboard.NumberOfRamSlots <= Pc.Ram?.Count)
+                if (_motherboard.NumberOfRamSlots <= _ram?.Count)
                 {
-                    Pc.Result = ResultsProcessingOfPcComponents.RamSlotsError;
+                    _result = ResultsProcessingOfPcComponents.RamSlotsError;
                     return this;
                 }
             }
 
-            Pc.Ram?.Add(ram);
+            _ram?.Add(ram);
         }
 
         return this;
@@ -238,29 +243,29 @@ public class PcBuild
     {
         if (gpu != null)
         {
-            if (Pc.ComputerCase is not null)
+            if (_computerCase is not null)
             {
-                if (gpu.Height >= Pc.ComputerCase.MaximumDimensionsGpu.MaxLengthGPU ||
-                    gpu.Width >= Pc.ComputerCase.MaximumDimensionsGpu.MaxWidthGPU)
+                if (gpu.Height >= _computerCase.MaximumDimensionsGpu.MaxLengthGPU ||
+                    gpu.Width >= _computerCase.MaximumDimensionsGpu.MaxWidthGPU)
                 {
-                    Pc.Result = ResultsProcessingOfPcComponents.DimensionsError;
+                    _result = ResultsProcessingOfPcComponents.DimensionsError;
                     return this;
                 }
             }
 
-            if (Pc.Gpu?.Any() == true)
+            if (_gpu?.Any() == true)
             {
-                if (Pc.Motherboard is not null)
+                if (_motherboard is not null)
                 {
-                    if (Pc.Gpu.Count >= Pc.Motherboard.NumberOfPciExpressLanes)
+                    if (_gpu.Count >= _motherboard.NumberOfPciExpressLanes)
                     {
-                        Pc.Result = ResultsProcessingOfPcComponents.PcieCountError;
+                        _result = ResultsProcessingOfPcComponents.PcieCountError;
                         return this;
                     }
                 }
             }
 
-            Pc.Gpu?.Add(gpu);
+            _gpu?.Add(gpu);
         }
 
         return this;
@@ -270,22 +275,19 @@ public class PcBuild
     {
         if (ssd != null)
         {
-            if (Pc.Motherboard is not null)
+            if (_motherboard is not null)
             {
-                int totalSataPorts = Pc?.Motherboard.NumberOfSataPorts ?? 0;
-                int? requiredSataPorts = Pc?.Ssd?.Count + Pc?.Hdd?.Count;
+                int totalSataPorts = _motherboard.NumberOfSataPorts;
+                int? requiredSataPorts = _ssd?.Count + _hdd?.Count;
                 if (totalSataPorts <= requiredSataPorts)
                 {
-                    if (Pc != null)
-                    {
-                        Pc.Result = ResultsProcessingOfPcComponents.SataCountError;
-                    }
+                    _result = ResultsProcessingOfPcComponents.SataCountError;
 
                     return this;
                 }
             }
 
-            Pc?.Ssd?.Add(ssd);
+            _ssd?.Add(ssd);
         }
 
         return this;
@@ -295,22 +297,19 @@ public class PcBuild
     {
         if (hdd != null)
         {
-            if (Pc.Motherboard is not null)
+            if (_motherboard is not null)
             {
-                int totalSataPorts = Pc?.Motherboard.NumberOfSataPorts ?? 0;
-                int? requiredSataPorts = Pc?.Ssd?.Count + Pc?.Hdd?.Count;
+                int totalSataPorts = _motherboard.NumberOfSataPorts;
+                int? requiredSataPorts = _ssd?.Count + _hdd?.Count;
                 if (totalSataPorts <= requiredSataPorts)
                 {
-                    if (Pc != null)
-                    {
-                        Pc.Result = ResultsProcessingOfPcComponents.SataCountError;
-                    }
+                    _result = ResultsProcessingOfPcComponents.SataCountError;
 
                     return this;
                 }
             }
 
-            Pc?.Hdd?.Add(hdd);
+            _hdd?.Add(hdd);
         }
 
         return this;
@@ -320,15 +319,15 @@ public class PcBuild
     {
         if (computerCase != null)
         {
-            if (computerCase.Dimensions.Height < Pc?.ProcessorCoolingSystem?.Dimensions.Height ||
-                computerCase.Dimensions.Length < Pc?.ProcessorCoolingSystem?.Dimensions.Length ||
-                computerCase.Dimensions.Width < Pc?.ProcessorCoolingSystem?.Dimensions.Width)
+            if (computerCase.Dimensions.Height < _processorCoolingSystem?.Dimensions.Height ||
+                computerCase.Dimensions.Length < _processorCoolingSystem?.Dimensions.Length ||
+                computerCase.Dimensions.Width < _processorCoolingSystem?.Dimensions.Width)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.DimensionsError;
+                _result = ResultsProcessingOfPcComponents.DimensionsError;
                 return this;
             }
 
-            if (Pc?.Motherboard is not null)
+            if (_motherboard is not null)
             {
                 bool flagSupportFormFactor = false;
                 ICollection<string>? supportedFormFactors = computerCase.SupportedFormFactors;
@@ -336,7 +335,7 @@ public class PcBuild
                 {
                     foreach (string supportedFormFactor in supportedFormFactors)
                     {
-                        if (Pc.Motherboard.FormFactor == supportedFormFactor)
+                        if (_motherboard.FormFactor == supportedFormFactor)
                         {
                             flagSupportFormFactor = true;
                         }
@@ -344,13 +343,13 @@ public class PcBuild
 
                     if (!flagSupportFormFactor)
                     {
-                        Pc.Result = ResultsProcessingOfPcComponents.FormFactorError;
+                        _result = ResultsProcessingOfPcComponents.FormFactorError;
                         return this;
                     }
                 }
             }
 
-            if (Pc != null) Pc.ComputerCase = computerCase;
+            _computerCase = computerCase;
         }
 
         return this;
@@ -359,52 +358,52 @@ public class PcBuild
     public PcBuild PowerUnitBuilder(Power.PowerUnit? powerUnit)
     {
         double powerConsumption = 0;
-        if (Pc.Ssd?.Any() == true)
+        if (_ssd?.Any() == true)
         {
-            foreach (Ssd ssd in Pc.Ssd)
+            foreach (Ssd ssd in _ssd)
             {
                 powerConsumption += ssd.PowerConsumption;
             }
         }
 
-        if (Pc.Hdd?.Any() == true)
+        if (_hdd?.Any() == true)
         {
-            foreach (Hdd hdd in Pc.Hdd)
+            foreach (Hdd hdd in _hdd)
             {
                 powerConsumption += hdd.PowerConsumption;
             }
         }
 
-        if (Pc.Gpu?.Any() == true)
+        if (_gpu?.Any() == true)
         {
-            foreach (Gpu gpu in Pc.Gpu)
+            foreach (Gpu gpu in _gpu)
             {
                 powerConsumption += gpu.PowerConsumption;
             }
         }
 
-        if (Pc.Ram?.Any() == true)
+        if (_ram?.Any() == true)
         {
-            foreach (Ram ram in Pc.Ram)
+            foreach (Ram ram in _ram)
             {
                 powerConsumption += ram.PowerConsumption;
             }
         }
 
-        if (Pc.Processor is not null)
+        if (_processor is not null)
         {
-            powerConsumption += Pc.Processor.PowerConsumption;
+            powerConsumption += _processor.PowerConsumption;
         }
 
         if (powerUnit?.PeakLoad < powerConsumption)
         {
-            Pc.Result = ResultsProcessingOfPcComponents.Warning;
+            _result = ResultsProcessingOfPcComponents.Warning;
             return this;
         }
 
         if (powerUnit != null)
         {
-            Pc.PowerUnit = powerUnit;
+            _powerUnit = powerUnit;
         }
 
         return this;
@@ -414,13 +413,13 @@ public class PcBuild
     {
         if (wiFiAdapter != null)
         {
-            if (Pc.Motherboard != null && Pc.Motherboard.HaveWiFiModule)
+            if (_motherboard != null && _motherboard.HaveWiFiModule)
             {
-                Pc.Result = ResultsProcessingOfPcComponents.WiFiModuleError;
+                _result = ResultsProcessingOfPcComponents.WiFiModuleError;
                 return this;
             }
 
-            Pc.WiFiAdapter = wiFiAdapter;
+            _wiFiAdapter = wiFiAdapter;
         }
 
         return this;
@@ -428,13 +427,25 @@ public class PcBuild
 
     public Pc Build()
     {
-        if (Pc.Result == ResultsProcessingOfPcComponents.Successful ||
-            Pc.Result == ResultsProcessingOfPcComponents.Warning)
+        var pc = new Pc(
+            _result,
+            _motherboard,
+            _processor,
+            _processorCoolingSystem,
+            _ram,
+            _gpu,
+            _ssd,
+            _hdd,
+            _computerCase,
+            _powerUnit,
+            _wiFiAdapter);
+        if (_result == ResultsProcessingOfPcComponents.Successful ||
+            _result == ResultsProcessingOfPcComponents.Warning)
         {
-            OrderFormation.SendingAnOrder(Pc);
-            MessageToTheSalesDepartment.Send(Pc.Result);
+            OrderFormation.SendingAnOrder(pc);
+            MessageToTheSalesDepartment.Send(pc.Result);
         }
 
-        return Pc;
+        return pc;
     }
 }

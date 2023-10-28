@@ -2,10 +2,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Power;
 
 public class PowerUnit
 {
-    public int PeakLoad { get; set; }
+    public PowerUnit(int peakLoad)
+    {
+        PeakLoad = peakLoad;
+    }
+
+    public int PeakLoad { get; protected set; }
     public PowerUnit Clone()
     {
-        return new PowerUnit()
+        return new PowerUnit(PeakLoad)
         {
             PeakLoad = PeakLoad,
         };

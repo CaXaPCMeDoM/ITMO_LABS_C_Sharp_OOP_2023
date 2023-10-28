@@ -1,34 +1,40 @@
 using System;
+using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 public class RamBuilder : IRamBuilder
 {
+    private double _ramSize;
+    private Collection<Tuple<int, double>> _supportedFrequenciesAndVoltages = new();
+    private Collection<string> _availableProfiles = new();
+    private string _formFactor = string.Empty;
+    private string _ddrVersion = string.Empty;
+    private double _powerConsumption;
+
     internal RamBuilder()
     {
         Xmp = new Xmp();
-        Ram = new Ram();
     }
 
     private Xmp Xmp { get; set; }
-    private Ram Ram { get; set; }
 
     public RamBuilder RamSize(double ramSize)
     {
-        Ram.RamSize = ramSize;
+        _ramSize = ramSize;
         return this;
     }
 
     public RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage)
     {
-        Ram.SupportedFrequenciesAndVoltages.Add(Tuple.Create(frequency, voltage));
+        _supportedFrequenciesAndVoltages.Add(Tuple.Create(frequency, voltage));
         return this;
     }
 
     public RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency)
     {
-        Ram.AvailableProfiles.Add(profile);
+        _availableProfiles.Add(profile);
         if (profile is not "")
         {
             Xmp.Timings = timings;
@@ -41,24 +47,30 @@ public class RamBuilder : IRamBuilder
 
     public RamBuilder FormFactor(string formFactor)
     {
-        Ram.FormFactor = formFactor;
+        _formFactor = formFactor;
         return this;
     }
 
     public RamBuilder DdrVersion(string ddrVersion)
     {
-        Ram.DdrVersion = ddrVersion;
+        _ddrVersion = ddrVersion;
         return this;
     }
 
     public RamBuilder PowerConsumption(double powerConsumption)
     {
-        Ram.PowerConsumption = powerConsumption;
+        _powerConsumption = powerConsumption;
         return this;
     }
 
     public Ram Build()
     {
-        return Ram;
+        return new Ram(
+            _ramSize,
+            _supportedFrequenciesAndVoltages,
+            _availableProfiles,
+            _formFactor,
+            _ddrVersion,
+            _powerConsumption);
     }
 }

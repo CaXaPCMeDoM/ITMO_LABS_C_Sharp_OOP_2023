@@ -12,12 +12,23 @@ public class GpuInMemoryRepository : IRepository<Gpu>
     {
         _gpuList = new Collection<Gpu>();
 
-        // Добавьте доступные компоненты GPU в список
-        _gpuList.Add(new Gpu { Name = "GTX 1660", Height = 10, Width = 20, Memory = 8, PciVersion = "PCI-E 3.0", ChipFrequency = 1600, PowerConsumption = 120 });
-        _gpuList.Add(new Gpu { Name = "GTX 1080", Height = 12, Width = 24, Memory = 8, PciVersion = "PCI-E 3.0", ChipFrequency = 1800, PowerConsumption = 150 });
-
-        // изменение:
-        // _gpuList[1].Name = "a";
+        var gpuBuilder = new GpuBuilder();
+        _gpuList.Add(gpuBuilder.Name("GTX 1660")
+            .Height(10)
+            .Width(20)
+            .Memory(8)
+            .PciVersion("PCI-E 3.0")
+            .ChipFrequency(1600)
+            .PowerConsumption(120)
+            .Build());
+        _gpuList.Add(gpuBuilder.Name("GTX 1080")
+            .Height(12)
+            .Width(20)
+            .Memory(8)
+            .PciVersion("PCI-E 3.0")
+            .ChipFrequency(1800)
+            .PowerConsumption(150)
+            .Build());
     }
 
     public Collection<Gpu> ReadOnlyCollection => _gpuList;
