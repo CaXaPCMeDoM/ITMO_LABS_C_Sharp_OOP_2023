@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 using Itmo.ObjectOrientedProgramming.Lab2.Processors;
 using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
@@ -14,7 +15,7 @@ public interface IMotherboardBuilder
 
     MotherboardBuilder NumberOfSataPorts(int ports);
 
-    MotherboardBuilder ChipsetSupportXmp(bool supportChipset);
+    MotherboardBuilder ChipsetSupportXmp(Xmp supportChipset);
 
     MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency);
     MotherboardBuilder SupportedRamStandard(string standard);

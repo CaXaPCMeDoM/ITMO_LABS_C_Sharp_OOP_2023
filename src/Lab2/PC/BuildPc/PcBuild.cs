@@ -92,6 +92,7 @@ public class PcBuild
 
         int totalSataPorts = _motherboard?.NumberOfSataPorts ?? 0;
         int? requiredSataPorts = _ssd?.Count + _hdd?.Count;
+        _result = ValidationMotherBoardSocket.MotherBoardSocket(totalSataPorts, requiredSataPorts, flagSupportSocket);
         if (totalSataPorts < requiredSataPorts)
         {
             _result = ResultsProcessingOfPcComponents.SataCountError;

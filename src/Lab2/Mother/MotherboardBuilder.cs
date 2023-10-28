@@ -47,7 +47,7 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public MotherboardBuilder ChipsetSupportXmp(bool supportChipset)
+    public MotherboardBuilder ChipsetSupportXmp(Xmp? supportChipset)
     {
         _chipset.StateСhangeSupportXmp(supportChipset);
         return this;

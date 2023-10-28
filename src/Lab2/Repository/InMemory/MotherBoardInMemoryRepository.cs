@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 using Itmo.ObjectOrientedProgramming.Lab2.Mother;
 using Itmo.ObjectOrientedProgramming.Lab2.Processors;
 using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
@@ -13,6 +14,7 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
     public MotherBoardInMemoryRepository()
     {
         var ram = new RamInMemoryRepository();
+        var xmp = new Xmp(20, 123, 1);
         var cpuInMemoryRepository = new CpuInMemoryRepository();
         _motherboardsList = new Collection<Motherboard>();
 
@@ -23,7 +25,7 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
             .ProcessorSocket("LGA1200")
             .NumberOfPciExpressLanes(16)
             .NumberOfSataPorts(6)
-            .ChipsetSupportXmp(true)
+            .ChipsetSupportXmp(xmp)
             .ChipsetSupportedRamFrequency(new Collection<Ram> { ram.ReadOnlyCollection[0], ram.ReadOnlyCollection[1] })
             .SupportedRamStandard("DDR4")
             .NumberOfRamSlots(4)
@@ -38,7 +40,7 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
             .ProcessorSocket("Socket 1151")
             .NumberOfPciExpressLanes(6)
             .NumberOfSataPorts(4)
-            .ChipsetSupportXmp(true)
+            .ChipsetSupportXmp(null)
             .ChipsetSupportedRamFrequency(new Collection<Ram>
                 { ram.ReadOnlyCollection[0], ram.ReadOnlyCollection[1] })
             .SupportedRamStandard("DDR4")
