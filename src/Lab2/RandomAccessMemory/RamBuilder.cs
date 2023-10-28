@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
@@ -12,13 +11,9 @@ public class RamBuilder : IRamBuilder
     private string _formFactor = string.Empty;
     private string _ddrVersion = string.Empty;
     private double _powerConsumption;
-
-    internal RamBuilder()
-    {
-        Xmp = new Xmp();
-    }
-
-    private Xmp Xmp { get; set; }
+    private double _timings;
+    private double _voltage;
+    private int _frequency;
 
     public RamBuilder RamSize(double ramSize)
     {
@@ -37,9 +32,9 @@ public class RamBuilder : IRamBuilder
         _availableProfiles.Add(profile);
         if (profile is not "")
         {
-            Xmp.Timings = timings;
-            Xmp.Voltage = voltage;
-            Xmp.Frequency = frequency;
+            _timings = timings;
+            _voltage = voltage;
+            _frequency = frequency;
         }
 
         return this;
