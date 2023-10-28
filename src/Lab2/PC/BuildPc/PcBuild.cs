@@ -5,6 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.CoolingSystem;
 using Itmo.ObjectOrientedProgramming.Lab2.DataStorage.HardDiskDrive;
 using Itmo.ObjectOrientedProgramming.Lab2.DataStorage.SolidStateDisk;
 using Itmo.ObjectOrientedProgramming.Lab2.Enums;
+using Itmo.ObjectOrientedProgramming.Lab2.Mother;
 using Itmo.ObjectOrientedProgramming.Lab2.PC.ValidationCheck;
 using Itmo.ObjectOrientedProgramming.Lab2.Processors;
 using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
@@ -17,7 +18,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PC.BuildPc;
 public class PcBuild
 {
     private ResultsProcessingOfPcComponents _result;
-    private Mother.Motherboard? _motherboard;
+    private Motherboard? _motherboard;
     private Processor? _processor;
 
     private ProcessorCoolingSystem? _processorCoolingSystem;
@@ -50,13 +51,13 @@ public class PcBuild
             return this;
         }
 
-        if (_motherboard?.NumberOfPciExpressLanes <= _gpu?.Count)
+        if (ValidationNumberPciExpressGpuCount.СoincidencesNumberPciExpressGpuCount(_motherboard, _gpu))
         {
             _result = ResultsProcessingOfPcComponents.PcieCountError;
             return this;
         }
 
-        if (_computerCase != null)
+        if (_computerCase is not null)
         {
             if (_computerCase.SupportedFormFactors?.Any() == true)
             {
@@ -78,7 +79,7 @@ public class PcBuild
         }
 
         bool flagSupportSocket = true;
-        if (_processorCoolingSystem != null)
+        if (_processorCoolingSystem is not null)
         {
             flagSupportSocket = false;
             foreach (string collingSupportSocket in _processorCoolingSystem.SupportedSockets)
@@ -258,7 +259,7 @@ public class PcBuild
             {
                 if (_motherboard is not null)
                 {
-                    if (_gpu.Count >= _motherboard.NumberOfPciExpressLanes)
+                    if (ValidationNumberPciExpressGpuCount.СoincidencesNumberPciExpressGpuCount(_motherboard, _gpu))
                     {
                         _result = ResultsProcessingOfPcComponents.PcieCountError;
                         return this;

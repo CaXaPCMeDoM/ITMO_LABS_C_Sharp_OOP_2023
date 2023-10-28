@@ -95,7 +95,7 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public Mother.Motherboard Build()
+    public Motherboard Build()
     {
         return new Motherboard(
             _haveWiFiModule,
