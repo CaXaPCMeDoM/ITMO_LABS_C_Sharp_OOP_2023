@@ -27,16 +27,27 @@ public class RamBuilder : IRamBuilder
         return this;
     }
 
-    public RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency)
+    public RamBuilder AvailableProfile(string profile)
     {
         _availableProfiles.Add(profile);
-        if (profile is not "")
-        {
-            _timings = timings;
-            _voltage = voltage;
-            _frequency = frequency;
-        }
+        return this;
+    }
 
+    public RamBuilder AvailableTimings(double timings)
+    {
+        _timings = timings;
+        return this;
+    }
+
+    public RamBuilder AvailableVoltage(double voltage)
+    {
+        _voltage = voltage;
+        return this;
+    }
+
+    public RamBuilder AvailableFrequency(int frequency)
+    {
+        _frequency = frequency;
         return this;
     }
 

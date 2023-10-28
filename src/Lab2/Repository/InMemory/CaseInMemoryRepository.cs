@@ -12,13 +12,19 @@ public class CaseInMemoryRepository : IRepository<ComputerCase>
         _processorList = new Collection<ComputerCase>();
 
         _processorList.Add(new ComputerCaseBuilder()
-            .Dimensions(200, 423, 394)
-            .MaximumDimensionsGpu(295, 1000)
+            .DimensionsWidth(200)
+            .DimensionsHeight(423)
+            .DimensionsLength(394)
+            .MaximumLengthGpu(295)
+            .MaximumWeightGpu(1000)
             .SupportedFormFactors(new Collection<string> { "ATX" })
             .Build());
         _processorList.Add(new ComputerCaseBuilder()
-            .Dimensions(2000, 4203, 3904)
-            .MaximumDimensionsGpu(29, 100)
+            .DimensionsWidth(2000)
+            .DimensionsHeight(4230)
+            .DimensionsLength(3940)
+            .MaximumLengthGpu(29)
+            .MaximumWeightGpu(100)
             .SupportedFormFactors(new Collection<string> { "ATX", "MICRO-ATX" })
             .Build());
     }

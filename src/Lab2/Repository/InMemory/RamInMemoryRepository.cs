@@ -12,7 +12,10 @@ public class RamInMemoryRepository : IRepository<Ram>
         _processorList = new Collection<Ram>();
 
         _processorList.Add(new RamBuilder()
-            .AvailableProfiles("XMP", 16, 17, 36)
+            .AvailableProfile("XMP")
+            .AvailableTimings(16)
+            .AvailableFrequency(17)
+            .AvailableVoltage(36)
             .RamSize(4)
             .FormFactor("DIMM")
             .SupportedFrequencyAndVoltage(2, 1.2)

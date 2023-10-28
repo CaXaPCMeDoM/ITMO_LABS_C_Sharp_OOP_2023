@@ -10,9 +10,14 @@ public class ComputerCaseBuilder : IComputerCaseBuilder
     private ICollection<string>? _supportedFormFactors = new List<string>();
     private Dimensions _dimensions = new Dimensions();
 
-    public ComputerCaseBuilder MaximumDimensionsGpu(int length, int weight)
+    public ComputerCaseBuilder MaximumLengthGpu(int length)
     {
         _maxLengthGpu = length;
+        return this;
+    }
+
+    public ComputerCaseBuilder MaximumWeightGpu(int weight)
+    {
         _maxWidthGpu = weight;
         return this;
     }
@@ -30,12 +35,21 @@ public class ComputerCaseBuilder : IComputerCaseBuilder
         return this;
     }
 
-    public ComputerCaseBuilder Dimensions(int width, int height, int length)
+    public ComputerCaseBuilder DimensionsWidth(int width)
     {
         _dimensions.Width = width;
-        _dimensions.Height = height;
-        _dimensions.Length = length;
+        return this;
+    }
 
+    public ComputerCaseBuilder DimensionsHeight(int height)
+    {
+        _dimensions.Height = height;
+        return this;
+    }
+
+    public ComputerCaseBuilder DimensionsLength(int length)
+    {
+        _dimensions.Length = length;
         return this;
     }
 

@@ -134,10 +134,10 @@ public class PcBuild
             }
 
             bool processorSupported = true;
-            foreach (string supportedProcessor in _motherboard.Bios.SupportedProcessors)
+            foreach (Processor supportedProcessor in _motherboard.Bios.SupportedProcessors)
             {
                 processorSupported = false;
-                if (supportedProcessor == processor.Name)
+                if (supportedProcessor == processor)
                 {
                     processorSupported = true;
                     _processor = processor;

@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.Processors;
+using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Mother;
 
@@ -14,7 +16,7 @@ public interface IMotherboardBuilder
 
     MotherboardBuilder ChipsetSupportXmp(bool supportChipset);
 
-    MotherboardBuilder ChipsetSupportedRamFrequency(Collection<string> frequency);
+    MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency);
     MotherboardBuilder SupportedRamStandard(string standard);
 
     MotherboardBuilder NumberOfRamSlots(int slots);
@@ -24,6 +26,6 @@ public interface IMotherboardBuilder
 
     MotherboardBuilder BiosVersion(string biosVersion);
 
-    MotherboardBuilder BiosSupportedProcessors(Collection<string> processor);
+    MotherboardBuilder BiosSupportedProcessors(Collection<Processor> processor);
     Mother.Motherboard Build();
 }

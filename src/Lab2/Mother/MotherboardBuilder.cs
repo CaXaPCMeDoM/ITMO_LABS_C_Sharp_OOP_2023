@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab2.Attributes;
+using Itmo.ObjectOrientedProgramming.Lab2.Processors;
+using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Mother;
 public class MotherboardBuilder : IMotherboardBuilder
@@ -51,7 +53,7 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public MotherboardBuilder ChipsetSupportedRamFrequency(Collection<string> frequency)
+    public MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency)
     {
         _chipset.AddSupportedRamFrequencies(frequency);
         return this;
@@ -87,7 +89,7 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public MotherboardBuilder BiosSupportedProcessors(Collection<string> processor)
+    public MotherboardBuilder BiosSupportedProcessors(Collection<Processor> processor)
     {
         _bios.AddSupportedProcessors(processor);
         return this;

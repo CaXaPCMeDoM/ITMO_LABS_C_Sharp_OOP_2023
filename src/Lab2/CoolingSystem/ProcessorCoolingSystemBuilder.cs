@@ -22,10 +22,20 @@ public class ProcessorCoolingSystemBuilder : IProcessorCoolingSystemBuilder
         return this;
     }
 
-    public ProcessorCoolingSystemBuilder Dimensions(int width, int height, int length)
+    public ProcessorCoolingSystemBuilder DimensionsWidth(int width)
     {
         _dimensions.Width = width;
+        return this;
+    }
+
+    public ProcessorCoolingSystemBuilder DimensionsHeight(int height)
+    {
         _dimensions.Height = height;
+        return this;
+    }
+
+    public ProcessorCoolingSystemBuilder DimensionsLength(int length)
+    {
         _dimensions.Length = length;
         return this;
     }

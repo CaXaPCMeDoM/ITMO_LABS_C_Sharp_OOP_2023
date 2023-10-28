@@ -6,7 +6,10 @@ public interface IRamBuilder
 
     RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage);
 
-    RamBuilder AvailableProfiles(string profile, double timings, double voltage, int frequency);
+    public RamBuilder AvailableProfile(string profile);
+    public RamBuilder AvailableTimings(double timings);
+    public RamBuilder AvailableVoltage(double voltage);
+    public RamBuilder AvailableFrequency(int frequency);
 
     RamBuilder FormFactor(string formFactor);
 

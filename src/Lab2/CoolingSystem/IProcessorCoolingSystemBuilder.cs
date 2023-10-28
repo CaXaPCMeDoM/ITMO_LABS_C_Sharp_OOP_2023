@@ -6,8 +6,9 @@ public interface IProcessorCoolingSystemBuilder
 {
     ProcessorCoolingSystemBuilder Name(string name);
 
-    ProcessorCoolingSystemBuilder Dimensions(int width, int height, int length);
-
+    public ProcessorCoolingSystemBuilder DimensionsWidth(int width);
+    public ProcessorCoolingSystemBuilder DimensionsHeight(int height);
+    public ProcessorCoolingSystemBuilder DimensionsLength(int length);
     ProcessorCoolingSystemBuilder Tdp(int tdp);
     ProcessorCoolingSystemBuilder SupportedSockets(Collection<string> supportedSockets);
 

@@ -13,13 +13,17 @@ public class ProcessorCoolingInMemoryRepository : IRepository<ProcessorCoolingSy
 
         _processorList.Add(new ProcessorCoolingSystemBuilder()
             .Name("AeroCool Verkho i")
-            .Dimensions(103, 45, 103)
+            .DimensionsWidth(103)
+            .DimensionsHeight(45)
+            .DimensionsLength(103)
             .SupportedSockets(new Collection<string> { "LGA775", "LGA1150", "LGA1151", "LGA1151-v2", "LGA1155", "LGA1156", "LGA1200" })
             .Tdp(90)
             .Build());
         _processorList.Add(new ProcessorCoolingSystemBuilder()
             .Name("DEEPCOOL Alta 9")
-            .Dimensions(103, 45, 103)
+            .DimensionsWidth(103)
+            .DimensionsHeight(45)
+            .DimensionsLength(103)
             .SupportedSockets(new Collection<string> { "LGA775", "LGA1150", "LGA1151", "LGA1151-v2", "LGA1155", "LGA1156", "LGA1200" })
             .Tdp(10)
             .Build());
