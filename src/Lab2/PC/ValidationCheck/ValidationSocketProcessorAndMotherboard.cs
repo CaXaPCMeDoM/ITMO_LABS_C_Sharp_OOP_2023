@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Processors;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PC.ValidationCheck;
 
-public static class Validation
+public static class ValidationSocketProcessorAndMotherboard
 {
     public static bool SocketOfTheProcessorAndTheMotherboardAreTheSame(
         Mother.Motherboard? motherboard,

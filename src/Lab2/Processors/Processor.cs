@@ -8,16 +8,31 @@ public class Processor
 {
     private IEnumerable<int> _supportedMemoryFrequencies;
 
-    public Processor()
+    public Processor(
+        string name,
+        int coreFrequency,
+        int cores,
+        string socket,
+        bool integratedGraphics,
+        Collection<int> supportedMemoryFrequencies,
+        int tdp,
+        int powerConsumption)
     {
-        _supportedMemoryFrequencies = new List<int>();
+        CoreFrequency = coreFrequency;
+        Name = name;
+        Cores = cores;
+        Socket = socket;
+        IntegratedGraphics = integratedGraphics;
+        Tdp = tdp;
+        _supportedMemoryFrequencies = supportedMemoryFrequencies;
+        PowerConsumption = powerConsumption;
     }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
     public int CoreFrequency { get; set; }
     public int Cores { get; set; }
-    public string? Socket { get; set; }
+    public string Socket { get; set; }
     public bool IntegratedGraphics { get; set; }
     public IEnumerable<int> SupportedMemoryFrequencies => _supportedMemoryFrequencies;
     public int Tdp { get; set; }
@@ -25,7 +40,15 @@ public class Processor
 
     public Processor Clone()
     {
-        return new Processor()
+        return new Processor(
+            Name,
+            CoreFrequency,
+            Cores,
+            Socket,
+            IntegratedGraphics,
+            (Collection<int>)_supportedMemoryFrequencies,
+            Tdp,
+            PowerConsumption)
         {
             Name = Name,
             PowerConsumption = PowerConsumption,

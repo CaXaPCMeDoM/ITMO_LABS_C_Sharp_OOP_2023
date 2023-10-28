@@ -1,19 +1,19 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.COMPUTERCASE;
 
 public class ComputerCaseBuilder : IComputerCaseBuilder
 {
-    internal ComputerCaseBuilder()
-    {
-        ComputerCase = new ComputerCase();
-    }
+    private int _maxLengthGpu;
+    private int _maxWidthGpu;
+    private ICollection<string>? _supportedFormFactors = new List<string>();
+    private Dimensions _dimensions = new Dimensions();
 
-    private ComputerCase ComputerCase { get; set; }
     public ComputerCaseBuilder MaximumDimensionsGpu(int length, int weight)
     {
-        ComputerCase.MaximumDimensionsGpu.MaxLengthGPU = length;
-        ComputerCase.MaximumDimensionsGpu.MaxWidthGPU = weight;
+        _maxLengthGpu = length;
+        _maxWidthGpu = weight;
         return this;
     }
 
@@ -23,7 +23,7 @@ public class ComputerCaseBuilder : IComputerCaseBuilder
         {
             foreach (string formFactor in supportedFormFactors)
             {
-                ComputerCase.SupportedFormFactors?.Add(formFactor);
+                _supportedFormFactors?.Add(formFactor);
             }
         }
 
@@ -32,14 +32,19 @@ public class ComputerCaseBuilder : IComputerCaseBuilder
 
     public ComputerCaseBuilder Dimensions(int width, int height, int length)
     {
-        ComputerCase.Dimensions.Width = width;
-        ComputerCase.Dimensions.Height = height;
-        ComputerCase.Dimensions.Length = length;
+        _dimensions.Width = width;
+        _dimensions.Height = height;
+        _dimensions.Length = length;
+
         return this;
     }
 
     public ComputerCase Build()
     {
-        return ComputerCase;
+        return new ComputerCase(
+            _maxLengthGpu,
+            _maxWidthGpu,
+            _supportedFormFactors,
+            _dimensions);
     }
 }

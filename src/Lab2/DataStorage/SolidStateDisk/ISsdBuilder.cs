@@ -2,13 +2,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.DataStorage.SolidStateDisk;
 
 public interface ISsdBuilder
 {
-    public SsdBuilder ConnectionType(string connectionType);
+    SsdBuilder ConnectionType(string connectionType);
 
-    public SsdBuilder Capacity(int capacity);
+    SsdBuilder Capacity(int capacity);
 
-    public SsdBuilder MaxSpeed(int maxSpeed);
+    SsdBuilder MaxSpeed(int maxSpeed);
 
-    public SsdBuilder PowerConsumption(int powerConsumption);
+    SsdBuilder PowerConsumption(int powerConsumption);
 
-    public Ssd Builder();
+    Ssd Builder();
 }

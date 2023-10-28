@@ -1,42 +1,47 @@
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.COMPUTERCASE;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.CoolingSystem;
 
 public class ProcessorCoolingSystemBuilder : IProcessorCoolingSystemBuilder
 {
-    internal ProcessorCoolingSystemBuilder()
-    {
-        ProcessorCoolingSystem = new ProcessorCoolingSystem();
-    }
-
-    private ProcessorCoolingSystem ProcessorCoolingSystem { get; }
+    private string _name = string.Empty;
+    private Collection<string> _supportedSockets = new Collection<string>();
+    private Dimensions _dimensions = new Dimensions();
+    private int _tdp;
 
     public ProcessorCoolingSystemBuilder Name(string name)
     {
-        ProcessorCoolingSystem.SetName(name);
+        _name = name;
         return this;
     }
 
     public ProcessorCoolingSystemBuilder SupportedSockets(Collection<string> supportedSockets)
     {
-        ProcessorCoolingSystem.AddSupportedSockets(supportedSockets);
+        _supportedSockets = supportedSockets;
         return this;
     }
 
     public ProcessorCoolingSystemBuilder Dimensions(int width, int height, int length)
     {
-        ProcessorCoolingSystem.SetDimensions(width, height, length);
+        _dimensions.Width = width;
+        _dimensions.Height = height;
+        _dimensions.Length = length;
         return this;
     }
 
     public ProcessorCoolingSystemBuilder Tdp(int tdp)
     {
-        ProcessorCoolingSystem.SetTdp(tdp);
+        _tdp = tdp;
         return this;
     }
 
     public ProcessorCoolingSystem Build()
     {
-        return ProcessorCoolingSystem;
+        return new ProcessorCoolingSystem(
+            _dimensions,
+            _tdp,
+            _name,
+            _supportedSockets);
     }
 }
