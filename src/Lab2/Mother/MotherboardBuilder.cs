@@ -15,7 +15,9 @@ public class MotherboardBuilder : IMotherboardBuilder
     private string _supportedRamStandard = string.Empty;
     private int _numberOfRamSlots;
     private string _formFactor = string.Empty;
-    private Bios _bios = new Bios();
+    private string _biosType = string.Empty;
+    private string _biosVersion = string.Empty;
+    private Collection<Processor> _supportedProcessors = new Collection<Processor>();
 
     public MotherboardBuilder HaveWiFiModule(bool haveWiFiModule)
     {
@@ -79,24 +81,25 @@ public class MotherboardBuilder : IMotherboardBuilder
 
     public MotherboardBuilder Bios(string biosType)
     {
-        _bios.BiosType = biosType;
+        _biosType = biosType;
         return this;
     }
 
     public MotherboardBuilder BiosVersion(string biosVersion)
     {
-        _bios.BiosVersion = biosVersion;
+        _biosVersion = biosVersion;
         return this;
     }
 
     public MotherboardBuilder BiosSupportedProcessors(Collection<Processor> processor)
     {
-        _bios.AddSupportedProcessors(processor);
+        _supportedProcessors = processor;
         return this;
     }
 
     public Motherboard Build()
     {
+        var bios = new Bios(_biosType, _biosVersion, _supportedProcessors);
         return new Motherboard(
             _haveWiFiModule,
             _name,
@@ -107,6 +110,6 @@ public class MotherboardBuilder : IMotherboardBuilder
             _supportedRamStandard,
             _numberOfRamSlots,
             _formFactor,
-            _bios);
+            bios);
     }
 }

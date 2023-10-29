@@ -22,7 +22,6 @@ public class Motherboard
         NumberOfPciExpressLanes = numberOfPciExpressLanes;
         NumberOfSataPorts = numberOfSataPorts;
         Chipset = new Chipset();
-        Bios = new Bios();
         Chipset = chipset;
         SupportedRamStandard = supportedRamStandard;
         NumberOfRamSlots = numberOfRamSlots;

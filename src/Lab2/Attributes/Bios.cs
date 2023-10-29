@@ -9,13 +9,15 @@ public class Bios
 {
     private IEnumerable<Processor> _supportedProcessors;
 
-    public Bios()
+    public Bios(string biosType, string biosVersion, Collection<Processor> supportedProcessors)
     {
-        _supportedProcessors = new List<Processor>();
+        _supportedProcessors = supportedProcessors;
+        BiosType = biosType;
+        BiosVersion = biosVersion;
     }
 
-    public string? BiosType { get; set; } = string.Empty;
-    public string? BiosVersion { get; set; } = string.Empty;
+    public string? BiosType { get; protected set; }
+    public string? BiosVersion { get; protected set; }
     public IEnumerable<Processor> SupportedProcessors => _supportedProcessors;
 
     public void AddSupportedProcessors(Collection<Processor> supportedFrequencies)
