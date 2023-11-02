@@ -6,12 +6,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Repository.InMemory;
 
 public class CaseInMemoryRepository : IRepository<ComputerCase>
 {
-    private Collection<ComputerCase> _processorList;
+    private Collection<ComputerCase> _caseList;
     public CaseInMemoryRepository()
     {
-        _processorList = new Collection<ComputerCase>();
+        _caseList = new Collection<ComputerCase>();
 
-        _processorList.Add(new ComputerCaseBuilder()
+        _caseList.Add(new ComputerCaseBuilder()
             .DimensionsWidth(200)
             .DimensionsHeight(423)
             .DimensionsLength(394)
@@ -19,7 +19,7 @@ public class CaseInMemoryRepository : IRepository<ComputerCase>
             .MaximumWeightGpu(1000)
             .SupportedFormFactors(new Collection<string> { "ATX" })
             .Build());
-        _processorList.Add(new ComputerCaseBuilder()
+        _caseList.Add(new ComputerCaseBuilder()
             .DimensionsWidth(2000)
             .DimensionsHeight(4230)
             .DimensionsLength(3940)
@@ -29,10 +29,15 @@ public class CaseInMemoryRepository : IRepository<ComputerCase>
             .Build());
     }
 
-    public Collection<ComputerCase> ReadOnlyCollection => _processorList;
+    public Collection<ComputerCase> ReadOnlyCollection => _caseList;
 
     public IEnumerable<ComputerCase> GetAll()
     {
-        return _processorList;
+        return _caseList;
+    }
+
+    public void AddMemoryList(ComputerCase inMemory)
+    {
+        _caseList.Add(inMemory);
     }
 }

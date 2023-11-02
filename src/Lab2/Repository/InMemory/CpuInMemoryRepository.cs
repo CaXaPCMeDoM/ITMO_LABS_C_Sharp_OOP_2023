@@ -6,37 +6,42 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Repository.InMemory;
 
 public class CpuInMemoryRepository : IRepository<Processor>
 {
-    private Collection<Processor> _processorList;
+    private Collection<Processor> _cpuList;
     public CpuInMemoryRepository()
     {
-        _processorList = new Collection<Processor>();
+        _cpuList = new Collection<Processor>();
 
-        _processorList.Add(new ProcessorBuilder()
+        _cpuList.Add(new ProcessorBuilder()
             .Name("Intel Core i3")
             .PowerConsumption(65)
             .Socket("LGA1200")
             .Cores(4)
             .CoreFrequency(3)
             .IntegratedGraphics(false)
-            .WithTdp(65)
+            .Tdp(65)
             .SupportedMemoryFrequencies(new Collection<int> { 4 })
             .Build());
-        _processorList.Add(new ProcessorBuilder()
+        _cpuList.Add(new ProcessorBuilder()
             .Name("Intel Core i3")
             .PowerConsumption(58)
             .Socket("LGA1200")
             .Cores(4)
             .CoreFrequency(3)
             .IntegratedGraphics(false)
-            .WithTdp(58)
+            .Tdp(58)
             .SupportedMemoryFrequencies(new Collection<int> { 4 })
             .Build());
     }
 
-    public Collection<Processor> ReadOnlyCollection => _processorList;
+    public Collection<Processor> ReadOnlyCollection => _cpuList;
 
     public IEnumerable<Processor> GetAll()
     {
-        return _processorList;
+        return _cpuList;
+    }
+
+    public void AddMemoryList(Processor inMemory)
+    {
+        _cpuList.Add(inMemory);
     }
 }

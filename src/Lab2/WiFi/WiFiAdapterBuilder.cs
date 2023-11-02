@@ -1,11 +1,14 @@
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.WiFi;
 
 public class WiFiAdapterBuilder : IWiFiAdapterBuilder
 {
+    private const int _emptyVariable = 0;
     private string _wiFiStandardVersion = string.Empty;
     private bool _bluetoothModuleHave;
     private string _pcieVersion = string.Empty;
-    private int _powerConsumption;
+    private int _powerConsumption = _emptyVariable;
 
     public WiFiAdapterBuilder WiFiStandardVersion(string wiFiStandardVersion)
     {
@@ -33,6 +36,14 @@ public class WiFiAdapterBuilder : IWiFiAdapterBuilder
 
     public WiFiAdapter Build()
     {
+        if (_wiFiStandardVersion.Length == _emptyVariable ||
+            _bluetoothModuleHave == false ||
+            _pcieVersion.Length == _emptyVariable ||
+            _powerConsumption == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
         return new WiFiAdapter(
             _wiFiStandardVersion,
             _bluetoothModuleHave,

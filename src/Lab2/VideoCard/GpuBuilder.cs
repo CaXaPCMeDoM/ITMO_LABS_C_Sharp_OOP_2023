@@ -1,14 +1,17 @@
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.VideoCard;
 
 public class GpuBuilder : IGpuBuilder
 {
+    private const int _emptyVariable = 0;
     private string _name = string.Empty;
-    private int _height;
-    private int _width;
-    private int _memory;
+    private int _height = _emptyVariable;
+    private int _width = _emptyVariable;
+    private int _memory = _emptyVariable;
     private string _pciVersion = string.Empty;
-    private int _chipFrequency;
-    private int _powerConsumption;
+    private int _chipFrequency = _emptyVariable;
+    private int _powerConsumption = _emptyVariable;
 
     public GpuBuilder Name(string name)
     {
@@ -54,6 +57,17 @@ public class GpuBuilder : IGpuBuilder
 
     public Gpu Build()
     {
+        if (_height == _emptyVariable ||
+            _width == _emptyVariable ||
+            _memory == _emptyVariable ||
+            _pciVersion.Length == _emptyVariable ||
+            _chipFrequency == _emptyVariable ||
+            _powerConsumption == _emptyVariable ||
+            _name.Length == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
         return new Gpu(
             _height,
             _width,

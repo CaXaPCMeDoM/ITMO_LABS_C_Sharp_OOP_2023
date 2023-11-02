@@ -10,10 +10,10 @@ public class Ssd
         PowerConsumption = powerConsumption;
     }
 
-    public string ConnectionType { get; protected set; } = string.Empty;
-    public int Capacity { get; protected set; }
-    public int MaxSpeed { get; protected set; }
-    public int PowerConsumption { get; protected set; }
+    public string ConnectionType { get; private set; }
+    public int Capacity { get; private set; }
+    public int MaxSpeed { get; private set; }
+    public int PowerConsumption { get; private set; }
 
     public Ssd Clone()
     {
@@ -24,5 +24,14 @@ public class Ssd
             MaxSpeed = MaxSpeed,
             Capacity = Capacity,
         };
+    }
+
+    public SsdBuilder Debuilder()
+    {
+        return new SsdBuilder()
+            .Capacity(Capacity)
+            .ConnectionType(ConnectionType)
+            .PowerConsumption(PowerConsumption)
+            .MaxSpeed(MaxSpeed);
     }
 }

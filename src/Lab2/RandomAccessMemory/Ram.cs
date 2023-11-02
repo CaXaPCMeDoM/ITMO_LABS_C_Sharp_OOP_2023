@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
@@ -7,33 +6,37 @@ public class Ram
 {
     public Ram(
         double ramSize,
-        Collection<Tuple<int, double>> supportedFrequenciesAndVoltages,
+        Collection<int> supportedFrequencies,
+        Collection<double> supportedVoltages,
         Collection<string> availableProfiles,
         string formFactor,
         string ddrVersion,
         double powerConsumption)
     {
         RamSize = ramSize;
-        SupportedFrequenciesAndVoltages = supportedFrequenciesAndVoltages;
+        SupportedVoltages = supportedVoltages;
         AvailableProfiles = availableProfiles;
+        SupportedFrequencies = supportedFrequencies;
         FormFactor = formFactor;
         DdrVersion = ddrVersion;
         PowerConsumption = powerConsumption;
     }
 
-    public double RamSize { get; set; }
-    public Collection<Tuple<int, double>> SupportedFrequenciesAndVoltages { get; init; }
+    public double RamSize { get; private set; }
+    public Collection<int> SupportedFrequencies { get; private set; }
+    public Collection<double> SupportedVoltages { get; private set; }
 
-    public Collection<string> AvailableProfiles { get; init; }
-    public string FormFactor { get; set; }
-    public string DdrVersion { get; set; }
-    public double PowerConsumption { get; set; }
+    public Collection<string> AvailableProfiles { get; private set; }
+    public string FormFactor { get; private set; }
+    public string DdrVersion { get; private set; }
+    public double PowerConsumption { get; private set; }
 
     public Ram Clone()
     {
         return new Ram(
             RamSize,
-            SupportedFrequenciesAndVoltages,
+            SupportedFrequencies,
+            SupportedVoltages,
             AvailableProfiles,
             FormFactor,
             DdrVersion,
@@ -41,10 +44,23 @@ public class Ram
         {
             RamSize = RamSize,
             PowerConsumption = PowerConsumption,
-            SupportedFrequenciesAndVoltages = SupportedFrequenciesAndVoltages,
+            SupportedVoltages = SupportedVoltages,
+            SupportedFrequencies = SupportedFrequencies,
             AvailableProfiles = AvailableProfiles,
             FormFactor = FormFactor,
             DdrVersion = DdrVersion,
         };
+    }
+
+    public RamBuilder Debuilder()
+    {
+        return new RamBuilder()
+            .RamSize(RamSize)
+            .SupportedFrequency(SupportedFrequencies)
+            .SupportedVoltage(SupportedVoltages)
+            .PowerConsumption(PowerConsumption)
+            .AvailableProfile(AvailableProfiles)
+            .FormFactor(FormFactor)
+            .DdrVersion(DdrVersion);
     }
 }

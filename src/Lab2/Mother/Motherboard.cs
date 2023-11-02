@@ -6,8 +6,8 @@ public class Motherboard
 {
     public Motherboard(
         bool haveWiFiModule,
-        string? name,
-        string? processorSocket,
+        string name,
+        string processorSocket,
         int numberOfPciExpressLanes,
         int numberOfSataPorts,
         Chipset chipset,
@@ -21,7 +21,6 @@ public class Motherboard
         ProcessorSocket = processorSocket;
         NumberOfPciExpressLanes = numberOfPciExpressLanes;
         NumberOfSataPorts = numberOfSataPorts;
-        Chipset = new Chipset();
         Chipset = chipset;
         SupportedRamStandard = supportedRamStandard;
         NumberOfRamSlots = numberOfRamSlots;
@@ -29,17 +28,17 @@ public class Motherboard
         Bios = bios;
     }
 
-    public bool HaveWiFiModule { get; set; }
-    public string? Name { get; set; }
+    public bool HaveWiFiModule { get; private set; }
+    public string Name { get; private set; }
 
-    public string? ProcessorSocket { get; set; }
-    public int NumberOfPciExpressLanes { get; set; }
-    public int NumberOfSataPorts { get; set; }
-    public Chipset Chipset { get; set; }
-    public string SupportedRamStandard { get; set; }
-    public int NumberOfRamSlots { get; set; }
-    public string FormFactor { get; set; }
-    public Bios Bios { get; set; }
+    public string ProcessorSocket { get; private set; }
+    public int NumberOfPciExpressLanes { get; private set; }
+    public int NumberOfSataPorts { get; private set; }
+    public Chipset Chipset { get; private set; }
+    public string SupportedRamStandard { get; private set; }
+    public int NumberOfRamSlots { get; private set; }
+    public string FormFactor { get; private set; }
+    public Bios Bios { get; private set; }
     public Motherboard Clone()
     {
         return new Motherboard(
@@ -65,5 +64,22 @@ public class Motherboard
             FormFactor = FormFactor,
             Bios = Bios,
         };
+    }
+
+    public MotherboardBuilder Debuilder()
+    {
+        return new MotherboardBuilder()
+            .BiosType(Bios.BiosType)
+            .BiosVersion(Bios.BiosVersion)
+            .Name(Name)
+            .FormFactor(FormFactor)
+            .HaveWiFiModule(HaveWiFiModule)
+            .ProcessorSocket(ProcessorSocket)
+            .NumberOfPciExpressLanes(NumberOfPciExpressLanes)
+            .NumberOfSataPorts(NumberOfSataPorts)
+            .NumberOfRamSlots(NumberOfRamSlots)
+            .ChipsetSupportXmp(Chipset.SupportXmp)
+            .ChipsetSupportedRamFrequency(Chipset.SupportRamFrequencies)
+            .SupportedRamStandard(SupportedRamStandard);
     }
 }

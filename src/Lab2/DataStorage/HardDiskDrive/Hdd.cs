@@ -9,9 +9,9 @@ public class Hdd
         PowerConsumption = powerConsumption;
     }
 
-    public int Capacity { get; protected set; }
-    public int SpindleRotationSpeed { get; protected set; }
-    public int PowerConsumption { get; protected set; }
+    public int Capacity { get; private set; }
+    public int SpindleRotationSpeed { get; private set; }
+    public int PowerConsumption { get; private set; }
 
     public Hdd Clone()
     {
@@ -21,5 +21,13 @@ public class Hdd
             SpindleRotationSpeed = SpindleRotationSpeed,
             PowerConsumption = PowerConsumption,
         };
+    }
+
+    public HddBuilder Debuilder()
+    {
+        return new HddBuilder()
+            .Capacity(Capacity)
+            .PowerConsumption(PowerConsumption)
+            .SpindleRotationSpeed(SpindleRotationSpeed);
     }
 }

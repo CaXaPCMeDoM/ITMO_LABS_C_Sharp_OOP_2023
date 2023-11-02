@@ -1,19 +1,21 @@
-using System;
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
 
 public class RamBuilder : IRamBuilder
 {
-    private double _ramSize;
-    private Collection<Tuple<int, double>> _supportedFrequenciesAndVoltages = new();
+    private const int _emptyVariable = 0;
+    private double _ramSize = _emptyVariable;
+    private Collection<int> _supportedFrequencies = new();
+    private Collection<double> _supportedVoltage = new();
     private Collection<string> _availableProfiles = new();
     private string _formFactor = string.Empty;
     private string _ddrVersion = string.Empty;
-    private double _powerConsumption;
-    private double _timings;
-    private double _voltage;
-    private int _frequency;
+    private double _powerConsumption = _emptyVariable;
+    private double _timings = _emptyVariable;
+    private double _voltage = _emptyVariable;
+    private int _frequency = _emptyVariable;
 
     public RamBuilder RamSize(double ramSize)
     {
@@ -21,15 +23,21 @@ public class RamBuilder : IRamBuilder
         return this;
     }
 
-    public RamBuilder SupportedFrequencyAndVoltage(int frequency, double voltage)
+    public RamBuilder SupportedFrequency(Collection<int> frequency)
     {
-        _supportedFrequenciesAndVoltages.Add(Tuple.Create(frequency, voltage));
+        _supportedFrequencies = frequency;
         return this;
     }
 
-    public RamBuilder AvailableProfile(string profile)
+    public RamBuilder SupportedVoltage(Collection<double> voltage)
     {
-        _availableProfiles.Add(profile);
+        _supportedVoltage = voltage;
+        return this;
+    }
+
+    public RamBuilder AvailableProfile(Collection<string> profile)
+    {
+        _availableProfiles = profile;
         return this;
     }
 
@@ -71,9 +79,20 @@ public class RamBuilder : IRamBuilder
 
     public Ram Build()
     {
+        if (_ramSize == _emptyVariable ||
+            _supportedFrequencies.Count == _emptyVariable ||
+            _supportedVoltage.Count == _emptyVariable ||
+            _formFactor.Length == _emptyVariable ||
+            _ddrVersion.Length == _emptyVariable ||
+            _powerConsumption == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
         return new Ram(
             _ramSize,
-            _supportedFrequenciesAndVoltages,
+            _supportedFrequencies,
+            _supportedVoltage,
             _availableProfiles,
             _formFactor,
             _ddrVersion,

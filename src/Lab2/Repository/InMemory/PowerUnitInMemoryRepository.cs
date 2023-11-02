@@ -6,23 +6,28 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Repository.InMemory;
 
 public class PowerUnitInMemoryRepository : IRepository<PowerUnit>
 {
-    private Collection<PowerUnit> _processorList;
+    private Collection<PowerUnit> _powerUnitList;
     public PowerUnitInMemoryRepository()
     {
-        _processorList = new Collection<Power.PowerUnit>();
+        _powerUnitList = new Collection<Power.PowerUnit>();
 
-        _processorList.Add(new PowerUnitBuilder()
+        _powerUnitList.Add(new PowerUnitBuilder()
             .PeakLoad(500)
             .Builder());
-        _processorList.Add(new PowerUnitBuilder()
+        _powerUnitList.Add(new PowerUnitBuilder()
             .PeakLoad(100)
             .Builder());
     }
 
-    public Collection<PowerUnit> ReadOnlyCollection => _processorList;
+    public Collection<PowerUnit> ReadOnlyCollection => _powerUnitList;
 
     public IEnumerable<PowerUnit> GetAll()
     {
-        return _processorList;
+        return _powerUnitList;
+    }
+
+    public void AddMemoryList(PowerUnit inMemory)
+    {
+        _powerUnitList.Add(inMemory);
     }
 }

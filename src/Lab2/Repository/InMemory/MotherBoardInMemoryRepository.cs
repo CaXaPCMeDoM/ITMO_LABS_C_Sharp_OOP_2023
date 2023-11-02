@@ -30,7 +30,7 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
             .SupportedRamStandard("DDR4")
             .NumberOfRamSlots(4)
             .FormFactor("ATX")
-            .Bios("UEFI")
+            .BiosType("UEFI")
             .BiosVersion("2001")
             .BiosSupportedProcessors(new Collection<Processor>
                 { cpuInMemoryRepository.ReadOnlyCollection[0], cpuInMemoryRepository.ReadOnlyCollection[1] })
@@ -46,12 +46,14 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
             .SupportedRamStandard("DDR4")
             .NumberOfRamSlots(2)
             .FormFactor("Micro ATX")
-            .Bios("UEFI")
+            .BiosType("UEFI")
             .BiosVersion("P2.10")
             .BiosSupportedProcessors(new Collection<Processor> { cpuInMemoryRepository.ReadOnlyCollection[0], cpuInMemoryRepository.ReadOnlyCollection[1] })
             .Build());
-        Motherboard newMotherboard = _motherboardsList[0].Clone();
-        newMotherboard.FormFactor = "2002";
+        Motherboard newMotherboard;
+        MotherboardBuilder newMotherboardBuilder = _motherboardsList[0].Clone().Debuilder();
+        newMotherboardBuilder.FormFactor("2002");
+        newMotherboard = newMotherboardBuilder.Build();
         _motherboardsList.Add(newMotherboard);
     }
 
@@ -60,5 +62,10 @@ public class MotherBoardInMemoryRepository : IRepository<Motherboard>
     public IEnumerable<Motherboard> GetAll()
     {
         return _motherboardsList;
+    }
+
+    public void AddMemoryList(Motherboard inMemory)
+    {
+        _motherboardsList.Add(inMemory);
     }
 }

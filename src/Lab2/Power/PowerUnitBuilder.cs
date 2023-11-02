@@ -1,8 +1,11 @@
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.Power;
 
 public class PowerUnitBuilder : IPowerUnitBuilder
 {
-    private int _peakLoad;
+    private const int _emptyVariable = 0;
+    private int _peakLoad = _emptyVariable;
 
     public PowerUnitBuilder PeakLoad(int peakLoad)
     {
@@ -12,6 +15,11 @@ public class PowerUnitBuilder : IPowerUnitBuilder
 
     public Power.PowerUnit Builder()
     {
+        if (_peakLoad == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
         return new PowerUnit(_peakLoad);
     }
 }

@@ -13,13 +13,13 @@ public class Gpu
         Name = name;
     }
 
-    public int Height { get; set; }
-    public int Width { get; set; }
-    public int Memory { get; set; }
-    public string PciVersion { get; set; }
-    public int ChipFrequency { get; set; }
-    public int PowerConsumption { get; set; }
-    public string Name { get; set; }
+    public int Height { get; private set; }
+    public int Width { get; private set; }
+    public int Memory { get; private set; }
+    public string PciVersion { get; private set; }
+    public int ChipFrequency { get; private set; }
+    public int PowerConsumption { get; private set; }
+    public string Name { get; private set; }
 
     public Gpu Clone()
     {
@@ -40,5 +40,17 @@ public class Gpu
             ChipFrequency = ChipFrequency,
             Name = Name,
         };
+    }
+
+    public GpuBuilder Debuilder()
+    {
+        return new GpuBuilder()
+            .Height(Height)
+            .Width(Width)
+            .Memory(Memory)
+            .PciVersion(PciVersion)
+            .ChipFrequency(ChipFrequency)
+            .PowerConsumption(PowerConsumption)
+            .Name(Name);
     }
 }

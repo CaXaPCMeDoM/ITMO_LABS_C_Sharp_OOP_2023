@@ -6,18 +6,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Repository.InMemory;
 
 public class SsdInMemoryRepository : IRepository<Ssd>
 {
-    private Collection<Ssd> _processorList;
+    private Collection<Ssd> _ssdList;
     public SsdInMemoryRepository()
     {
-        _processorList = new Collection<Ssd>();
+        _ssdList = new Collection<Ssd>();
 
-        _processorList.Add(new SsdBuilder()
+        _ssdList.Add(new SsdBuilder()
             .ConnectionType("SATA")
             .PowerConsumption(1)
             .Capacity(120)
             .MaxSpeed(520)
             .Builder());
-        _processorList.Add(new SsdBuilder()
+        _ssdList.Add(new SsdBuilder()
             .ConnectionType("SATA")
             .PowerConsumption(1)
             .Capacity(1200)
@@ -25,10 +25,15 @@ public class SsdInMemoryRepository : IRepository<Ssd>
             .Builder());
     }
 
-    public Collection<Ssd> ReadOnlyCollection => _processorList;
+    public Collection<Ssd> ReadOnlyCollection => _ssdList;
 
     public IEnumerable<Ssd> GetAll()
     {
-        return _processorList;
+        return _ssdList;
+    }
+
+    public void AddMemoryList(Ssd inMemory)
+    {
+        _ssdList.Add(inMemory);
     }
 }

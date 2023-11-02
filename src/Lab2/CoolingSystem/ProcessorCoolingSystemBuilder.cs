@@ -1,14 +1,18 @@
 using System.Collections.ObjectModel;
 using Itmo.ObjectOrientedProgramming.Lab2.COMPUTERCASE;
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.CoolingSystem;
 
 public class ProcessorCoolingSystemBuilder : IProcessorCoolingSystemBuilder
 {
+    private const int _emptyVariable = 0;
     private string _name = string.Empty;
     private Collection<string> _supportedSockets = new Collection<string>();
-    private Dimensions _dimensions = new Dimensions();
-    private int _tdp;
+    private int _tdp = _emptyVariable;
+    private int _width = _emptyVariable;
+    private int _height = _emptyVariable;
+    private int _length = _emptyVariable;
 
     public ProcessorCoolingSystemBuilder Name(string name)
     {
@@ -24,19 +28,19 @@ public class ProcessorCoolingSystemBuilder : IProcessorCoolingSystemBuilder
 
     public ProcessorCoolingSystemBuilder DimensionsWidth(int width)
     {
-        _dimensions.Width = width;
+        _width = width;
         return this;
     }
 
     public ProcessorCoolingSystemBuilder DimensionsHeight(int height)
     {
-        _dimensions.Height = height;
+        _height = height;
         return this;
     }
 
     public ProcessorCoolingSystemBuilder DimensionsLength(int length)
     {
-        _dimensions.Length = length;
+        _length = length;
         return this;
     }
 
@@ -48,8 +52,19 @@ public class ProcessorCoolingSystemBuilder : IProcessorCoolingSystemBuilder
 
     public ProcessorCoolingSystem Build()
     {
+        if (_tdp == _emptyVariable ||
+            _width == _emptyVariable ||
+            _length == _emptyVariable ||
+            _height == _emptyVariable ||
+            _name.Length == _emptyVariable ||
+            _supportedSockets.Count == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
+        var dimensions = new Dimensions(_width, _height, _length);
         return new ProcessorCoolingSystem(
-            _dimensions,
+            dimensions,
             _tdp,
             _name,
             _supportedSockets);

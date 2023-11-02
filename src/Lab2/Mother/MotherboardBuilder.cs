@@ -11,13 +11,14 @@ public class MotherboardBuilder : IMotherboardBuilder
     private string _processorSocket = string.Empty;
     private int _numberOfPciExpressLanes;
     private int _numberOfSataPorts;
-    private Chipset _chipset = new Chipset();
     private string _supportedRamStandard = string.Empty;
     private int _numberOfRamSlots;
     private string _formFactor = string.Empty;
     private string _biosType = string.Empty;
     private string _biosVersion = string.Empty;
     private Collection<Processor> _supportedProcessors = new Collection<Processor>();
+    private Xmp? _supportXmp;
+    private Collection<Ram> _ramFrequencies = new Collection<Ram>();
 
     public MotherboardBuilder HaveWiFiModule(bool haveWiFiModule)
     {
@@ -51,13 +52,13 @@ public class MotherboardBuilder : IMotherboardBuilder
 
     public MotherboardBuilder ChipsetSupportXmp(Xmp? supportChipset)
     {
-        _chipset.StateСhangeSupportXmp(supportChipset);
+        _supportXmp = supportChipset;
         return this;
     }
 
     public MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency)
     {
-        _chipset.AddSupportedRamFrequencies(frequency);
+        _ramFrequencies = frequency;
         return this;
     }
 
@@ -79,7 +80,7 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public MotherboardBuilder Bios(string biosType)
+    public MotherboardBuilder BiosType(string biosType)
     {
         _biosType = biosType;
         return this;
@@ -99,6 +100,7 @@ public class MotherboardBuilder : IMotherboardBuilder
 
     public Motherboard Build()
     {
+        var chipset = new Chipset(_ramFrequencies, _supportXmp);
         var bios = new Bios(_biosType, _biosVersion, _supportedProcessors);
         return new Motherboard(
             _haveWiFiModule,
@@ -106,7 +108,7 @@ public class MotherboardBuilder : IMotherboardBuilder
             _processorSocket,
             _numberOfPciExpressLanes,
             _numberOfSataPorts,
-            _chipset,
+            chipset,
             _supportedRamStandard,
             _numberOfRamSlots,
             _formFactor,

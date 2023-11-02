@@ -30,17 +30,17 @@ public class Pc
         WiFiAdapter = wiFiAdapter;
     }
 
-    public ResultsProcessingOfPcComponents Result { get; set; }
-    public Mother.Motherboard? Motherboard { get; set; }
-    public Processor? Processor { get; set; }
+    public ResultsProcessingOfPcComponents Result { get; private set; }
+    public Mother.Motherboard? Motherboard { get; private set; }
+    public Processor? Processor { get; private set; }
 
-    public ProcessorCoolingSystem? ProcessorCoolingSystem { get; set; }
+    public ProcessorCoolingSystem? ProcessorCoolingSystem { get; private set; }
 
     public ICollection<Ram>? Ram { get; }
     public ICollection<Gpu>? Gpu { get; }
     public ICollection<Ssd>? Ssd { get; }
     public ICollection<Hdd>? Hdd { get; }
-    public ComputerCase? ComputerCase { get; set; }
-    public Power.PowerUnit? PowerUnit { get; set; }
-    public WiFiAdapter? WiFiAdapter { get; set; }
+    public ComputerCase? ComputerCase { get; private set; }
+    public Power.PowerUnit? PowerUnit { get; private set; }
+    public WiFiAdapter? WiFiAdapter { get; private set; }
 }

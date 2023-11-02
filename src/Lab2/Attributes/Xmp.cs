@@ -9,7 +9,7 @@ public class Xmp
         Frequency = frequency;
     }
 
-    public double Timings { get; protected set; }
-    public double Voltage { get; protected set; }
+    public double Timings { get; private set; }
+    public double Voltage { get; private set; }
     public int Frequency { get; protected set; }
 }

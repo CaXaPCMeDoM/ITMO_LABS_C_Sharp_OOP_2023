@@ -10,10 +10,10 @@ public class WiFiAdapter
         PowerConsumption = powerConsumption;
     }
 
-    public string WiFiStandardVersion { get; set; }
-    public bool BluetoothModuleHave { get; set; }
-    public string PcieVersion { get; set; }
-    public int PowerConsumption { get; set; }
+    public string WiFiStandardVersion { get; private set; }
+    public bool BluetoothModuleHave { get; private set; }
+    public string PcieVersion { get; private set; }
+    public int PowerConsumption { get; private set; }
 
     public WiFiAdapter Clone()
     {
@@ -28,5 +28,14 @@ public class WiFiAdapter
             BluetoothModuleHave = BluetoothModuleHave,
             PcieVersion = PcieVersion,
         };
+    }
+
+    public WiFiAdapterBuilder Debuilder()
+    {
+        return new WiFiAdapterBuilder()
+            .WiFiStandardVersion(WiFiStandardVersion)
+            .BluetoothModuleHave(BluetoothModuleHave)
+            .PcieVersion(PcieVersion)
+            .PowerConsumption(PowerConsumption);
     }
 }

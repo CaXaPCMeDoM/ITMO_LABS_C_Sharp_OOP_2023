@@ -156,8 +156,10 @@ public static class Main
             .ComputerCaseBuilder(computerCase)
             .PowerUnitBuilder(powerUnit)
             .Build();
-        ProcessorCoolingSystem newProcessorCoolingSystem = processorCoolingSystem.Clone();
-        newProcessorCoolingSystem.Tdp = 100;
+        ProcessorCoolingSystem newProcessorCoolingSystem;
+        ProcessorCoolingSystemBuilder newProcessorCoolingSystemBuilder = processorCoolingSystem.Clone().Debuilder();
+        newProcessorCoolingSystemBuilder.Tdp(100);
+        newProcessorCoolingSystem = newProcessorCoolingSystemBuilder.Build();
         Pc pcSecond = new PcBuild()
             .GpuBuilder(gpu)
             .MotherboardBuilder(motherboard)
@@ -169,8 +171,10 @@ public static class Main
             .ComputerCaseBuilder(computerCase)
             .PowerUnitBuilder(powerUnit)
             .Build();
-        Motherboard newMotherboard = motherboard.Clone();
-        newMotherboard.NumberOfPciExpressLanes = 3;
+        Motherboard newMotherboard;
+        MotherboardBuilder newMotherboardBuilder = motherboard.Clone().Debuilder();
+        newMotherboardBuilder.NumberOfPciExpressLanes(3);
+        newMotherboard = newMotherboardBuilder.Build();
         Pc pcThird = new PcBuild()
             .GpuBuilder(gpu)
             .MotherboardBuilder(newMotherboard)

@@ -1,17 +1,19 @@
 using System.Collections.ObjectModel;
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Processors;
 
 public class ProcessorBuilder : IProcessorBuilder
 {
+    private const int _emptyVariable = 0;
     private string _name = string.Empty;
-    private int _coreFrequency;
-    private int _cores;
+    private int _coreFrequency = _emptyVariable;
+    private int _cores = _emptyVariable;
     private Collection<int> _supportedMemoryFrequencies = new Collection<int>();
     private string _socket = string.Empty;
     private bool _integratedGraphics;
-    private int _tdp;
-    private int _powerConsumption;
+    private int _tdp = _emptyVariable;
+    private int _powerConsumption = _emptyVariable;
 
     public ProcessorBuilder Name(string name)
     {
@@ -49,7 +51,7 @@ public class ProcessorBuilder : IProcessorBuilder
         return this;
     }
 
-    public ProcessorBuilder WithTdp(int tdp)
+    public ProcessorBuilder Tdp(int tdp)
     {
         _tdp = tdp;
         return this;
@@ -63,6 +65,17 @@ public class ProcessorBuilder : IProcessorBuilder
 
     public Processor Build()
     {
+        if (_name.Length == _emptyVariable ||
+            _powerConsumption == _emptyVariable ||
+            _cores == _emptyVariable ||
+            _socket.Length == _emptyVariable ||
+            _supportedMemoryFrequencies.Count == _emptyVariable ||
+            _tdp == _emptyVariable ||
+            _coreFrequency == _emptyVariable)
+        {
+            throw new EmptyValuesException();
+        }
+
         return new Processor(
             _name,
             _coreFrequency,

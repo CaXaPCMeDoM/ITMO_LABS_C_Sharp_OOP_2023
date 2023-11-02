@@ -7,26 +7,26 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Mother;
 
 public interface IMotherboardBuilder
 {
-    MotherboardBuilder HaveWiFiModule(bool haveWiFiModule);
-    MotherboardBuilder Name(string name);
-    MotherboardBuilder ProcessorSocket(string socket);
+    protected MotherboardBuilder HaveWiFiModule(bool haveWiFiModule);
+    protected MotherboardBuilder Name(string name);
+    protected MotherboardBuilder ProcessorSocket(string socket);
 
-    MotherboardBuilder NumberOfPciExpressLanes(int lanes);
+    protected MotherboardBuilder NumberOfPciExpressLanes(int lanes);
 
-    MotherboardBuilder NumberOfSataPorts(int ports);
+    protected MotherboardBuilder NumberOfSataPorts(int ports);
 
-    MotherboardBuilder ChipsetSupportXmp(Xmp supportChipset);
+    protected MotherboardBuilder ChipsetSupportXmp(Xmp supportChipset);
 
-    MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency);
-    MotherboardBuilder SupportedRamStandard(string standard);
+    protected MotherboardBuilder ChipsetSupportedRamFrequency(Collection<Ram> frequency);
+    protected MotherboardBuilder SupportedRamStandard(string standard);
 
-    MotherboardBuilder NumberOfRamSlots(int slots);
+    protected MotherboardBuilder NumberOfRamSlots(int slots);
 
-    MotherboardBuilder FormFactor(string formFactor);
-    MotherboardBuilder Bios(string biosType);
+    protected MotherboardBuilder FormFactor(string formFactor);
+    protected MotherboardBuilder BiosType(string biosType);
 
-    MotherboardBuilder BiosVersion(string biosVersion);
+    protected MotherboardBuilder BiosVersion(string biosVersion);
 
-    MotherboardBuilder BiosSupportedProcessors(Collection<Processor> processor);
-    Mother.Motherboard Build();
+    protected MotherboardBuilder BiosSupportedProcessors(Collection<Processor> processor);
+    protected Motherboard Build();
 }

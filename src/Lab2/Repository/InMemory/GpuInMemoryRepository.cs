@@ -37,4 +37,9 @@ public class GpuInMemoryRepository : IRepository<Gpu>
     {
         return _gpuList;
     }
+
+    public void AddMemoryList(Gpu inMemory)
+    {
+        _gpuList.Add(inMemory);
+    }
 }

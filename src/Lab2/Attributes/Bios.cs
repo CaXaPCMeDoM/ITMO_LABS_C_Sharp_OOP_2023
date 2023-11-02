@@ -16,12 +16,13 @@ public class Bios
         BiosVersion = biosVersion;
     }
 
-    public string? BiosType { get; protected set; }
-    public string? BiosVersion { get; protected set; }
+    public string BiosType { get; private set; }
+    public string BiosVersion { get; private set; }
     public IEnumerable<Processor> SupportedProcessors => _supportedProcessors;
 
     public void AddSupportedProcessors(Collection<Processor> supportedFrequencies)
     {
-        foreach (Collection<Processor> collection in new[] { supportedFrequencies }) _supportedProcessors = _supportedProcessors.Concat<Processor>(collection);
+        foreach (Collection<Processor> collection in new[] { supportedFrequencies })
+            _supportedProcessors = _supportedProcessors.Concat<Processor>(collection);
     }
 }

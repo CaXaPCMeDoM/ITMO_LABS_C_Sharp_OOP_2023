@@ -7,12 +7,18 @@ public class PowerUnit
         PeakLoad = peakLoad;
     }
 
-    public int PeakLoad { get; protected set; }
+    public int PeakLoad { get; private set; }
     public PowerUnit Clone()
     {
         return new PowerUnit(PeakLoad)
         {
             PeakLoad = PeakLoad,
         };
+    }
+
+    public PowerUnitBuilder Debuilder()
+    {
+        return new PowerUnitBuilder()
+            .PeakLoad(PeakLoad);
     }
 }

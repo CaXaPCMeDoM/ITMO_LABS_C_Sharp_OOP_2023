@@ -6,6 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.DataStorage.HardDiskDrive;
 using Itmo.ObjectOrientedProgramming.Lab2.DataStorage.SolidStateDisk;
 using Itmo.ObjectOrientedProgramming.Lab2.Enums;
 using Itmo.ObjectOrientedProgramming.Lab2.Mother;
+using Itmo.ObjectOrientedProgramming.Lab2.MyException;
 using Itmo.ObjectOrientedProgramming.Lab2.PC.ValidationCheck;
 using Itmo.ObjectOrientedProgramming.Lab2.Processors;
 using Itmo.ObjectOrientedProgramming.Lab2.RandomAccessMemory;
@@ -17,6 +18,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PC.BuildPc;
 
 public class PcBuild
 {
+    private const int _emptyVariable = 0;
     private ResultsProcessingOfPcComponents _result;
     private Motherboard? _motherboard;
     private Processor? _processor;
@@ -168,6 +170,11 @@ public class PcBuild
             _processor = processor;
         }
 
+        if (_result == ResultsProcessingOfPcComponents.Successful)
+        {
+            _processor = processor;
+        }
+
         return this;
     }
 
@@ -247,8 +254,8 @@ public class PcBuild
         {
             if (_computerCase is not null)
             {
-                if (gpu.Height >= _computerCase.MaximumDimensionsGpu.MaxLengthGPU ||
-                    gpu.Width >= _computerCase.MaximumDimensionsGpu.MaxWidthGPU)
+                if (gpu.Height >= _computerCase.MaximumDimensionsGpu.MaxLengthGpu ||
+                    gpu.Width >= _computerCase.MaximumDimensionsGpu.MaxWidthGpu)
                 {
                     _result = ResultsProcessingOfPcComponents.DimensionsError;
                     return this;
@@ -429,25 +436,39 @@ public class PcBuild
 
     public Pc Build()
     {
-        var pc = new Pc(
-            _result,
-            _motherboard,
-            _processor,
-            _processorCoolingSystem,
-            _ram,
-            _gpu,
-            _ssd,
-            _hdd,
-            _computerCase,
-            _powerUnit,
-            _wiFiAdapter);
-        if (_result == ResultsProcessingOfPcComponents.Successful ||
-            _result == ResultsProcessingOfPcComponents.Warning)
+        if (_motherboard is not null &&
+            _gpu is not null &&
+            _computerCase is not null &&
+            (_hdd is not null || _ssd is not null) &&
+            _ram is not null &&
+            _powerUnit is not null &&
+            _processor is not null &&
+            (_processor.IntegratedGraphics || _gpu.Count == _emptyVariable))
         {
-            OrderFormation.SendingAnOrder(pc);
-            MessageToTheSalesDepartment.Send(pc.Result);
-        }
+            var pc = new Pc(
+                _result,
+                _motherboard,
+                _processor,
+                _processorCoolingSystem,
+                _ram,
+                _gpu,
+                _ssd,
+                _hdd,
+                _computerCase,
+                _powerUnit,
+                _wiFiAdapter);
+            if (_result == ResultsProcessingOfPcComponents.Successful ||
+                _result == ResultsProcessingOfPcComponents.Warning)
+            {
+                OrderFormation.SendingAnOrder(pc);
+                MessageToTheSalesDepartment.Send(pc.Result);
+            }
 
-        return pc;
+            return pc;
+        }
+        else
+        {
+            throw new EmptyValuesException();
+        }
     }
 }
