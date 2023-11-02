@@ -19,7 +19,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PC.BuildPc;
 public class PcBuild
 {
     private const int _emptyVariable = 0;
-    private ResultsProcessingOfPcComponents _result;
+    private ResultsProcessingOfPcComponents _result = ResultsProcessingOfPcComponents.Successful;
     private Motherboard? _motherboard;
     private Processor? _processor;
 
@@ -135,24 +135,6 @@ public class PcBuild
                         flagSupportSocket = true;
                     }
                 }
-            }
-
-            bool processorSupported = true;
-            foreach (Processor supportedProcessor in _motherboard.Bios.SupportedProcessors)
-            {
-                processorSupported = false;
-                if (supportedProcessor == processor)
-                {
-                    processorSupported = true;
-                    _processor = processor;
-                    return this;
-                }
-            }
-
-            if (!processorSupported)
-            {
-                _result = ResultsProcessingOfPcComponents.BiosSupportError;
-                return this;
             }
 
             if (!flagSupportSocket)
@@ -407,6 +389,7 @@ public class PcBuild
         if (powerUnit?.PeakLoad < powerConsumption)
         {
             _result = ResultsProcessingOfPcComponents.Warning;
+            _powerUnit = powerUnit;
             return this;
         }
 
@@ -443,7 +426,7 @@ public class PcBuild
             _ram is not null &&
             _powerUnit is not null &&
             _processor is not null &&
-            (_processor.IntegratedGraphics || _gpu.Count == _emptyVariable))
+            (_processor.IntegratedGraphics || _gpu.Count is not _emptyVariable))
         {
             var pc = new Pc(
                 _result,

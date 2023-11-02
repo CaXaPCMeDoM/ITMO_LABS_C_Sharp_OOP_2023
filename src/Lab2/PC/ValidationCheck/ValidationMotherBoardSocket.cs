@@ -6,7 +6,7 @@ public static class ValidationMotherBoardSocket
 {
     public static ResultsProcessingOfPcComponents MotherBoardSocket(int totalSataPorts, int? requiredSataPorts, bool flagSupportSocket)
     {
-        ResultsProcessingOfPcComponents result = ResultsProcessingOfPcComponents.None;
+        ResultsProcessingOfPcComponents result = ResultsProcessingOfPcComponents.Successful;
         if (totalSataPorts < requiredSataPorts)
         {
             result = ResultsProcessingOfPcComponents.SataCountError;
