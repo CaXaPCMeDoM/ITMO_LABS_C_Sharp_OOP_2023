@@ -26,5 +26,6 @@ public class Display : FinalRecipent
         DisplayDriver.SetText(text);
         Console.WriteLine(DisplayDriver.ChangeColorOutputText(color));
         DisplayDriver.CleanOutput();
+        Console.ResetColor();
     }
 }

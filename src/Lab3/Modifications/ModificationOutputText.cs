@@ -13,8 +13,6 @@ public class ModificationOutputText
     public string Colored(ConsoleColor color)
     {
         Console.ForegroundColor = color;
-        Console.WriteLine(_text);
-        Console.ResetColor();
 
         return _text;
     }

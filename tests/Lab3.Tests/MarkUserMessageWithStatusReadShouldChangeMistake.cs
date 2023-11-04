@@ -5,6 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients.Enums;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics;
 using Xunit;
+using ILogger = Itmo.ObjectOrientedProgramming.Lab3.Logger.ILogger;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
 
@@ -14,27 +15,28 @@ public static class MarkUserMessageWithStatusReadShouldChangeMistake
     [MemberData(nameof(StatusChange))]
     public static void Test(ResultAttemptMakrReadMessage resultAttemptMakrReadMessage)
     {
-        UserAddresse? user;
-        AddresseeComponent userAddresse = new UserAddresse(ImportanceLevel.High);
+        ILogger logger = new Logger.Logger();
+        UserAddresse? userAddresseCopy;
+        AddresseeComponent userAddresse = new UserAddresse(ImportanceLevel.High, logger);
         Message message = Message.Builder
             .WithId(1)
-            .WithHeading("HUI")
+            .WithHeading("H123U6I4")
             .WithBody("NEHUI901421")
             .ImportanceLevelBuilder(ImportanceLevel.High)
             .Build();
         Topic topic = Topic.Builder
-            .WithName("INEEBU")
+            .WithName("IN1E32EB4U")
             .WithAdress(userAddresse)
             .WithMessage(message)
             .Build();
         topic.SendMessageToTheAddressee(message);
-        user = (UserAddresse?)topic.AddresseeComponent;
-        User? huesos = user?.User;
-        if (huesos != null)
+        userAddresseCopy = (UserAddresse?)topic.AddresseeComponent;
+        User? user = userAddresseCopy?.User;
+        if (user != null)
         {
             ResultAttemptMakrReadMessage readMessage;
-            huesos.MarkAsRead(1);
-            readMessage = huesos.MarkAsRead(1);
+            user.MarkAsRead(1);
+            readMessage = user.MarkAsRead(1);
             Assert.Equal(readMessage, resultAttemptMakrReadMessage);
         }
     }
