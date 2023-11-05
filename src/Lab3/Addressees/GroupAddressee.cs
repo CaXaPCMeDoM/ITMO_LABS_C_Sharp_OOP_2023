@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Itmo.ObjectOrientedProgramming.Lab3.Logger;
-using Itmo.ObjectOrientedProgramming.Lab3.Logger.Auxiliary;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
@@ -8,8 +6,7 @@ public class GroupAddressee : AddresseeComponent
 {
     private List<AddresseeComponent> _addressees;
 
-    public GroupAddressee(ILogger logger)
-        : base(logger)
+    public GroupAddressee()
     {
         _addressees = new List<AddresseeComponent>();
     }
@@ -26,7 +23,6 @@ public class GroupAddressee : AddresseeComponent
 
     public override void ReceiveMessage(Message message)
     {
-        Logger.Log(LoggerMessages.ReceivedMessage + $"{nameof(GroupAddressee)}");
         foreach (AddresseeComponent addressee in _addressees)
         {
             addressee.ReceiveMessage(message);

@@ -2,7 +2,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 public class Message
 {
-    private Message(int id, string heading, string body, ImportanceLevel importanceLevel)
+    private Message(int id, string heading, string body, int importanceLevel)
     {
         Heading = heading;
         Body = body;
@@ -14,13 +14,13 @@ public class Message
     public int Id { get; protected set; }
     public string Heading { get; protected set; }
     public string Body { get; protected set; }
-    public ImportanceLevel ImportanceLevel { get; protected set; }
+    public int ImportanceLevel { get; protected set; }
 
     private class MessageBuilder : IIdBuilder, IBodyBuilder, IHeadingBuilder, IImportanceLevelBuilder
     {
         private string _heading = string.Empty;
         private string _body = string.Empty;
-        private ImportanceLevel _importanceLevel;
+        private int _importanceLevel;
         private int _id;
 
         public IImportanceLevelBuilder WithBody(string body)
@@ -35,7 +35,7 @@ public class Message
             return this;
         }
 
-        public IImportanceLevelBuilder ImportanceLevelBuilder(ImportanceLevel importanceLevel)
+        public IImportanceLevelBuilder ImportanceLevel(int importanceLevel)
         {
             this._importanceLevel = importanceLevel;
             return this;

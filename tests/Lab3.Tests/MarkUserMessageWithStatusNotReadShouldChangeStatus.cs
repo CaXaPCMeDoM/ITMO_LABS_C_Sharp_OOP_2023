@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 using Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 using Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients.Enums;
-using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics;
 using Xunit;
@@ -11,21 +10,25 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
 
 public static class MarkUserMessageWithStatusNotReadShouldChangeStatus
 {
+    private const string HeadingVariableMessage = "H123U6I4";
+    private const string BodyVariableMessage = "NEHUI901421";
+    private const int IdVariableMessage = 1;
+    private const string NameTopicVariable = "Test topic";
+    private const int ImportanceLevelVariable = 1;
     [Theory]
     [MemberData(nameof(StatusChange))]
     public static void Test(ResultAttemptMakrReadMessage resultAttemptMakrReadMessage)
     {
-        ILogger logger = new Logger.Logger();
         UserAddresse? userAddresseCopy;
-        AddresseeComponent userAddresse = new UserAddresse(logger);
+        AddresseeComponent userAddresse = new UserAddresse();
         Message message = Message.Builder
-            .WithId(1)
-            .WithHeading("H123U6I4")
-            .WithBody("NEHUI901421")
-            .ImportanceLevelBuilder(ImportanceLevel.High)
+            .WithId(IdVariableMessage)
+            .WithHeading(HeadingVariableMessage)
+            .WithBody(BodyVariableMessage)
+            .ImportanceLevel(ImportanceLevelVariable)
             .Build();
         Topic topic = Topic.Builder
-            .WithName("IN1E32EB4U")
+            .WithName(NameTopicVariable)
             .WithAdress(userAddresse)
             .WithMessage(message)
             .Build();

@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
@@ -16,17 +15,10 @@ public class Display : FinalRecipent
 
     public void WriteTextWithColor(Message message)
     {
-        string text = string.Empty;
-        foreach (PropertyInfo property in message.GetType().GetProperties())
-        {
-            if (property.PropertyType == typeof(string))
-            {
-                text += (string?)property.GetValue(message) ?? string.Empty;
-            }
-        }
-
-        _displayDriver.SetText(text);
+        _displayDriver.SetText(message.Body);
+        _displayDriver.SetText(message.Heading);
         Console.WriteLine(_displayDriver.ChangeColorOutputText(_color));
+
         _displayDriver.CleanOutput();
         Console.ResetColor();
     }

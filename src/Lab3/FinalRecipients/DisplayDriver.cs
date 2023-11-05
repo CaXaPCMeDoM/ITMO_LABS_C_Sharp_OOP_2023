@@ -9,6 +9,7 @@ public class DisplayDriver : IDisplayDriver
     public void CleanOutput()
     {
         Console.Clear();
+        _text = string.Empty;
     }
 
     public void SetText(string text)

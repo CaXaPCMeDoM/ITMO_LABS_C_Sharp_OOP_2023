@@ -10,22 +10,28 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
 
 public static class TestFour
 {
+    private const string HeadingVariableMessage = "H123U6I4";
+    private const string BodyVariableMessage = "NEHUI901421";
+    private const int IdVariableMessage = 1;
+    private const string NameTopicVariable = "Test topic";
+    private const int ImportanceLevelFirstVariable = 1;
+    private const int ImportanceLevelSecondVariable = 2;
     [Theory]
     [MemberData(nameof(LoggerResult))]
-    public static void TheMessageDidNotFitTheCriteriaOfImportance(ImportanceLevel level)
+    public static void TheMessageDidNotFitTheCriteriaOfImportance(int level)
     {
         // Arrange
         Message message = Message.Builder
-            .WithId(1)
-            .WithHeading("H123U6I4")
-            .WithBody("NEHUI901421")
-            .ImportanceLevelBuilder(ImportanceLevel.Low)
+            .WithId(IdVariableMessage)
+            .WithHeading(HeadingVariableMessage)
+            .WithBody(BodyVariableMessage)
+            .ImportanceLevel(ImportanceLevelFirstVariable)
             .Build();
         var loggerMock = new Mock<ILogger>();
         ILogger logger = loggerMock.Object;
-        AddresseeComponent userAddresse = new FilterText(new UserAddresse(logger), level, logger);
+        AddresseeComponent userAddresse = new FilterText(new UserAddresse(), level);
         Topic topic = Topic.Builder
-            .WithName("Test topic")
+            .WithName(NameTopicVariable)
             .WithAdress(userAddresse)
             .WithMessage(message)
             .Build();
@@ -41,7 +47,7 @@ public static class TestFour
     {
         yield return new object[]
         {
-            ImportanceLevel.High,
+            ImportanceLevelSecondVariable,
         };
     }
 }

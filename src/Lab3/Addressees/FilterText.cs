@@ -1,14 +1,12 @@
-using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class FilterText : AddresseeComponent
 {
-    private ImportanceLevel _importanceLevel;
+    private int _importanceLevel;
 
-    public FilterText(AddresseeComponent addresseeComponent, ImportanceLevel importanceLevel, ILogger logger)
-        : base(logger)
+    public FilterText(AddresseeComponent addresseeComponent, int importanceLevel)
     {
         this._importanceLevel = importanceLevel;
         AddresseeComponent = addresseeComponent;
