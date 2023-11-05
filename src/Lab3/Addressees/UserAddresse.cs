@@ -7,8 +7,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class UserAddresse : AddresseeComponent
 {
-    public UserAddresse(ImportanceLevel importanceLevel, ILogger logger)
-        : base(importanceLevel, logger)
+    public UserAddresse(ILogger logger)
+        : base(logger)
     {
     }
 

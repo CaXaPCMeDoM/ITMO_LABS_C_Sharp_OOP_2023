@@ -1,12 +1,11 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 
-public class Messenger : FinalRecipent
+public class Messenger : FinalRecipent, IMessenger
 {
-    public static void DataOutput(Message message)
+    public void DataOutput(string message)
     {
-        Console.WriteLine(message.Heading + message.Body);
+        Console.WriteLine(message);
     }
 }

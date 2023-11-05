@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
+using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
-using Itmo.ObjectOrientedProgramming.Lab3.Tests.CopyForMocking.CloneForMockingForFifthTest;
-using Itmo.ObjectOrientedProgramming.Lab3.Tests.CopyForMocking.CloneForMockingForFourthTest;
+using Itmo.ObjectOrientedProgramming.Lab3.Topics;
+using Moq;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
@@ -10,29 +12,36 @@ public static class TestFour
 {
     [Theory]
     [MemberData(nameof(LoggerResult))]
-    public static void TheMessageDidNotFitTheCriteriaOfImportance(ResultTestForFourthTest filteringFailed)
+    public static void TheMessageDidNotFitTheCriteriaOfImportance(ImportanceLevel level)
     {
-        AddresseeComponentCloneForFifthTest userAddresse = new UserAddresseCloneForFifthTest(ImportanceLevel.High);
+        // Arrange
         Message message = Message.Builder
             .WithId(1)
             .WithHeading("H123U6I4")
             .WithBody("NEHUI901421")
             .ImportanceLevelBuilder(ImportanceLevel.Low)
             .Build();
-        TopicCloneForFifthTest topic = TopicCloneForFifthTest.Builder
-            .WithName("IN1E32EB4U")
+        var loggerMock = new Mock<ILogger>();
+        ILogger logger = loggerMock.Object;
+        AddresseeComponent userAddresse = new FilterText(new UserAddresse(logger), level, logger);
+        Topic topic = Topic.Builder
+            .WithName("Test topic")
             .WithAdress(userAddresse)
             .WithMessage(message)
             .Build();
-        ResultTestForFourthTest resultTestForFourthTest = topic.SendMessageToTheAddressee(message);
-        Assert.Equal(resultTestForFourthTest, filteringFailed);
+
+        // Act
+        topic.SendMessageToTheAddressee(message);
+
+        // Assert
+        loggerMock.Verify(log => log.Log(It.IsAny<string>()), Times.Never);
     }
 
     public static IEnumerable<object[]> LoggerResult()
     {
         yield return new object[]
         {
-            ResultTestForFourthTest.Mistake,
+            ImportanceLevel.High,
         };
     }
 }

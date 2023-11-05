@@ -19,7 +19,7 @@ public class Topic
 
     public void SendMessageToTheAddressee(Message message)
     {
-        AddresseeComponent?.AddMessage(message);
+        AddresseeComponent?.ReceiveMessage(message);
     }
 
     private class TopicBuilder : INameBuilder, IAdressBuilder, IMessageBuilder

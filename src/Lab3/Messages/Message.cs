@@ -2,7 +2,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 public class Message
 {
-    public Message(int id, string heading, string body, ImportanceLevel importanceLevel)
+    private Message(int id, string heading, string body, ImportanceLevel importanceLevel)
     {
         Heading = heading;
         Body = body;

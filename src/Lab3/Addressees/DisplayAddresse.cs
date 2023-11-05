@@ -9,8 +9,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 public class DisplayAddresse : AddresseeComponent
 {
     private ConsoleColor _color;
-    public DisplayAddresse(ImportanceLevel importanceLevel, ConsoleColor color, ILogger logger)
-        : base(importanceLevel, logger)
+    public DisplayAddresse(ConsoleColor color, ILogger logger)
+        : base(logger)
     {
         _color = color;
     }
@@ -18,7 +18,8 @@ public class DisplayAddresse : AddresseeComponent
     public override void ReceiveMessage(Message message)
     {
         Logger.Log(LoggerMessages.ReceivedMessage + $"{nameof(DisplayAddresse)}");
-        var display = new Display(message);
-        display.WriteTextWithColor(_color);
+        var display = new Display();
+        display.SetColor(_color);
+        display.WriteTextWithColor(message);
     }
 }

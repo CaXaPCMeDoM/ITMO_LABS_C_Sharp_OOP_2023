@@ -21,7 +21,7 @@ public static class TestSixth
             .ImportanceLevelBuilder(ImportanceLevel.High)
             .Build();
         var loggerMock = new Mock<Itmo.ObjectOrientedProgramming.Lab3.Logger.ILogger>();
-        var messengerAddressee = new MessengerAddressee(ImportanceLevel.High, loggerMock.Object);
+        var messengerAddressee = new MessengerAddressee(loggerMock.Object);
         Topic topic = Topic.Builder
             .WithName("Test topic")
             .WithAdress(messengerAddressee)

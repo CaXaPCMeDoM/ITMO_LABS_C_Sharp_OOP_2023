@@ -7,14 +7,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class MessengerAddressee : AddresseeComponent
 {
-    public MessengerAddressee(ImportanceLevel importanceLevel, ILogger logger)
-        : base(importanceLevel, logger)
+    public MessengerAddressee(ILogger logger)
+        : base(logger)
     {
     }
 
     public override void ReceiveMessage(Message message)
     {
         Logger.Log(LoggerMessages.ReceivedMessage + $"{nameof(MessengerAddressee)}");
-        Messenger.DataOutput(message);
+        IMessenger messenger = new Messenger();
+        messenger.DataOutput(message.Body);
     }
 }

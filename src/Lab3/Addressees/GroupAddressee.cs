@@ -8,8 +8,8 @@ public class GroupAddressee : AddresseeComponent
 {
     private List<AddresseeComponent> _addressees;
 
-    public GroupAddressee(ImportanceLevel importanceLevel, ILogger logger)
-        : base(importanceLevel, logger)
+    public GroupAddressee(ILogger logger)
+        : base(logger)
     {
         _addressees = new List<AddresseeComponent>();
     }

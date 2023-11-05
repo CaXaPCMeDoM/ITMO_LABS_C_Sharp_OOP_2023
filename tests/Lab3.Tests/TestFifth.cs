@@ -21,7 +21,7 @@ public static class TestFifth
             .ImportanceLevelBuilder(ImportanceLevel.High)
             .Build();
         var loggerMock = new Mock<Logger.ILogger>();
-        var userAddresse = new UserAddresse(ImportanceLevel.High, loggerMock.Object);
+        var userAddresse = new UserAddresse(loggerMock.Object);
         Topic topic = Topic.Builder
             .WithName("Test topic")
             .WithAdress(userAddresse)

@@ -6,26 +6,28 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 
 public class Display : FinalRecipent
 {
-    private Message _message;
-    public Display(Message message)
+    private IDisplayDriver _displayDriver = new DisplayDriver();
+    private ConsoleColor _color;
+
+    public void SetColor(ConsoleColor color)
     {
-        _message = message;
+        _color = color;
     }
 
-    public void WriteTextWithColor(ConsoleColor color)
+    public void WriteTextWithColor(Message message)
     {
         string text = string.Empty;
-        foreach (PropertyInfo property in _message.GetType().GetProperties())
+        foreach (PropertyInfo property in message.GetType().GetProperties())
         {
             if (property.PropertyType == typeof(string))
             {
-                text += (string?)property.GetValue(_message) ?? string.Empty;
+                text += (string?)property.GetValue(message) ?? string.Empty;
             }
         }
 
-        DisplayDriver.SetText(text);
-        Console.WriteLine(DisplayDriver.ChangeColorOutputText(color));
-        DisplayDriver.CleanOutput();
+        _displayDriver.SetText(text);
+        Console.WriteLine(_displayDriver.ChangeColorOutputText(_color));
+        _displayDriver.CleanOutput();
         Console.ResetColor();
     }
 }

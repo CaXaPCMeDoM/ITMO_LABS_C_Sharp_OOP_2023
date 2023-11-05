@@ -17,7 +17,7 @@ public static class MarkUserMessageWithStatusReadShouldChangeMistake
     {
         ILogger logger = new Logger.Logger();
         UserAddresse? userAddresseCopy;
-        AddresseeComponent userAddresse = new UserAddresse(ImportanceLevel.High, logger);
+        AddresseeComponent userAddresse = new UserAddresse(logger);
         Message message = Message.Builder
             .WithId(1)
             .WithHeading("H123U6I4")
