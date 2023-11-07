@@ -1,3 +1,5 @@
+using System;
+
 namespace Itmo.ObjectOrientedProgramming.Lab3.Logger;
 
 public class Logger : ILogger
@@ -6,5 +8,6 @@ public class Logger : ILogger
     public void Log(string message)
     {
         this.Message += message;
+        Console.WriteLine(Message);
     }
 }
