@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 
-public class Display : FinalRecipent
+public class Display
 {
     private IDisplayDriver _displayDriver = new DisplayDriver();
     private ConsoleColor _color;

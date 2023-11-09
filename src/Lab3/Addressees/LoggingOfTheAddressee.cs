@@ -11,7 +11,7 @@ public class LoggingOfTheAddressee : AddresseeComponent
         Logger = logger;
     }
 
-    public ILogger Logger { get; }
+    protected ILogger Logger { get; }
     protected AddresseeComponent AddresseeComponent { get; }
     public override void ReceiveMessage(Message message)
     {

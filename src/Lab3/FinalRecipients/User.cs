@@ -4,28 +4,31 @@ using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 
-public class User : FinalRecipent
+public class User
 {
-    private Dictionary<int, Message> _messageCollection = new Dictionary<int, Message>();
-    private Dictionary<int, bool> _messageRead = new Dictionary<int, bool>();
+    private Dictionary<int, MessageWithStatus> _messageCollectionWithStatus = new Dictionary<int, MessageWithStatus>();
     public int Id { get; private set; }
 
     public void SetMessage(Message message)
     {
-        _messageCollection.TryAdd(message.Id, message);
-        _messageRead.TryAdd(message.Id, false);
+        _messageCollectionWithStatus.TryAdd(message.Id, new MessageWithStatus { Message = message, IsRead = false });
     }
 
     public bool GetMessageStatus(int key)
     {
-        return _messageRead[key];
+        if (_messageCollectionWithStatus.TryGetValue(key, out MessageWithStatus? messageWithStatus))
+        {
+            return messageWithStatus.IsRead;
+        }
+
+        return false;
     }
 
     public ResultAttemptMakrReadMessage MarkAsRead(int key)
     {
-        if (_messageRead.TryGetValue(key, out _) && _messageRead[key] is not true)
+        if (_messageCollectionWithStatus.TryGetValue(key, out MessageWithStatus? messageWithStatus) && !messageWithStatus.IsRead)
         {
-            _messageRead[key] = true;
+            messageWithStatus.IsRead = true;
             return ResultAttemptMakrReadMessage.Successful;
         }
         else

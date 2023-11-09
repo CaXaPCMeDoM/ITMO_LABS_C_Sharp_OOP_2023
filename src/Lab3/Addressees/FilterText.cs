@@ -5,20 +5,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 public class FilterText : AddresseeComponent
 {
     private int _importanceLevel;
+    private AddresseeComponent _addresseeComponent;
 
     public FilterText(AddresseeComponent addresseeComponent, int importanceLevel)
     {
         this._importanceLevel = importanceLevel;
-        AddresseeComponent = addresseeComponent;
+        _addresseeComponent = addresseeComponent;
     }
-
-    protected AddresseeComponent AddresseeComponent { get; }
 
     public override void ReceiveMessage(Message message)
     {
         if (message.ImportanceLevel == _importanceLevel)
         {
-            AddresseeComponent.ReceiveMessage(message);
+            _addresseeComponent.ReceiveMessage(message);
         }
     }
 }

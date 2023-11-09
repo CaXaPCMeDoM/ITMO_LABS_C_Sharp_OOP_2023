@@ -2,7 +2,7 @@ using System;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 
-public class Messenger : FinalRecipent, IMessenger
+public class Messenger : IMessenger
 {
     public void DataOutput(string message)
     {

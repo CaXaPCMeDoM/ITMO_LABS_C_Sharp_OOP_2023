@@ -4,8 +4,4 @@
         <RootNamespace>Itmo.ObjectOrientedProgramming.Lab3</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Messages\Enums\" />
-    </ItemGroup>
-
 </Project>
