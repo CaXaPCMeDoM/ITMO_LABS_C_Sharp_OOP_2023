@@ -13,6 +13,6 @@ public class MessengerAddressee : AddresseeComponent
 
     public override void ReceiveMessage(Message message)
     {
-        _messenger.DataOutput(message.Body);
+        _messenger.MessageDataOutput(message.Body);
     }
 }

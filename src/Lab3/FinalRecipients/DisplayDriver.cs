@@ -24,4 +24,9 @@ public class DisplayDriver : IDisplayDriver
         _text = modificationOutputText.Colored(color);
         return _text;
     }
+
+    public void WriteTextToConsole(string text)
+    {
+        Console.WriteLine(text);
+    }
 }

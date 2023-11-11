@@ -17,7 +17,7 @@ public class Display
     {
         _displayDriver.SetText(message.Body);
         _displayDriver.SetText(message.Heading);
-        Console.WriteLine(_displayDriver.ChangeColorOutputText(_color));
+        _displayDriver.WriteTextToConsole(_displayDriver.ChangeColorOutputText(_color));
 
         _displayDriver.CleanOutput();
         Console.ResetColor();

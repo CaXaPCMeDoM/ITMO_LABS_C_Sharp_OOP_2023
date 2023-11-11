@@ -9,7 +9,7 @@ public class FilterText : AddresseeComponent
 
     public FilterText(AddresseeComponent addresseeComponent, int importanceLevel)
     {
-        this._importanceLevel = importanceLevel;
+        _importanceLevel = importanceLevel;
         _addresseeComponent = addresseeComponent;
     }
 
