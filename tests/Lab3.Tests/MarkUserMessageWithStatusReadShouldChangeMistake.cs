@@ -20,7 +20,8 @@ public static class MarkUserMessageWithStatusReadShouldChangeMistake
     public static void Test(ResultAttemptMakrReadMessage resultAttemptMakrReadMessage)
     {
         UserAddresse? userAddresseCopy;
-        AddresseeComponent userAddresse = new UserAddresse();
+        var useInAdressee = new User();
+        AddresseeComponent userAddresse = new UserAddresse(useInAdressee);
         Message message = Message.Builder
             .WithId(IdVariableMessage)
             .WithHeading(HeadingVariableMessage)

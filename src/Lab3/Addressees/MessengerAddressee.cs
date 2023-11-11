@@ -5,9 +5,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class MessengerAddressee : AddresseeComponent
 {
+    private IMessenger _messenger;
+    public MessengerAddressee(IMessenger messenger)
+    {
+        _messenger = messenger;
+    }
+
     public override void ReceiveMessage(Message message)
     {
-        IMessenger messenger = new Messenger();
-        messenger.DataOutput(message.Body);
+        _messenger.DataOutput(message.Body);
     }
 }

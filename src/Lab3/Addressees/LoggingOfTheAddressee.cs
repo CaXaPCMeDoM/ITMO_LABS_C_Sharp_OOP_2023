@@ -16,5 +16,6 @@ public class LoggingOfTheAddressee : AddresseeComponent
     public override void ReceiveMessage(Message message)
     {
         Logger.Log(message.Body + message.Heading);
+        AddresseeComponent.ReceiveMessage(message);
     }
 }

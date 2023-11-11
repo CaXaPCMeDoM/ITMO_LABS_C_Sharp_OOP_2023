@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
+using Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Logger;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics;
@@ -29,7 +30,8 @@ public static class TestFour
             .Build();
         var loggerMock = new Mock<ILogger>();
         ILogger logger = loggerMock.Object;
-        AddresseeComponent userAddresse = new FilterText(new UserAddresse(), level);
+        var userInAdressee = new User();
+        AddresseeComponent userAddresse = new FilterText(new UserAddresse(userInAdressee), level);
         Topic topic = Topic.Builder
             .WithName(NameTopicVariable)
             .WithAdress(userAddresse)

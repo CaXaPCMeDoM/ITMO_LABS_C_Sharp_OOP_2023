@@ -5,7 +5,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class UserAddresse : AddresseeComponent
 {
-    public User User { get; private set; } = new();
+    public UserAddresse(User user)
+    {
+        User = user;
+    }
+
+    public User User { get; private set; }
     public override void ReceiveMessage(Message message)
     {
         User.SetMessage(message);

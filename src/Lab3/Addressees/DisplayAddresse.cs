@@ -5,9 +5,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public class DisplayAddresse : AddresseeComponent
 {
-    private Display display = new Display();
+    private Display _display;
+    public DisplayAddresse(Display display)
+    {
+        _display = display;
+    }
+
     public override void ReceiveMessage(Message message)
     {
-        display.WriteTextWithColor(message);
+        _display.WriteTextWithColor(message);
     }
 }

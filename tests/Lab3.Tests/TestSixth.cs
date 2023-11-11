@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
+using Itmo.ObjectOrientedProgramming.Lab3.FinalRecipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics;
 using Moq;
@@ -25,7 +26,8 @@ public static class TestSixth
             .ImportanceLevel(ImportanceLevelVariable)
             .Build();
         var loggerMock = new Mock<Itmo.ObjectOrientedProgramming.Lab3.Logger.ILogger>();
-        var messengerAddressee = new LoggingOfTheAddressee(new MessengerAddressee(), loggerMock.Object);
+        var messengerInAdressee = new Messenger();
+        var messengerAddressee = new LoggingOfTheAddressee(new MessengerAddressee(messengerInAdressee), loggerMock.Object);
         Topic topic = Topic.Builder
             .WithName(NameTopicVariable)
             .WithAdress(messengerAddressee)
