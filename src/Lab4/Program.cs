@@ -8,15 +8,12 @@ public static class Program
 {
     public static void Main()
     {
-        while (true)
+        string? message = Console.ReadLine();
+        var chairOfCommand = new ChairOfCommand();
+        if (message != null)
         {
-            string? message = Console.ReadLine();
-            var chairOfCommand = new ChairOfCommand();
-            if (message != null)
-            {
-                Request request = Parse.Parser.ParserRequest(message);
-                chairOfCommand.AssemblingTheChain(request);
-            }
+            Request request = Parse.Parser.ParserRequest(message);
+            chairOfCommand.AssemblingTheChain(request);
         }
     }
 }
