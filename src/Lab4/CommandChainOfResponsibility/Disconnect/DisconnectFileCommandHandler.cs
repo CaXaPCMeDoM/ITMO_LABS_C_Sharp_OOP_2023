@@ -10,7 +10,7 @@ public class DisconnectFileCommandHandler : CommandHandlerBase
     private const int FirstWordIsCommand = 0;
     private const string DisconnectConstString = "disconnect";
 
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string? firstWord = request.Arguments.ElementAtOrDefault(FirstWordIsCommand);
         if (firstWord is not null
@@ -18,12 +18,21 @@ public class DisconnectFileCommandHandler : CommandHandlerBase
             && FileInvoker is not null
             && FileCommand is not null)
         {
-            FileInvoker.SetCommand(new DisconnectCommand(FileCommand));
+            var disconnectCommand = new DisconnectCommand(FileCommand);
+            FileInvoker.SetCommand(disconnectCommand);
             FileInvoker.ExecuteCommand();
+            return disconnectCommand;
         }
         else
         {
-            NextHandler?.HandlerCommand(request);
+            if (NextHandler is not null)
+            {
+                return NextHandler.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

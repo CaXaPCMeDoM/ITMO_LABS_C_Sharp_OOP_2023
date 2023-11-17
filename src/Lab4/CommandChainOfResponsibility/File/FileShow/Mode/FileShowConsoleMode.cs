@@ -10,7 +10,7 @@ public class FileShowConsoleMode : FileShowModeHandler
     private const string Flag = "-m";
     private const string ConsoleMode = "console";
     private const int PositionOfAddress = 2;
-    public override void HandlerCommand(Request request)
+    public override Commands.ICommand? HandlerCommand(Request request)
     {
         string modeFullStringInSend = Parser.ParserFlagInRequest(request, Flag);
         if (modeFullStringInSend == ConsoleMode
@@ -18,17 +18,20 @@ public class FileShowConsoleMode : FileShowModeHandler
             && FileInvoker is not null)
         {
             IPrintFile printFile = new PrintFileToConsole();
-            FileInvoker.SetCommand(
-                new ShowFileCommand(
-                    FileCommand,
-                    printFile,
-                    request.Arguments.ElementAtOrDefault(PositionOfAddress) ?? string.Empty));
+            var showFileCommand = new ShowFileCommand(
+                FileCommand,
+                printFile,
+                request.Arguments.ElementAtOrDefault(PositionOfAddress) ?? string.Empty);
+            FileInvoker.SetCommand(showFileCommand);
 
             FileInvoker.ExecuteCommand();
+
+            return showFileCommand;
         }
         else
         {
             NextMode?.HandlerCommand(request);
+            return null;
         }
     }
 }

@@ -10,7 +10,7 @@ public class FileDeleteCommandHandler : FileCommandHandler
     private const string SecondWordOfTheCommand = "delete";
     private const int PositionSecondWordOfTheCommand = 1;
     private const int PositionPath = 2;
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string? secondWord = request.Arguments.ElementAtOrDefault(PositionSecondWordOfTheCommand);
         if (secondWord != null
@@ -18,16 +18,25 @@ public class FileDeleteCommandHandler : FileCommandHandler
             && FileInvoker is not null
             && FileCommand is not null)
         {
-            FileInvoker.SetCommand(
-                new DeleteFileCommand(
-                    FileCommand,
-                    request.Arguments.ElementAtOrDefault(PositionPath) ?? string.Empty));
+            var deleteFileCommand = new DeleteFileCommand(
+                FileCommand,
+                request.Arguments.ElementAtOrDefault(PositionPath) ?? string.Empty);
+            FileInvoker.SetCommand(deleteFileCommand);
 
             FileInvoker.ExecuteCommand();
+
+            return deleteFileCommand;
         }
         else
         {
-            NextMode?.HandlerCommand(request);
+            if (NextMode is not null)
+            {
+                return NextMode.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

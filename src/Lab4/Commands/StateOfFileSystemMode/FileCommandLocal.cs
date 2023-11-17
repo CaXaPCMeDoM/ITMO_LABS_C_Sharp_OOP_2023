@@ -28,7 +28,7 @@ public class FileCommandLocal : IFileCommand
 
     public void ListDirectoryContents(int depth)
     {
-        if (_fileInfo is not null && _fileInfo.Directory is not null)
+        if (_fileInfo is not null && _fileInfo.Exists && _fileInfo.Directory is not null)
         {
             DirectoryInfo? directoryInfo = _fileInfo.Directory;
             Console.WriteLine($"Contents of {directoryInfo.FullName}:");

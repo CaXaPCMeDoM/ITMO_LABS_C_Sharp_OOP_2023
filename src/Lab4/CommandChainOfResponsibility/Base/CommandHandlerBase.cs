@@ -14,5 +14,5 @@ public abstract class CommandHandlerBase
         NextHandler = nextHandler;
     }
 
-    public abstract void HandlerCommand(Request request);
+    public abstract ICommand? HandlerCommand(Request request);
 }

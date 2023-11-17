@@ -2,6 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Connect.C
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Disconnect;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileBase;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Tree.TreeBase;
+using ICommand = Itmo.ObjectOrientedProgramming.Lab4.Commands.ICommand;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Base;
 
@@ -19,8 +20,8 @@ public class ChairOfCommand
         _fileCommand.SetNextHandler(_treeFileCommand);
     }
 
-    public void AssemblingTheChain(Request request)
+    public ICommand? AssemblingTheChain(Request request)
     {
-        _connectFileCommand.HandlerCommand(request);
+        return _connectFileCommand.HandlerCommand(request);
     }
 }

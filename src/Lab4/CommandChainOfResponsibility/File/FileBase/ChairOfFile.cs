@@ -2,6 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.File
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileDelete;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileRename;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileShow;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileBase;
 
@@ -19,8 +20,8 @@ public class ChairOfFile
         _fileRenameCommandHandler.SetNextMode(_fileShowCommandHandler);
     }
 
-    public void AssemblingTheMode(Request request)
+    public ICommand? AssemblingTheMode(Request request)
     {
-        _fileCopyCommandHandler.HandlerCommand(request);
+        return _fileCopyCommandHandler.HandlerCommand(request);
     }
 }

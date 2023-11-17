@@ -11,7 +11,7 @@ public class FileMoveCommandHandler : FileCommandHandler
     private const int PositionSecondWordOfTheCommand = 1;
     private const int PositionSourcePath = 2;
     private const int PositionDestinationPath = 3;
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string? firstWord = request.Arguments.ElementAtOrDefault(PositionSecondWordOfTheCommand);
         if (firstWord != null
@@ -19,17 +19,26 @@ public class FileMoveCommandHandler : FileCommandHandler
             && FileInvoker is not null
             && FileCommand is not null)
         {
-            FileInvoker.SetCommand(
-                new MoveFileCommand(
-                    FileCommand,
-                    request.Arguments.ElementAtOrDefault(PositionSourcePath) ?? string.Empty,
-                    request.Arguments.ElementAtOrDefault(PositionDestinationPath) ?? string.Empty));
+            var moveFileCommand = new MoveFileCommand(
+                FileCommand,
+                request.Arguments.ElementAtOrDefault(PositionSourcePath) ?? string.Empty,
+                request.Arguments.ElementAtOrDefault(PositionDestinationPath) ?? string.Empty);
+
+            FileInvoker.SetCommand(moveFileCommand);
 
             FileInvoker.ExecuteCommand();
+            return moveFileCommand;
         }
         else
         {
-            NextMode?.HandlerCommand(request);
+            if (NextMode is not null)
+            {
+                return NextMode.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

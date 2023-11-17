@@ -9,22 +9,30 @@ public class TreeGoToCommandHandler : TreeFileCommandHandler
     private const string SecondWordOfTheCommand = "goto";
     private const int PositionSecondWordOfTheCommand = 1;
     private const int PositionPath = 2;
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         if (request.Arguments.ElementAtOrDefault(PositionSecondWordOfTheCommand) == SecondWordOfTheCommand
             && FileInvoker is not null
             && FileCommand is not null)
         {
-            FileInvoker.SetCommand(
-                new NavigateToDirectoryCommand(
-                    FileCommand,
-                    request.Arguments.ElementAtOrDefault(PositionPath) ?? string.Empty));
+            var navigateToDirectoryCommand = new NavigateToDirectoryCommand(
+                FileCommand,
+                request.Arguments.ElementAtOrDefault(PositionPath) ?? string.Empty);
+            FileInvoker.SetCommand(navigateToDirectoryCommand);
 
             FileInvoker.ExecuteCommand();
+            return navigateToDirectoryCommand;
         }
         else
         {
-            NextMode?.HandlerCommand(request);
+            if (NextMode is not null)
+            {
+                return NextMode.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ public class FileCopyCommandHandler : FileCommandHandler
     private const int PositionSecondWordOfTheCommand = 1;
     private const int PositionSourcePath = 2;
     private const int PositionDestinationPath = 3;
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string? secondWord = request.Arguments.ElementAtOrDefault(PositionSecondWordOfTheCommand);
         if (secondWord != null
@@ -19,17 +19,25 @@ public class FileCopyCommandHandler : FileCommandHandler
             && FileInvoker is not null
             && FileCommand is not null)
         {
-            FileInvoker.SetCommand(
-                new CopyFileCommand(
-                    FileCommand,
-                    request.Arguments.ElementAtOrDefault(PositionSourcePath) ?? string.Empty,
-                    request.Arguments.ElementAtOrDefault(PositionDestinationPath) ?? string.Empty));
+            var copyFileCommand = new CopyFileCommand(
+                FileCommand,
+                request.Arguments.ElementAtOrDefault(PositionSourcePath) ?? string.Empty,
+                request.Arguments.ElementAtOrDefault(PositionDestinationPath) ?? string.Empty);
+            FileInvoker.SetCommand(copyFileCommand);
 
             FileInvoker.ExecuteCommand();
+            return copyFileCommand;
         }
         else
         {
-            NextMode?.HandlerCommand(request);
+            if (NextMode is not null)
+            {
+                return NextMode.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

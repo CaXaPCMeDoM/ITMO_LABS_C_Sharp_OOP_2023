@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Base;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.File.FileBase;
 
@@ -14,18 +15,25 @@ public class FileCommandHandler : CommandHandlerBase
         NextMode = modeHandler;
     }
 
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string? firstWord = request.Arguments.ElementAtOrDefault(FirstWord);
         if (firstWord != null
             && firstWord.Equals(FileConstString, StringComparison.Ordinal))
         {
             var chairMode = new ChairOfFile();
-            chairMode.AssemblingTheMode(request);
+            return chairMode.AssemblingTheMode(request);
         }
         else
         {
-            NextHandler?.HandlerCommand(request);
+            if (NextHandler is not null)
+            {
+                return NextHandler.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

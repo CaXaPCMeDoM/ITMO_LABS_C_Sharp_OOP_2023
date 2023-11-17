@@ -11,7 +11,7 @@ public class LocalConnectModeHandler : ConnectModeHandler
     private const string Flag = "-m";
     private const string ModeIsLocal = "local";
     private const int PositionAddress = 1;
-    public override void HandlerCommand(Request request)
+    public override ICommand? HandlerCommand(Request request)
     {
         string modeFullStringInSend = Parser.ParserFlagInRequest(request, Flag);
         if (modeFullStringInSend.Equals(ModeIsLocal, StringComparison.Ordinal))
@@ -19,12 +19,24 @@ public class LocalConnectModeHandler : ConnectModeHandler
             Mode = modeFullStringInSend;
             FileCommand = new FileCommandLocal();
             FileInvoker = new FileInvoker();
-            FileInvoker.SetCommand(new ConnectCommand(FileCommand, request.Arguments.ElementAtOrDefault(PositionAddress) ?? string.Empty));
+            var connectCommand = new ConnectCommand(
+                FileCommand,
+                request.Arguments.ElementAtOrDefault(PositionAddress) ?? string.Empty);
+
+            FileInvoker.SetCommand(connectCommand);
             FileInvoker.ExecuteCommand();
+            return connectCommand;
         }
         else
         {
-            NextMode?.HandlerCommand(request);
+            if (NextMode is not null)
+            {
+                return NextMode.HandlerCommand(request);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

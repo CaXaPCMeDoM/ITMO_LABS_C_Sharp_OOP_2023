@@ -1,5 +1,6 @@
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Tree.TreeGoTo;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Tree.TreeList;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Tree.TreeBase;
 
@@ -12,8 +13,8 @@ public class ChairOfTree
         _treeGoTo.SetNextMode(_treeList);
     }
 
-    public void AssemblingTheMode(Request request)
+    public ICommand? AssemblingTheMode(Request request)
     {
-        _treeGoTo.HandlerCommand(request);
+        return _treeGoTo.HandlerCommand(request);
     }
 }
