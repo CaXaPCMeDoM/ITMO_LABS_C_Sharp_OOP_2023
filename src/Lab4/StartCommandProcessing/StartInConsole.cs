@@ -2,11 +2,11 @@ using System;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Base;
 
-namespace Itmo.ObjectOrientedProgramming.Lab4.StartCommand;
+namespace Itmo.ObjectOrientedProgramming.Lab4.StartCommandProcessing;
 
-public static class Start
+public class StartInConsole : IStart
 {
-    public static void Programm()
+    public void Programm()
     {
         while (true)
         {
@@ -23,5 +23,10 @@ public static class Start
                 chairOfCommand.AssemblingTheChain(request);
             }
         }
+    }
+
+    public void Proframm()
+    {
+        throw new NotImplementedException();
     }
 }
