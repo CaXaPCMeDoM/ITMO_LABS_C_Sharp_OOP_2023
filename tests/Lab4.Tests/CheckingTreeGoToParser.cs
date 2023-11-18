@@ -8,9 +8,9 @@ using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Tests;
 
-public static class CheckingTheTreeListParser
+public static class CheckingTreeGoToParser
 {
-    private const string MessageForTest = "tree list -d 1";
+    private const string MessageForTest = "tree goto asf";
     private const string MessageForInit = "connect A:\\neverSayNever -m local";
     [Theory]
     [MemberData(nameof(TestData))]
@@ -31,7 +31,7 @@ public static class CheckingTheTreeListParser
     {
         yield return new object[]
         {
-            new ListDirectoryContentsCommand(new FileCommandLocal(), 1),
+            new NavigateToDirectoryCommand(new FileCommandLocal(), "up"),
         };
     }
 }

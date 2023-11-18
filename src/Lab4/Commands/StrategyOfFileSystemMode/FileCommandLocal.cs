@@ -28,15 +28,9 @@ public class FileCommandLocal : IFileCommand
 
     public void ListDirectoryContents(int depth)
     {
-        if (_fileInfo is not null && _fileInfo.Exists && _fileInfo.Directory is not null)
+        if (_fileInfo is not null && _fileInfo.Directory is not null)
         {
-            DirectoryInfo? directoryInfo = _fileInfo.Directory;
-            Console.WriteLine($"Contents of {directoryInfo.FullName}:");
-
-            foreach (FileInfo fileInfo in directoryInfo.GetFiles())
-            {
-                Console.WriteLine(fileInfo.Name);
-            }
+            ListDirectory(_fileInfo.FullName, depth);
         }
     }
 
@@ -96,6 +90,27 @@ public class FileCommandLocal : IFileCommand
             {
                 File.Move(fullSourcePath, fullDestinationPath);
             }
+        }
+    }
+
+    private void ListDirectory(string path, int depth)
+    {
+        Console.Write(new string(' ', depth * 4));
+
+        var directoryInfo = new DirectoryInfo(path);
+        Console.WriteLine(directoryInfo.Name + "\\");
+
+        FileInfo[] files = directoryInfo.GetFiles();
+        foreach (FileInfo file in files)
+        {
+            Console.Write(new string(' ', (depth + 1) * 4));
+            Console.WriteLine(file.Name);
+        }
+
+        DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
+        foreach (DirectoryInfo subDirectory in subDirectories)
+        {
+            ListDirectory(subDirectory.FullName, depth + 1);
         }
     }
 }
