@@ -12,21 +12,14 @@ public class StartInConsole : IStart
         {
             string? message = Console.ReadLine();
             var chairOfCommand = new ChairOfCommand();
-            if (message != null)
+            if (message == null) continue;
+            if (message == "exit")
             {
-                if (message == "exit")
-                {
-                    break;
-                }
-
-                Request request = Parse.Parser.ParserRequest(message);
-                chairOfCommand.AssemblingTheChain(request);
+                break;
             }
-        }
-    }
 
-    public void Proframm()
-    {
-        throw new NotImplementedException();
+            Request request = Parse.Parser.ParserRequest(message);
+            chairOfCommand.AssemblingTheChain(request);
+        }
     }
 }

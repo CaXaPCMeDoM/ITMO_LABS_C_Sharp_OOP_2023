@@ -44,7 +44,6 @@ public class FileCommandLocal : IFileCommand
     {
         if (_fileInfo is not null)
         {
-            Console.WriteLine($"Content of {_fileInfo.FullName}:");
             printFileMode.PrintFile(File.ReadAllText(_fileInfo.FullName));
         }
     }
