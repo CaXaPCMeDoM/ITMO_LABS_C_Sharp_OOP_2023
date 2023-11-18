@@ -14,6 +14,11 @@ public static class Start
             var chairOfCommand = new ChairOfCommand();
             if (message != null)
             {
+                if (message == "exit")
+                {
+                    break;
+                }
+
                 Request request = Parse.Parser.ParserRequest(message);
                 chairOfCommand.AssemblingTheChain(request);
             }
