@@ -10,9 +10,18 @@ public class FileCommandHandler : CommandHandlerBase
     private const int FirstWord = 0;
     private const string FileConstString = "file";
     protected FileCommandHandler? NextMode { get; private set; }
-    public void SetNextMode(FileCommandHandler modeHandler)
+    public FileCommandHandler SetNextMode(FileCommandHandler modeHandler)
     {
-        NextMode = modeHandler;
+        if (NextMode is null)
+        {
+            NextMode = modeHandler;
+        }
+        else
+        {
+            NextMode.SetNextHandler(modeHandler);
+        }
+
+        return this;
     }
 
     public override ICommand? HandlerCommand(Request request)

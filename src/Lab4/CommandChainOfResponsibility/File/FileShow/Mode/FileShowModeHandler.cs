@@ -4,8 +4,17 @@ public class FileShowModeHandler : FileShowCommandHandler
 {
     protected new FileShowModeHandler? NextMode { get; private set; }
 
-    public void SetNextMode(FileShowModeHandler modeHandler)
+    public FileShowModeHandler SetNextMode(FileShowModeHandler modeHandler)
     {
-        NextMode = modeHandler;
+        if (NextMode is null)
+        {
+            NextMode = modeHandler;
+        }
+        else
+        {
+            NextMode.SetNextHandler(modeHandler);
+        }
+
+        return this;
     }
 }

@@ -15,9 +15,10 @@ public class ChairOfFile
 
     public ChairOfFile()
     {
-        _fileCopyCommandHandler.SetNextMode(_fileDeleteCommandHandler);
-        _fileDeleteCommandHandler.SetNextMode(_fileRenameCommandHandler);
-        _fileRenameCommandHandler.SetNextMode(_fileShowCommandHandler);
+        _fileCopyCommandHandler.SetNextMode(
+            _fileDeleteCommandHandler.SetNextMode(
+                _fileRenameCommandHandler.SetNextMode(
+                    _fileShowCommandHandler)));
     }
 
     public ICommand? AssemblingTheMode(Request request)

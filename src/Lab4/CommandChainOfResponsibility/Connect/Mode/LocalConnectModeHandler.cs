@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab4.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.StateOfFileSystemMode;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.StrategyOfFileSystemMode;
 using Itmo.ObjectOrientedProgramming.Lab4.Parse;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Connect.Mode;

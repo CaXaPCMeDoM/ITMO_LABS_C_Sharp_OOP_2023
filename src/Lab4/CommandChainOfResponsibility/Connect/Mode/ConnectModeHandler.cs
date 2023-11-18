@@ -6,8 +6,17 @@ public abstract class ConnectModeHandler : ConnectFileCommandHandler
 {
     protected ConnectModeHandler? NextMode { get; private set; }
 
-    public void SetNextMode(ConnectModeHandler connectModeHandler)
+    public ConnectModeHandler SetNextMode(ConnectModeHandler connectModeHandler)
     {
-        NextMode = connectModeHandler;
+        if (NextMode is null)
+        {
+            NextMode = connectModeHandler;
+        }
+        else
+        {
+            NextMode.SetNextHandler(connectModeHandler);
+        }
+
+        return this;
     }
 }

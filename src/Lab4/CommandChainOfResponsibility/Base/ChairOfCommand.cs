@@ -15,9 +15,10 @@ public class ChairOfCommand
 
     public ChairOfCommand()
     {
-        _connectFileCommand.SetNextHandler(_disconnectFileCommand);
-        _disconnectFileCommand.SetNextHandler(_fileCommand);
-        _fileCommand.SetNextHandler(_treeFileCommand);
+        _connectFileCommand.SetNextHandler(
+            _disconnectFileCommand.SetNextHandler(
+                _disconnectFileCommand.SetNextHandler(
+                    _fileCommand.SetNextHandler(_treeFileCommand))));
     }
 
     public ICommand? AssemblingTheChain(Request request)

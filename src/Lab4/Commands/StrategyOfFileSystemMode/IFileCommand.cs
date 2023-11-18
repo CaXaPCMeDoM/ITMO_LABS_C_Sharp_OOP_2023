@@ -1,6 +1,6 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Commands.ShowFile;
 
-namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.StateOfFileSystemMode;
+namespace Itmo.ObjectOrientedProgramming.Lab4.Commands.StrategyOfFileSystemMode;
 
 public interface IFileCommand
 {

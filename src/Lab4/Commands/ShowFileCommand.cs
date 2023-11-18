@@ -1,5 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Commands.ShowFile;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.StateOfFileSystemMode;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.StrategyOfFileSystemMode;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Commands;
 

@@ -1,5 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab4.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.StateOfFileSystemMode;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.StrategyOfFileSystemMode;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Base;
 
@@ -9,9 +9,18 @@ public abstract class CommandHandlerBase
     protected static FileInvoker? FileInvoker { get; set; }
     protected CommandHandlerBase? NextHandler { get; private set; }
 
-    public void SetNextHandler(CommandHandlerBase nextHandler)
+    public CommandHandlerBase SetNextHandler(CommandHandlerBase nextHandler)
     {
-        NextHandler = nextHandler;
+        if (NextHandler is null)
+        {
+            NextHandler = nextHandler;
+        }
+        else
+        {
+            NextHandler.SetNextHandler(nextHandler);
+        }
+
+        return this;
     }
 
     public abstract ICommand? HandlerCommand(Request request);

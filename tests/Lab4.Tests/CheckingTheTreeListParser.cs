@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility;
 using Itmo.ObjectOrientedProgramming.Lab4.CommandChainOfResponsibility.Base;
 using Itmo.ObjectOrientedProgramming.Lab4.Commands;
-using Itmo.ObjectOrientedProgramming.Lab4.Commands.StateOfFileSystemMode;
+using Itmo.ObjectOrientedProgramming.Lab4.Commands.StrategyOfFileSystemMode;
 using Itmo.ObjectOrientedProgramming.Lab4.Parse;
 using Xunit;
 
