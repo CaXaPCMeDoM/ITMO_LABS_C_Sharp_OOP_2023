@@ -19,7 +19,14 @@ public class MoqUserRepository : IMoqUserRepository
             }
         }
 
-        return amount;
+        if (amount < 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return amount;
+        }
     }
 
     public double AddingFundsToYourAccount(Collection<MoqUserTable> table, long id, double amountToAdd)

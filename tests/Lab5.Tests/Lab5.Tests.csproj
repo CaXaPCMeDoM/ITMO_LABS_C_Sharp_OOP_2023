@@ -21,10 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Test\WithdrawingMoneyFromTheAccount\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\src\Lab5\LabFive.Application.Contracts\LabFive.Application.Contracts.csproj" />
     </ItemGroup>
 

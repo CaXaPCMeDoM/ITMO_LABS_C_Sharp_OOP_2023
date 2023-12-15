@@ -1,15 +1,10 @@
-using LabFive.Application.Contracts;
+using System.Collections.ObjectModel;
 
 namespace Itmo.ObjectOrientedProgramming.Lab5.Tests.Moq;
 
 public interface IMoqUserService
 {
-    LoginResult Login(string username, string password);
-    void CreatingAccount(string username, double userAmount, string userPassword);
+    public double WithdrawingMoney(Collection<MoqUserTable> table, double amountToWithdraw);
 
-    double? ViewingTheAccountBalanceByAccountId();
-
-    void WithdrawingMoney(double amountToWithdraw);
-
-    void AddingMoney(double amountToAdd);
+    public double AddingMoney(Collection<MoqUserTable> table, double amountToAdd);
 }
