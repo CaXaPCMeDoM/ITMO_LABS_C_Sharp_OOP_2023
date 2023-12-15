@@ -21,11 +21,13 @@ public class Initial : SqlMigration
         user_amount double precision not null ,
         user_password text not null
     );
+    insert into users (user_name, user_amount, user_password) values ('user1', 0.0, '123');
 
     create table admins
     (
         admin_password text not null
     );
+    insert into admins (admin_password) values ('1234');
 
     create table operation_detail
     (

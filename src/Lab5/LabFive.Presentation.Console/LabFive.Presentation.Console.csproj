@@ -7,8 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions\" />
-      <Folder Include="Scenarios\" />
+      <ProjectReference Include="..\LabFive.Application.Contracts\LabFive.Application.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Spectre.Console" />
     </ItemGroup>
 
 </Project>
