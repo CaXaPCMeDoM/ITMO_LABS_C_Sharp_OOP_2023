@@ -60,7 +60,13 @@ public class UserRepository : IUserRepository
         command.AddParameter("user_amount", useramount);
         command.AddParameter("user_password", userpassword);
 
-        long userId = (long)command.ExecuteScalar() ?? 0;
+        object? result = command.ExecuteScalar();
+        if (result == null)
+        {
+            return null;
+        }
+
+        long userId = (long)result;
 
         return new User(userId, username, useramount, userpassword);
     }

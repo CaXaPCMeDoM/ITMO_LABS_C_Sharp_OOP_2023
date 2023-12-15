@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using Itmo.Dev.Platform.Postgres.Connection;
 using Itmo.Dev.Platform.Postgres.Extensions;
 using LabFive.Application.Abstractions.Repositories;
+using LabFive.Application.Models.Admins;
 using LabFive.Application.Models.Users;
 using Npgsql;
 
@@ -14,6 +15,30 @@ public class AdminRepository : IAdminRepository
     public AdminRepository(IPostgresConnectionProvider connectionProvider)
     {
         _connectionProvider = connectionProvider;
+    }
+
+    public Admin? CheckByPassword(string password)
+    {
+        const string sql = """
+                           select admin_password
+                           from admins
+                           where admin_password = @password;
+                           """;
+        using NpgsqlConnection connection = Task
+            .Run(async () =>
+                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
+            .GetResult();
+
+        using var command = new NpgsqlCommand(sql, connection);
+        command.AddParameter("password", password);
+
+        using NpgsqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read() is false)
+            return null;
+
+        return new Admin(
+            Password: reader.GetString(0));
     }
 
     public Collection<OperationDetail> ViewingTheHistoryOfOperations(long userId)

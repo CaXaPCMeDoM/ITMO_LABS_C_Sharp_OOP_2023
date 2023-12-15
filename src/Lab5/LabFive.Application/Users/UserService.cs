@@ -1,4 +1,5 @@
 using LabFive.Application.Abstractions.Repositories;
+using LabFive.Application.Contracts;
 using LabFive.Application.Contracts.Users;
 using LabFive.Application.Models.Users;
 
@@ -33,19 +34,31 @@ internal class UserService : IUserService
         _currentUserManager.User = _userRepository.CreatingAccount(username, userAmount, userPassword);
     }
 
-    public double? ViewingTheAccountBalanceByAccountId(long id)
+    public double? ViewingTheAccountBalanceByAccountId()
     {
-        return _userRepository.ViewingTheAccountBalanceByAccountId(id);
+        if (_currentUserManager.User != null)
+        {
+            return _userRepository.ViewingTheAccountBalanceByAccountId(_currentUserManager.User.Id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void WithdrawingMoney(double amountToWithdraw)
     {
         if (_currentUserManager.User != null)
+        {
             _userRepository.WithdrawingMoneyFromTheAccount(_currentUserManager.User.Id, amountToWithdraw);
+        }
     }
 
-    public void AddingMoney(long id, double amountToAdd)
+    public void AddingMoney(double amountToAdd)
     {
-        _userRepository.AddingFundsToYourAccount(id, amountToAdd);
+        if (_currentUserManager.User != null)
+        {
+            _userRepository.AddingFundsToYourAccount(_currentUserManager.User.Id, amountToAdd);
+        }
     }
 }
