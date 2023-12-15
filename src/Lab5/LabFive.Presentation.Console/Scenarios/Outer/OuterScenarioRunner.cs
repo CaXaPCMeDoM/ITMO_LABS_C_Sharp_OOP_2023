@@ -1,7 +1,6 @@
-using LabFive.Presentation.Console.Scenarios.Outer;
 using Spectre.Console;
 
-namespace LabFive.Presentation.Console;
+namespace LabFive.Presentation.Console.Scenarios.Outer;
 
 public class OuterScenarioRunner
 {

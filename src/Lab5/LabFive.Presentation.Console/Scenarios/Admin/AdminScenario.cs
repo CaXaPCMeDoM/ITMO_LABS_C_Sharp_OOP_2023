@@ -16,7 +16,7 @@ public class AdminScenario : IOuterScenario
         _scenarioRunner = scenarioRunner;
     }
 
-    public string Name => "Login";
+    public string Name => "Admin";
 
     public void Run()
     {
@@ -33,6 +33,9 @@ public class AdminScenario : IOuterScenario
 
         AnsiConsole.WriteLine(message);
         AnsiConsole.WriteLine("Ok");
-        _scenarioRunner.Run();
+        while (true)
+        {
+            _scenarioRunner.Run();
+        }
     }
 }

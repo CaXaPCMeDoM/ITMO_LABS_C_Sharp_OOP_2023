@@ -1,6 +1,8 @@
-namespace LabFive.Application.Contracts.Users;
+using LabFive.Application.Contracts;
 
-public interface IUserService
+namespace Itmo.ObjectOrientedProgramming.Lab5.Tests.Moq;
+
+public interface IMoqUserService
 {
     LoginResult Login(string username, string password);
     void CreatingAccount(string username, double userAmount, string userPassword);

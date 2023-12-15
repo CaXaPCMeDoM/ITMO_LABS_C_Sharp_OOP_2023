@@ -15,20 +15,27 @@ public class UserRepository : IUserRepository
         _connectionProvider = connectionProvider;
     }
 
-    public User? FindUserByUsername(string username)
+    public User? LoginUserByUsernameAndPassword(string username, string password)
     {
         const string sql = """
-                           select user_id, user_name, user_amount, password
+                           select user_id, user_name, user_amount, user_password
                            from users
-                           where user_name = @username;
+                           where user_name = @username and user_password = @password;
                            """;
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
-        command.AddParameter("username", username);
+        command.Parameters.AddWithValue("username", username);
+        command.Parameters.AddWithValue("password", password);
 
         using NpgsqlDataReader reader = command.ExecuteReader();
 
@@ -50,10 +57,16 @@ public class UserRepository : IUserRepository
                            RETURNING user_id;
                            """;
 
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("user_name", username);
@@ -79,10 +92,16 @@ public class UserRepository : IUserRepository
                            where user_id = @userid;
                            """;
 
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("userid", id);
@@ -108,10 +127,16 @@ public class UserRepository : IUserRepository
                             returning user_amount;
                            """;
 
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("userid", id);
@@ -120,46 +145,70 @@ public class UserRepository : IUserRepository
         using NpgsqlDataReader reader = command.ExecuteReader();
         if (reader.Read())
         {
-            AddOperationDetail(connection, OperationType.Withdrawing, id, amountToWithdraw);
+            AddOperationDetailForWithdrawingMoney(connection, id, amountToWithdraw);
         }
     }
 
     public void AddingFundsToYourAccount(long id, double amountToAdd)
     {
         const string sql = """
-                       update users
-                       set user_amount = user_amount + @amount
-                       where user_id = @userid
-                       returning user_amount;
-                       """;
+                           update users
+                           set user_amount = user_amount + @amount
+                           where user_id = @userid
+                           returning user_amount;
+                           """;
 
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("userid", id);
         command.AddParameter("amount", amountToAdd);
 
-        using NpgsqlDataReader reader = command.ExecuteReader();
-        if (reader.Read())
+        double updatedAmount = 0;
+        using (NpgsqlDataReader reader = command.ExecuteReader())
         {
-            AddOperationDetail(connection, OperationType.Deposit, id, amountToAdd);
+            if (reader.Read())
+            {
+                updatedAmount = (double)reader[0];
+            }
         }
+
+        AddOperationDetailForAddingFounds(connection, id, amountToAdd);
     }
 
-    private static void AddOperationDetail(NpgsqlConnection connection, OperationType operationType, long userId, double operationAmount)
+    private static void AddOperationDetailForAddingFounds(NpgsqlConnection connection, long userId, double operationAmount)
     {
         const string sqlInsert = """
-                                 insert into operation_detail (operation_type, user_id, operation_amount)
-                                 values (@operationType, @userId, @operationAmount);
+                                 insert into operation_detail (user_id, operation_amount)
+                                 values (@userId, @operationAmount);
                                  """;
 
         using var commandInsert = new NpgsqlCommand(sqlInsert, connection);
-        commandInsert.AddParameter("operationType", operationType);
         commandInsert.AddParameter("userId", userId);
         commandInsert.AddParameter("operationAmount", operationAmount);
+
+        commandInsert.ExecuteNonQuery();
+    }
+
+    private static void AddOperationDetailForWithdrawingMoney(NpgsqlConnection connection, long userId, double operationAmount)
+    {
+        const string sqlInsert = """
+                                 insert into operation_detail (user_id, operation_amount)
+                                 values (@userId, @operationAmount);
+                                 """;
+
+        using var commandInsert = new NpgsqlCommand(sqlInsert, connection);
+        commandInsert.AddParameter("userId", userId);
+        commandInsert.AddParameter("operationAmount", -operationAmount);
 
         commandInsert.ExecuteNonQuery();
     }

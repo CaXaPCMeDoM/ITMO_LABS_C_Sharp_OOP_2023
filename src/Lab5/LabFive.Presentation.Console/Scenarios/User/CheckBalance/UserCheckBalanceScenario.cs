@@ -2,7 +2,7 @@ using System.Globalization;
 using LabFive.Application.Contracts.Users;
 using Spectre.Console;
 
-namespace LabFive.Presentation.Console.Scenarios.User.Balance;
+namespace LabFive.Presentation.Console.Scenarios.User.CheckBalance;
 
 public class UserCheckBalanceScenario : IScenario
 {
@@ -13,7 +13,7 @@ public class UserCheckBalanceScenario : IScenario
         _userService = userService;
     }
 
-    public string Name => "Login";
+    public string Name => "Balance";
 
     public void Run()
     {

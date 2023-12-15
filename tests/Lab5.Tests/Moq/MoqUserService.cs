@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab5.Tests.Moq;
 using LabFive.Application.Abstractions.Repositories;
 using LabFive.Application.Contracts;
 using LabFive.Application.Contracts.Users;
@@ -5,7 +6,7 @@ using LabFive.Application.Models.Users;
 
 namespace LabFive.Application.Users;
 
-internal class UserService : IUserService
+internal class MoqUserService : IMoqUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly CurrentUserManager _currentUserManager;

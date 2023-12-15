@@ -1,14 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using LabFive.Application.Contracts.Users;
 
-namespace LabFive.Presentation.Console.Scenarios.Login;
+namespace LabFive.Presentation.Console.Scenarios.User.AddMoney;
 
-public class LoginScenarioProvider : IScenarioProvider
+public class UserAddMoneyScenarioProvider : IScenarioProvider
 {
     private readonly IUserService _service;
     private readonly ICurrentUserService _currentUser;
 
-    public LoginScenarioProvider(
+    public UserAddMoneyScenarioProvider(
         IUserService service,
         ICurrentUserService currentUser)
     {
@@ -19,13 +19,13 @@ public class LoginScenarioProvider : IScenarioProvider
     public bool TryGetScenario(
         [NotNullWhen(true)] out IScenario? scenario)
     {
-        if (_currentUser.User is not null)
+        if (_currentUser.User is null)
         {
             scenario = null;
             return false;
         }
 
-        scenario = new LoginScenario(_service);
+        scenario = new UserAddMoneyScenario(_service);
         return true;
     }
 }

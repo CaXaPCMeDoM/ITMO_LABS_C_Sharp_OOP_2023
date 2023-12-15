@@ -21,8 +21,9 @@ public class UserScenario : IOuterScenario
     public void Run()
     {
         string username = AnsiConsole.Ask<string>("Enter your username");
+        string password = AnsiConsole.Ask<string>("Enter your password");
 
-        LoginResult result = _userService.Login(username);
+        LoginResult result = _userService.Login(username, password);
 
         string message = result switch
         {
@@ -33,6 +34,9 @@ public class UserScenario : IOuterScenario
 
         AnsiConsole.WriteLine(message);
         AnsiConsole.WriteLine("Ok");
-        _scenarioRunner.Run();
+        while (true)
+        {
+            _scenarioRunner.Run();
+        }
     }
 }

@@ -44,15 +44,21 @@ public class AdminRepository : IAdminRepository
     public Collection<OperationDetail> ViewingTheHistoryOfOperations(long userId)
     {
         const string sql = """
-                       select operation_id, operation_type, user_id, operation_amount
+                       select operation_id, user_id, operation_amount
                        from operation_detail
                        where user_id = :userId;
                        """;
 
-        using NpgsqlConnection connection = Task
-            .Run(async () =>
-                await _connectionProvider.GetConnectionAsync(default).ConfigureAwait(false)).GetAwaiter()
-            .GetResult();
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 6432,
+            Username = "postgres",
+            Password = "postgres",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+
+        connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("userId", userId);
@@ -65,9 +71,8 @@ public class AdminRepository : IAdminRepository
         {
             var operation = new OperationDetail(
                 OperationId: reader.GetInt64(0),
-                OperationType: reader.GetString(1),
-                UserId: reader.GetInt64(2),
-                OperationAmount: reader.GetDouble(3));
+                UserId: reader.GetInt64(1),
+                OperationAmount: reader.GetDouble(2));
 
             operations.Add(operation);
         }

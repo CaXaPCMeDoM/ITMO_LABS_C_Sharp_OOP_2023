@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using LabFive.Application.Contracts.Users;
 
-namespace LabFive.Presentation.Console.Scenarios.User.Balance;
+namespace LabFive.Presentation.Console.Scenarios.User.CheckBalance;
 
 public class UserCheckBalanceScenarioProvider : IScenarioProvider
 {
@@ -19,7 +19,7 @@ public class UserCheckBalanceScenarioProvider : IScenarioProvider
     public bool TryGetScenario(
         [NotNullWhen(true)] out IScenario? scenario)
     {
-        if (_currentUser.User is not null)
+        if (_currentUser.User is null)
         {
             scenario = null;
             return false;

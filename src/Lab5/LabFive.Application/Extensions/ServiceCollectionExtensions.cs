@@ -16,6 +16,9 @@ public static class ServiceCollectionExtensions
         collection.AddScoped<CurrentUserManager>();
         collection.AddScoped<ICurrentUserService>(
             p => p.GetRequiredService<CurrentUserManager>());
+        collection.AddScoped<CurrentAdminManager>();
+        collection.AddScoped<ICurrentAdminService>(
+            p => p.GetRequiredService<CurrentAdminManager>());
 
         return collection;
     }

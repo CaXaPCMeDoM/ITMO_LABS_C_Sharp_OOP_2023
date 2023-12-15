@@ -14,11 +14,11 @@ public class AdminGetHistoryOperationScenario : IScenario
         _userService = userService;
     }
 
-    public string Name => "Login";
+    public string Name => "History";
 
     public void Run()
     {
-        AnsiConsole.WriteLine("Введите параметр:");
+        AnsiConsole.WriteLine("Enter the parameter:");
         string? input = System.Console.ReadLine();
         if (input != null)
         {
@@ -26,12 +26,9 @@ public class AdminGetHistoryOperationScenario : IScenario
 
             IEnumerable<OperationDetail> result = _userService.GetHistoryOperation(userId);
 
-            if (result != null)
+            foreach (OperationDetail operation in result)
             {
-                foreach (OperationDetail operation in result)
-                {
-                    AnsiConsole.WriteLine(CultureInfo.InvariantCulture, "{0}", operation);
-                }
+                AnsiConsole.WriteLine(CultureInfo.InvariantCulture, "{0}", operation);
             }
         }
 

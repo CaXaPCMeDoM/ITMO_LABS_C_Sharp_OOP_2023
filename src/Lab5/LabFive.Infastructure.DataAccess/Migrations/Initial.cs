@@ -8,12 +8,6 @@ public class Initial : SqlMigration
 {
     protected override string GetUpSql(IServiceProvider serviceProvider) =>
     """
-    create type type_operation as enum
-    (
-        'withdrawing',
-        'deposit'
-    );
-
     create table users
     (
         user_id bigint primary key generated always as identity ,
@@ -32,8 +26,7 @@ public class Initial : SqlMigration
     create table operation_detail
     (
         operation_id bigint primary key generated always as identity ,
-        operation_type type_operation is not null ,
-        user_id bight not null ,
+        user_id bigint not null ,
         operation_amount double precision
     );
     """;
